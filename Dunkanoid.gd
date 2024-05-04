@@ -17,6 +17,7 @@ enum {
 var mode = MODE_WAIT
 
 signal update_score
+signal update_lives
 
 const levels = {
 	"DUNKANOID": {
@@ -87,12 +88,15 @@ const levels = {
 }
 
 var capture_mode : bool = false
-var lives : int = 3
+var lives : int = 3 :
+	set(x):
+		lives = x
+		update_lives.emit()
 var score : int = 0 :
 	set(x):
 		score = x
 		update_score.emit()
-var level : String = "SATERRANOID"
+var level : String = "DUNKANOID"
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
@@ -114,6 +118,10 @@ func new_level() -> void:
 		remove_child(ball)
 		ball.queue_free()
 	balls.clear()
+	for brick in bricks:
+		remove_child(brick)
+		brick.queue_free()
+	bricks.clear()
 		
 	$Start/Title.text = level
 	$Start/Round.text = "ROUND %3d" % [levels[level].round]
@@ -187,6 +195,11 @@ func _on_hit_floor(ball) -> void:
 		add_child(ball)
 		balls.push_back(ball)
 		$StartRound.play()
+		$Start.visible = true
+		mode = MODE_WAIT
+		lives -= 1
+		if lives <= 0:
+			get_tree().change_scene_to_file("res://Intro.tscn")
 
 
 func _on_round_won_finished() -> void:
@@ -268,3 +281,7 @@ func load_level(data) -> void:
 func _on_start_round_finished() -> void:
 	$Start.visible = false
 	mode = MODE_PLAY
+
+
+func _on_update_lives() -> void:
+	$LivesBox.text = "%d" % lives

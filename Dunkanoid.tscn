@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://4q0epdnb0x4s"]
+[gd_scene load_steps=15 format=3 uid="uid://4q0epdnb0x4s"]
 
 [ext_resource type="Script" path="res://Dunkanoid.gd" id="1_kv4if"]
 [ext_resource type="PackedScene" uid="uid://dndemjw7up2r6" path="res://Paddle/Paddle.tscn" id="2_26c5i"]
@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://818gpo5mes22" path="res://Sounds/Start.wav" id="6_s0pha"]
 [ext_resource type="AudioStream" uid="uid://bh2blx1uovmyt" path="res://Sounds/Win.wav" id="7_xrjor"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="8_wcf7g"]
-[ext_resource type="Shader" path="res://Arkanoid.gdshader" id="9_20w5w"]
+[ext_resource type="Material" uid="uid://bv4vhjg83fqpn" path="res://ArkanoidMaterial.tres" id="9_ouuij"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yf4r2"]
 rough = true
@@ -28,9 +28,6 @@ distance = -432.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_48dqy"]
 distance = -360.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6dsnv"]
-shader = ExtResource("9_20w5w")
 
 [node name="Dunkanoid" type="Node2D"]
 texture_filter = 1
@@ -70,21 +67,46 @@ stream = ExtResource("6_s0pha")
 stream = ExtResource("7_xrjor")
 
 [node name="ScoreLabel" type="Label" parent="."]
-offset_left = 509.0
+offset_left = 448.0
 offset_top = 29.0
-offset_right = 560.0
+offset_right = 639.0
 offset_bottom = 52.0
 theme = ExtResource("8_wcf7g")
 text = "SCORE"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ScoreBox" type="Label" parent="."]
-offset_left = 479.0
+offset_left = 448.0
 offset_top = 54.0
-offset_right = 597.0
+offset_right = 639.0
 offset_bottom = 77.0
 theme = ExtResource("8_wcf7g")
 theme_type_variation = &"Numbers"
 text = "00000000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LivesLabel" type="Label" parent="."]
+offset_left = 448.0
+offset_top = 82.0
+offset_right = 639.0
+offset_bottom = 105.0
+theme = ExtResource("8_wcf7g")
+text = "LIVES"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LivesBox" type="Label" parent="."]
+offset_left = 448.0
+offset_top = 105.0
+offset_right = 639.0
+offset_bottom = 128.0
+theme = ExtResource("8_wcf7g")
+theme_type_variation = &"Numbers"
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 16.0
@@ -103,7 +125,7 @@ offset_bottom = 16.0
 z_index = 1
 
 [node name="Title" type="Label" parent="Start"]
-material = SubResource("ShaderMaterial_6dsnv")
+material = ExtResource("9_ouuij")
 offset_left = 16.0
 offset_top = 199.0
 offset_right = 432.0
@@ -150,6 +172,7 @@ offset_right = 448.0
 offset_bottom = 360.0
 color = Color(0, 0, 1, 1)
 
+[connection signal="update_lives" from="." to="." method="_on_update_lives"]
 [connection signal="update_score" from="." to="." method="_on_update_score"]
 [connection signal="finished" from="StartRound" to="." method="_on_start_round_finished"]
 [connection signal="finished" from="RoundWon" to="." method="_on_round_won_finished"]

@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bv4vhjg83fqpn"]
+
+[ext_resource type="Shader" path="res://Arkanoid.gdshader" id="1_otqlg"]
+
+[resource]
+shader = ExtResource("1_otqlg")
