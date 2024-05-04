@@ -12,6 +12,8 @@ var capture_object : Node2D
 var capture_offset : Vector2 = Vector2.ZERO
 	
 func _physics_process(delta: float) -> void:
+	angular_velocity = 0
+	rotation = 0
 	if captured:
 		PhysicsServer2D.body_set_state(
 			get_rid(),
@@ -27,6 +29,8 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body is Brick:
+		if not body.visible:
+			return
 		#linear_velocity = (linear_velocity.normalized() + (Vector2(randf() - 0.5, randf() - 0.5) / 2.0)).normalized() * linear_velocity.length()
 		$BrickSound.play()
 		body.hit()

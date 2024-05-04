@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://wld2y5cseki8"]
+[gd_scene load_steps=5 format=3 uid="uid://wld2y5cseki8"]
 
 [ext_resource type="Script" path="res://Brick/Brick.gd" id="1_eylhu"]
+[ext_resource type="Texture2D" uid="uid://cipjurqgguse7" path="res://Brick/BaseBrick.png" id="2_v230s"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s6ufd"]
 rough = true
@@ -14,13 +15,19 @@ input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_s6ufd")
 constant_linear_velocity = Vector2(0, 50)
 script = ExtResource("1_eylhu")
-color = Color(0.203922, 0.682353, 0.4, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_xxkpg")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color(0.203922, 0.682353, 0.4, 1)
-polygon = PackedVector2Array(-15, -7, 15, -7, 15, 7, -15, 7)
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_v230s")
+stretch_mode = 2
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]

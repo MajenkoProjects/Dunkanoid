@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://clfo2nrropg8y"]
+[gd_scene load_steps=8 format=3 uid="uid://clfo2nrropg8y"]
 
 [ext_resource type="Script" path="res://Ball/Ball.gd" id="1_2xu4j"]
+[ext_resource type="Texture2D" uid="uid://wye1kea3ts48" path="res://Ball/Ball.png" id="2_cpnep"]
 [ext_resource type="AudioStream" uid="uid://7kjt62y3t8lc" path="res://Sounds/WallHit.wav" id="3_bwkax"]
 [ext_resource type="AudioStream" uid="uid://b6vosap1la1ts" path="res://Sounds/BrickHit.wav" id="4_ly8mo"]
 [ext_resource type="AudioStream" uid="uid://d3g30x1n2ncjj" path="res://Sounds/PaddleHit.wav" id="5_f8nt3"]
@@ -13,6 +14,7 @@ bounce = 1.0
 radius = 3.0
 
 [node name="Ball" type="RigidBody2D"]
+collision_layer = 0
 physics_material_override = SubResource("PhysicsMaterial_tqihs")
 gravity_scale = 0.0
 continuous_cd = 1
@@ -20,8 +22,12 @@ max_contacts_reported = 5
 contact_monitor = true
 script = ExtResource("1_2xu4j")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-3, -3, 3, -3, 3, 3, -3, 3)
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+texture = ExtResource("2_cpnep")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_nwcsc")

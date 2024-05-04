@@ -1,13 +1,90 @@
 extends Node2D
 
-var Brick = preload("res://Brick/Brick.tscn")
-var Ball = preload("res://Ball/Ball.tscn")
-var Upgrade = preload("res://Upgrade/Upgrade.tscn")
+var _Brick = preload("res://Brick/Brick.tscn")
+var _Ball = preload("res://Ball/Ball.tscn")
+var _Upgrade = preload("res://Upgrade/Upgrade.tscn")
 
 var bricks : Array = []
 var balls : Array[Node] = []
 
+enum {
+	MODE_WAIT,
+	MODE_PLAY,
+	MODE_EXIT,
+	MODE_LEAVE
+}
+
+var mode = MODE_WAIT
+
 signal update_score
+
+const levels = {
+	"DUNKANOID": {
+		"data": [
+			"             ",
+			"             ",
+			"sssssssssssss",
+			"YYYBYYsCCRCCC",
+			"YYBBYYsCCRRCC",
+			"YBBBBBsRRRRRC",
+			"BBBBBBsRRRRRR",
+			"YBBBBBsRRRRRC",
+			"YYBBYYsCCRRCC",
+			"YYYBYYsCCRCCC",
+			"ssisssssssiss"
+		],
+		"left": "RAINBOW",
+		"right": "SATERRANOID",
+		"round": 1
+	},
+	"RAINBOW": {
+		"data": [
+			"             ",
+			"             ",
+			"    RRRRR    ",
+			"   RRRRRRR   ",
+			"  RROOOOORR  ",
+			"  RROOOOORR  ",
+			" RROOYYYOORR ",
+			" ROOYBBBYOOR ",
+			" ROYBBBBBYOR ",
+			"RROYB   BYORR",
+			"ROYBg   gBYOR",
+			"ROYB     BYOR",
+			"ROYB     BYOR",
+			"ROYB     BYOR",
+			"ROYB     BYOR",
+			"ROYB     BYOR",
+			"sssss s sssss"
+		],
+		"left": "DUNKANOID",
+		"right": "DUNKANOID",
+		"round": 2
+	},
+	"SATERRANOID": {
+		"data": [
+			"             ",
+			"             ",
+			"WWOOCCgGGRRBB",
+			"WWOOCCgGGRRBB",
+			"OOCCGGgRRBBMM",
+			"OOCCGGgRRBBMM",
+			"CCGGRRgBBMMYY",
+			"CCGGRRgBBMMYY",
+			"GGRRBBgMMYYWW",
+			"GGRRBBgMMYYWW",
+			"RRBBMMgYYWWOO",
+			"RRBBMMgYYWWOO",
+			"BBMMYYgWWOOCC",
+			"BBMMYYgWWOOCC",
+			"MMYYWWgOOCCGG",
+			"MMYYWWgOOCCGG"
+		],
+		"left": "DUNKANOID",
+		"right": "DUNKANOID",
+		"round": 2
+	}
+}
 
 var capture_mode : bool = false
 var lives : int = 3
@@ -15,37 +92,47 @@ var score : int = 0 :
 	set(x):
 		score = x
 		update_score.emit()
+var level : String = "SATERRANOID"
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
 	new_level()
 
+func _process(_delta : float) -> void:
+	if mode == MODE_EXIT:
+		if $Paddle.global_position.x == 32:
+			level = levels[level].left
+			new_level()
+		if $Paddle.global_position.x == 416:
+			level = levels[level].right
+			new_level()
+
 func new_level() -> void:
+	mode = MODE_WAIT
+	$Exits.visible = false
 	for ball in balls:
 		remove_child(ball)
 		ball.queue_free()
-	for y in 8:
-		for x in 16:
-			var brick = Brick.instantiate()
-			brick.color = Color(randf(), randf(), randf())
-			brick.position = Vector2(x * 32 + 16, y * 16 + 8 + 32)
-			bricks.push_back(brick)
-			brick.brick_destroyed.connect(_brick_destroyed)
-			add_child(brick)
-	var ball = Ball.instantiate()
+	balls.clear()
+		
+	$Start/Title.text = level
+	$Start/Round.text = "ROUND %3d" % [levels[level].round]
+	load_level(levels[level].data)
+	var ball = _Ball.instantiate()
 	ball.capture($Paddle, Vector2((randf() * 32) - 16, 8))
 	ball.hit_paddle.connect(_on_hit_paddle)
 	ball.hit_floor.connect(_on_hit_floor)
 	add_child(ball)
 	balls.push_back(ball)
-	
+
+	$Start.visible = true
 	$StartRound.play()
 
 	
 func _brick_destroyed(brick) -> void:
 	score += brick.value
 	if randf() > 0.9:
-		var upgrade = Upgrade.instantiate()
+		var upgrade = _Upgrade.instantiate()
 		upgrade.position = brick.position
 		upgrade.upgrade_collected.connect(_on_upgrade_collected)
 		match randi() % 3:
@@ -57,18 +144,27 @@ func _brick_destroyed(brick) -> void:
 				upgrade.set_upgrade("X", Color.RED)
 		add_child(upgrade)
 	bricks.erase(brick)
-	if bricks.size() == 0:
+	var brick_count = 0
+	for abrick in bricks:
+		if abrick.my_type != Brick.INVULNERABLE:
+			brick_count += 1
+		
+	if brick_count == 0:
 		for ball in balls:
 			remove_child(ball)
 			ball.queue_free()
-			balls.erase(ball)
+		balls.clear()
+		mode = MODE_EXIT
+		$Exits.visible = true
 		$RoundWon.play()
 
 	
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		$Paddle.position = Vector2(min(max(16, event.position.x), 512-16), 340)
+		$Paddle.position = Vector2(min(max(32, event.position.x), 432-16), 340)
 	if event is InputEventMouseButton:
+		if mode != MODE_PLAY:
+			return
 		for ball in balls:
 			if (ball.captured):
 				ball.release()
@@ -80,12 +176,11 @@ func _on_hit_paddle(ball) -> void:
 
 func _on_hit_floor(ball) -> void:
 	$FloorSound.play()
-	print("Hit floor!")
 	balls.erase(ball)
 	remove_child(ball)
 	ball.call_deferred("queue_free")
 	if balls.size() == 0:
-		ball = Ball.instantiate()
+		ball = _Ball.instantiate()
 		ball.capture($Paddle, Vector2((randf() * 32) - 16, 8))
 		ball.hit_paddle.connect(_on_hit_paddle)
 		ball.hit_floor.connect(_on_hit_floor)
@@ -95,7 +190,7 @@ func _on_hit_floor(ball) -> void:
 
 
 func _on_round_won_finished() -> void:
-	new_level()
+	pass
 
 
 func _on_update_score() -> void:
@@ -115,15 +210,61 @@ func _on_upgrade_collected(code : String) -> void:
 				add_ball()
 
 func add_ball() -> void:
-	var newball = Ball.instantiate()
+	var newball = _Ball.instantiate()
 	newball.position = balls[0].position
-	newball.linear_velocity = balls[0].linear_velocity - Vector2((randf() - 0.5) * 30 , 0)
+	newball.linear_velocity = (balls[0].linear_velocity - Vector2((randf() - 0.5) * 100 , 0)).normalized() * balls[0].linear_velocity.length()
 	newball.angular_velocity = 0
 	newball.hit_paddle.connect(_on_hit_paddle)
 	newball.hit_floor.connect(_on_hit_floor)
+	if balls[0].captured:
+		newball.capture($Paddle, Vector2((randf() - 0.5) * 32, 8))
 	add_child(newball)
 	balls.push_back(newball)
 	
 			
 func _cancel_capture_mode() -> void:
 	capture_mode = false
+
+func load_level(data) -> void:
+	for y in data.size():
+		var line : String = data[y]
+		for x in line.length():
+			var c = line.substr(x, 1)
+			if c == " ":
+				continue
+				
+			var brick = _Brick.instantiate()
+			match c:
+				"R":
+					brick.type(Brick.NORMAL, Color.RED)
+				"G":
+					brick.type(Brick.NORMAL, Color.GREEN)
+				"Y":
+					brick.type(Brick.NORMAL, Color.YELLOW)
+				"B":
+					brick.type(Brick.NORMAL, Color.BLUE)
+				"M":
+					brick.type(Brick.NORMAL, Color.MAGENTA)
+				"C":
+					brick.type(Brick.NORMAL, Color.CYAN)
+				"W":
+					brick.type(Brick.NORMAL, Color.WHITE)
+				"O":
+					brick.type(Brick.NORMAL, Color.ORANGE)
+				"s":
+					brick.type(Brick.SHINY, Color.SILVER)
+				"g":
+					brick.type(Brick.SHINY, Color.GOLD)
+				"i":
+					brick.type(Brick.INVULNERABLE, Color.GRAY)
+
+			brick.position = Vector2(x * 32 + 16 + 16, y * 16 + 8 + 16)
+			bricks.push_back(brick)
+			brick.brick_destroyed.connect(_brick_destroyed)
+			add_child(brick)
+
+
+
+func _on_start_round_finished() -> void:
+	$Start.visible = false
+	mode = MODE_PLAY
