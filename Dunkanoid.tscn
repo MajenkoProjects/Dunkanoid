@@ -1,0 +1,84 @@
+[gd_scene load_steps=14 format=3 uid="uid://4q0epdnb0x4s"]
+
+[ext_resource type="Script" path="res://Dunkanoid.gd" id="1_kv4if"]
+[ext_resource type="PackedScene" uid="uid://dndemjw7up2r6" path="res://Paddle/Paddle.tscn" id="2_26c5i"]
+[ext_resource type="Script" path="res://Wall.gd" id="4_evt42"]
+[ext_resource type="AudioStream" uid="uid://bkw4xksukx0dd" path="res://Sounds/Fail.wav" id="5_p5ta8"]
+[ext_resource type="Script" path="res://Floor.gd" id="5_sravy"]
+[ext_resource type="AudioStream" uid="uid://818gpo5mes22" path="res://Sounds/Start.wav" id="6_s0pha"]
+[ext_resource type="AudioStream" uid="uid://bh2blx1uovmyt" path="res://Sounds/Win.wav" id="7_xrjor"]
+[ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="8_wcf7g"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yf4r2"]
+rough = true
+bounce = 1.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jsudl"]
+normal = Vector2(0, 1)
+distance = 1.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3e48c"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jt2f6"]
+normal = Vector2(-1, 0)
+distance = -512.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_48dqy"]
+distance = -360.0
+
+[node name="Dunkanoid" type="Node2D"]
+script = ExtResource("1_kv4if")
+
+[node name="Paddle" parent="." instance=ExtResource("2_26c5i")]
+position = Vector2(39, 340)
+input_pickable = false
+physics_material_override = SubResource("PhysicsMaterial_yf4r2")
+
+[node name="Wall" type="StaticBody2D" parent="."]
+script = ExtResource("4_evt42")
+
+[node name="Top" type="CollisionShape2D" parent="Wall"]
+shape = SubResource("WorldBoundaryShape2D_jsudl")
+
+[node name="Left" type="CollisionShape2D" parent="Wall"]
+shape = SubResource("WorldBoundaryShape2D_3e48c")
+
+[node name="Right" type="CollisionShape2D" parent="Wall"]
+shape = SubResource("WorldBoundaryShape2D_jt2f6")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+collision_layer = 3
+script = ExtResource("5_sravy")
+
+[node name="Bottom" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("WorldBoundaryShape2D_48dqy")
+
+[node name="FloorSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_p5ta8")
+
+[node name="StartRound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_s0pha")
+
+[node name="RoundWon" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_xrjor")
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 551.0
+offset_top = 16.0
+offset_right = 602.0
+offset_bottom = 39.0
+theme = ExtResource("8_wcf7g")
+text = "SCORE"
+
+[node name="ScoreBox" type="Label" parent="."]
+offset_left = 518.0
+offset_top = 41.0
+offset_right = 636.0
+offset_bottom = 64.0
+theme = ExtResource("8_wcf7g")
+theme_type_variation = &"Numbers"
+text = "00000000"
+
+[connection signal="update_score" from="." to="." method="_on_update_score"]
+[connection signal="finished" from="RoundWon" to="." method="_on_round_won_finished"]

@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://wld2y5cseki8"]
+
+[ext_resource type="Script" path="res://Brick/Brick.gd" id="1_eylhu"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s6ufd"]
+rough = true
+bounce = 10.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xxkpg"]
+size = Vector2(32, 16)
+
+[node name="Brick" type="StaticBody2D"]
+input_pickable = true
+physics_material_override = SubResource("PhysicsMaterial_s6ufd")
+constant_linear_velocity = Vector2(0, 50)
+script = ExtResource("1_eylhu")
+color = Color(0.203922, 0.682353, 0.4, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xxkpg")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.203922, 0.682353, 0.4, 1)
+polygon = PackedVector2Array(-15, -7, 15, -7, 15, 7, -15, 7)
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dndemjw7up2r6"]
+
+[ext_resource type="Script" path="res://Paddle/Paddle.gd" id="1_swo0j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3bg1o"]
+size = Vector2(32, 8)
+
+[node name="Paddle" type="StaticBody2D"]
+collision_layer = 3
+input_pickable = true
+constant_linear_velocity = Vector2(0, -50)
+script = ExtResource("1_swo0j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3bg1o")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-16, -4, 16, -4, 16, 4, -16, 4)
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

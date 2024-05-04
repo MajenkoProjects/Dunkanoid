@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://dbf2kicev8ma7"]
+
+[ext_resource type="Script" path="res://Upgrade/Upgrade.gd" id="1_3jp1b"]
+[ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="2_iabep"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_slgxc"]
+radius = 8.0
+height = 32.0
+
+[node name="Upgrade" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 2
+continuous_cd = 2
+max_contacts_reported = 2
+contact_monitor = true
+script = ExtResource("1_3jp1b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_slgxc")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0, 0.258824, 1, 1)
+polygon = PackedVector2Array(-8, -8, 8, -8, 12, -7, 15, -4, 16, 0, 15, 4, 12, 7, 8, 8, -8, 8, -12, 7, -15, 4, -16, 0, -15, -4, -12, -7)
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_iabep")
+theme_type_variation = &"Upgrade"
+text = "C"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
