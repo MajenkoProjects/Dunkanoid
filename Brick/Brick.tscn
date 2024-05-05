@@ -16,6 +16,14 @@ physics_material_override = SubResource("PhysicsMaterial_s6ufd")
 constant_linear_velocity = Vector2(0, 50)
 script = ExtResource("1_eylhu")
 
+[node name="Shadow" type="ColorRect" parent="."]
+z_index = -1
+offset_left = -13.0
+offset_top = -2.0
+offset_right = 19.0
+offset_bottom = 14.0
+color = Color(0, 0, 0, 0.247059)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_xxkpg")
 

@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3ikcjhbrm0hp"]
+
+[ext_resource type="Script" path="res://GameOver.gd" id="1_clfqa"]
+[ext_resource type="AudioStream" uid="uid://bm1txhcguq8e1" path="res://Sounds/GameOver.wav" id="2_a07oi"]
+[ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="3_km2fx"]
+[ext_resource type="Material" uid="uid://bv4vhjg83fqpn" path="res://ArkanoidMaterial.tres" id="4_et3vd"]
+
+[node name="GameOver" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_clfqa")
+
+[node name="GameOverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_a07oi")
+autoplay = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_km2fx")
+
+[node name="GameOver" type="Label" parent="VBoxContainer"]
+material = ExtResource("4_et3vd")
+layout_mode = 2
+theme = ExtResource("3_km2fx")
+theme_type_variation = &"Arkanoid"
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_km2fx")
+
+[node name="ScoreLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_km2fx")
+text = "Score"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreBox" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_km2fx")
+theme_type_variation = &"Numbers"
+text = "00000000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator3" type="VSeparator" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_km2fx")
+
+[connection signal="finished" from="GameOverSound" to="." method="_on_game_over_sound_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

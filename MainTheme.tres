@@ -1,7 +1,11 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://cfvww0geatnnk"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://cfvww0geatnnk"]
 
 [ext_resource type="FontFile" uid="uid://dfkm2dibf0c3b" path="res://Fonts/fonts-DSEG_v046/DSEG7-Classic-MINI/DSEG7ClassicMini-Italic.ttf" id="1_17to7"]
 [ext_resource type="FontFile" uid="uid://bx41ej4o03nbx" path="res://Fonts/arkanoid/Arka_solid.ttf" id="1_s07ae"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y3y82"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m7r63"]
 
 [resource]
 Arkanoid/base_type = &"Label"
@@ -10,6 +14,7 @@ Arkanoid/colors/font_outline_color = Color(1, 0.647059, 0, 1)
 Arkanoid/constants/outline_size = 2
 Arkanoid/font_sizes/font_size = 24
 Arkanoid/fonts/font = ExtResource("1_s07ae")
+HSeparator/styles/separator = SubResource("StyleBoxEmpty_y3y82")
 Numbers/base_type = &"Label"
 Numbers/colors/font_color = Color(1, 0.764706, 0, 1)
 Numbers/colors/font_outline_color = Color(0.996078, 0.380392, 0.137255, 0.898039)
@@ -22,3 +27,4 @@ Numbers/font_sizes/font_size = 18
 Numbers/fonts/font = ExtResource("1_17to7")
 Upgrade/base_type = &"Label"
 Upgrade/colors/font_color = Color(0, 0, 0, 1)
+VSeparator/styles/separator = SubResource("StyleBoxEmpty_m7r63")

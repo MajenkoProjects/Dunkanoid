@@ -1,12 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://4q0epdnb0x4s"]
+[gd_scene load_steps=17 format=3 uid="uid://4q0epdnb0x4s"]
 
 [ext_resource type="Script" path="res://Dunkanoid.gd" id="1_kv4if"]
 [ext_resource type="PackedScene" uid="uid://dndemjw7up2r6" path="res://Paddle/Paddle.tscn" id="2_26c5i"]
+[ext_resource type="Texture2D" uid="uid://14rcfdux2hkr" path="res://Backgrounds/dark-green-2790337_640.png" id="2_ke5lc"]
 [ext_resource type="Script" path="res://Wall.gd" id="4_evt42"]
 [ext_resource type="AudioStream" uid="uid://bkw4xksukx0dd" path="res://Sounds/Fail.wav" id="5_p5ta8"]
 [ext_resource type="Script" path="res://Floor.gd" id="5_sravy"]
 [ext_resource type="AudioStream" uid="uid://818gpo5mes22" path="res://Sounds/Start.wav" id="6_s0pha"]
 [ext_resource type="AudioStream" uid="uid://bh2blx1uovmyt" path="res://Sounds/Win.wav" id="7_xrjor"]
+[ext_resource type="AudioStream" uid="uid://bojc0es7165ed" path="res://Sounds/Collected.wav" id="8_fpbsr"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="8_wcf7g"]
 [ext_resource type="Material" uid="uid://bv4vhjg83fqpn" path="res://ArkanoidMaterial.tres" id="9_ouuij"]
 
@@ -33,6 +35,16 @@ distance = -360.0
 texture_filter = 1
 script = ExtResource("1_kv4if")
 
+[node name="Background" type="TextureRect" parent="."]
+z_index = -2
+texture_repeat = 2
+clip_contents = true
+offset_right = 640.0
+offset_bottom = 640.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_ke5lc")
+stretch_mode = 1
+
 [node name="Paddle" parent="." instance=ExtResource("2_26c5i")]
 position = Vector2(39, 340)
 input_pickable = false
@@ -57,14 +69,19 @@ script = ExtResource("5_sravy")
 [node name="Bottom" type="CollisionShape2D" parent="Floor"]
 shape = SubResource("WorldBoundaryShape2D_48dqy")
 
-[node name="FloorSound" type="AudioStreamPlayer" parent="."]
+[node name="Sounds" type="Node" parent="."]
+
+[node name="FloorSound" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("5_p5ta8")
 
-[node name="StartRound" type="AudioStreamPlayer" parent="."]
+[node name="StartRound" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("6_s0pha")
 
-[node name="RoundWon" type="AudioStreamPlayer" parent="."]
+[node name="RoundWon" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("7_xrjor")
+
+[node name="UpgradeCollected" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("8_fpbsr")
 
 [node name="ScoreLabel" type="Label" parent="."]
 offset_left = 448.0
@@ -173,6 +190,5 @@ offset_bottom = 360.0
 color = Color(0, 0, 1, 1)
 
 [connection signal="update_lives" from="." to="." method="_on_update_lives"]
-[connection signal="update_score" from="." to="." method="_on_update_score"]
-[connection signal="finished" from="StartRound" to="." method="_on_start_round_finished"]
-[connection signal="finished" from="RoundWon" to="." method="_on_round_won_finished"]
+[connection signal="finished" from="Sounds/StartRound" to="." method="_on_start_round_finished"]
+[connection signal="finished" from="Sounds/RoundWon" to="." method="_on_round_won_finished"]

@@ -16,10 +16,19 @@ enum {
 
 var mode = MODE_WAIT
 
-signal update_score
 signal update_lives
 
 const levels = {
+	"TEST": {
+		"data": [
+			"             ",
+			"             ",
+			"      R      ",
+		],
+		"left": "RAINBOW",
+		"right": "SATERRANOID",
+		"round": 1
+	},
 	"DUNKANOID": {
 		"data": [
 			"             ",
@@ -92,24 +101,35 @@ var lives : int = 3 :
 	set(x):
 		lives = x
 		update_lives.emit()
-var score : int = 0 :
-	set(x):
-		score = x
-		update_score.emit()
+
 var level : String = "DUNKANOID"
+
+var leave_direction : int = 0
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
+	EventBus.update_score.connect(_on_update_score)
 	new_level()
 
-func _process(_delta : float) -> void:
+func _process(delta : float) -> void:
 	if mode == MODE_EXIT:
 		if $Paddle.global_position.x == 32:
 			level = levels[level].left
-			new_level()
+			leave(-1)
 		if $Paddle.global_position.x == 416:
 			level = levels[level].right
-			new_level()
+			leave(+1)
+	
+	if mode == MODE_LEAVE:
+		$Paddle.global_position.x += (delta * leave_direction * 20.0)
+		if $Paddle.global_position.x < -16 or $Paddle.global_position.x > 448:
+			if not $Sounds/RoundWon.playing:
+				new_level()
+			
+
+func leave(dir : int) -> void:
+	mode = MODE_LEAVE
+	leave_direction = dir
 
 func new_level() -> void:
 	mode = MODE_WAIT
@@ -134,11 +154,11 @@ func new_level() -> void:
 	balls.push_back(ball)
 
 	$Start.visible = true
-	$StartRound.play()
+	$Sounds/StartRound.play()
 
 	
 func _brick_destroyed(brick) -> void:
-	score += brick.value
+	Global.score += brick.value
 	if randf() > 0.9:
 		var upgrade = _Upgrade.instantiate()
 		upgrade.position = brick.position
@@ -162,14 +182,21 @@ func _brick_destroyed(brick) -> void:
 			remove_child(ball)
 			ball.queue_free()
 		balls.clear()
+
+		for c in get_children():
+			if c is Upgrade:
+				remove_child(c)
+				c.queue_free()
+
 		mode = MODE_EXIT
 		$Exits.visible = true
-		$RoundWon.play()
+		$Sounds/RoundWon.play()
 
 	
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		$Paddle.position = Vector2(min(max(32, event.position.x), 432-16), 340)
+		if mode != MODE_LEAVE:
+			$Paddle.position = Vector2(min(max(32, event.position.x), 432-16), 340)
 	if event is InputEventMouseButton:
 		if mode != MODE_PLAY:
 			return
@@ -183,34 +210,40 @@ func _on_hit_paddle(ball) -> void:
 		ball.capture($Paddle, Vector2(diff, 8))
 
 func _on_hit_floor(ball) -> void:
-	$FloorSound.play()
+	$Sounds/FloorSound.play()
 	balls.erase(ball)
 	remove_child(ball)
 	ball.call_deferred("queue_free")
 	if balls.size() == 0:
+		for c in get_children():
+			if c is Upgrade:
+				remove_child(c)
+				c.queue_free()
+		capture_mode = false
 		ball = _Ball.instantiate()
 		ball.capture($Paddle, Vector2((randf() * 32) - 16, 8))
 		ball.hit_paddle.connect(_on_hit_paddle)
 		ball.hit_floor.connect(_on_hit_floor)
 		add_child(ball)
 		balls.push_back(ball)
-		$StartRound.play()
+		$Sounds/StartRound.play()
 		$Start.visible = true
 		mode = MODE_WAIT
 		lives -= 1
 		if lives <= 0:
-			get_tree().change_scene_to_file("res://Intro.tscn")
+			get_tree().change_scene_to_file("res://GameOver.tscn")
 
 
 func _on_round_won_finished() -> void:
 	pass
 
 
-func _on_update_score() -> void:
+func _on_update_score(score) -> void:
 	$ScoreBox.text = "%08d" % score
 	pass # Replace with function body.
 
 func _on_upgrade_collected(code : String) -> void:
+	$Sounds/UpgradeCollected.play()
 	match code:
 		"C":
 			capture_mode = true
@@ -223,6 +256,8 @@ func _on_upgrade_collected(code : String) -> void:
 				add_ball()
 
 func add_ball() -> void:
+	if balls.size() == 0: 
+		return
 	var newball = _Ball.instantiate()
 	newball.position = balls[0].position
 	newball.linear_velocity = (balls[0].linear_velocity - Vector2((randf() - 0.5) * 100 , 0)).normalized() * balls[0].linear_velocity.length()
@@ -237,6 +272,9 @@ func add_ball() -> void:
 			
 func _cancel_capture_mode() -> void:
 	capture_mode = false
+	for ball in balls:
+		if ball.captured:
+			ball.release()
 
 func load_level(data) -> void:
 	for y in data.size():

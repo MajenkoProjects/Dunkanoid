@@ -22,6 +22,12 @@ max_contacts_reported = 5
 contact_monitor = true
 script = ExtResource("1_2xu4j")
 
+[node name="Shadow" type="Polygon2D" parent="."]
+z_index = -1
+position = Vector2(1, 2)
+color = Color(0, 0, 0, 0.247059)
+polygon = PackedVector2Array(-3, -2, -2, -3, 2, -3, 3, -2, 3, 2, 2, 3, -2, 3, -3, 2)
+
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_left = -3.0
 offset_top = -3.0
