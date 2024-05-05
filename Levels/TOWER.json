@@ -1,0 +1,26 @@
+{
+  "background": "RedBoxes",
+  "data": [
+    "             ",
+    "             ",
+    "             ",
+    "             ",
+    "     sss     ",
+    "     CCC     ",
+    "     GGG     ",
+    "     RRR     ",
+    "     BBB     ",
+    "     MMM     ",
+    "     sss     ",
+    "             ",
+    "  g   g   g  ",
+    "             ",
+    "             ",
+    "             ",
+    "             ",
+    "             "
+  ],
+  "left": "DUNKANOID",
+  "name": "TOWER",
+  "right": "DUNKANOID"
+}

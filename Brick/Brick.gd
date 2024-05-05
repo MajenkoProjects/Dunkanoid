@@ -3,7 +3,8 @@ class_name Brick
 
 enum {
 	NORMAL,
-	SHINY,
+	SILVER,
+	GOLD,
 	INVULNERABLE
 }
 
@@ -32,8 +33,8 @@ func hit() -> void:
 			get_tree().create_timer(5).timeout.connect(_show_block)
 			return
 		brick_destroyed.emit(self)
-		get_parent().remove_child(self)
-		queue_free()
+		get_parent().call_deferred("remove_child", self)
+		call_deferred("queue_free")
 	else:
 		var tween = create_tween()
 		$TextureRect.modulate = Color(1, 1, 1)
@@ -56,11 +57,16 @@ func type(base : int, color : Color) -> void:
 			$TextureRect.modulate = color
 			hits = 1
 			value = 100
-		SHINY:
+		SILVER:
 			$TextureRect.texture = load("res://Brick/ShinyBrick.png")
 			$TextureRect.modulate = color
 			hits = 2
 			value = 200
+		GOLD:
+			$TextureRect.texture = load("res://Brick/ShinyBrick.png")
+			$TextureRect.modulate = color
+			hits = 3
+			value = 500
 		INVULNERABLE:
 			$TextureRect.texture = load("res://Brick/InvulBrick.png")
 			$TextureRect.modulate = color

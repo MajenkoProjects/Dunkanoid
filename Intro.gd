@@ -16,3 +16,15 @@ func _on_update_score(score : int) -> void:
 
 func _on_update_highscore(score : int) -> void:
 	$HBoxContainer/HighScore/HighScoreBox.text = "%08d" % score
+
+
+func _on_settings_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_editor_pressed() -> void:
+	get_tree().change_scene_to_file("res://LevelEditor.tscn")
+
+
+func _on_exit_pressed() -> void:
+	get_tree().quit()

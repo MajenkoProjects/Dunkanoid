@@ -1,0 +1,26 @@
+{
+  "background": "RedBoxes",
+  "data": [
+    "             ",
+    "             ",
+    "    WWWWW    ",
+    "    ggggg    ",
+    "             ",
+    "  WWWWWWWWW  ",
+    "  ggggggggg  ",
+    "             ",
+    " WWWWWWWWWWW ",
+    " ggggggggggg ",
+    "             ",
+    "  WWWWWWWWW  ",
+    "  ggggggggg  ",
+    "             ",
+    "   WWWWWWW   ",
+    "   ggggggg   ",
+    "             ",
+    "             "
+  ],
+  "left": "DUNKANOID",
+  "name": "SNOWCAP",
+  "right": "DUNKANOID"
+}

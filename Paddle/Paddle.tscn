@@ -1,20 +1,80 @@
-[gd_scene load_steps=3 format=3 uid="uid://dndemjw7up2r6"]
+[gd_scene load_steps=9 format=3 uid="uid://dndemjw7up2r6"]
 
+[ext_resource type="PhysicsMaterial" uid="uid://cql6t5hd40fgn" path="res://CorePhysics.tres" id="1_oa72h"]
 [ext_resource type="Script" path="res://Paddle/Paddle.gd" id="1_swo0j"]
+[ext_resource type="Texture2D" uid="uid://0pjgtr5e102q" path="res://Paddle/PaddleNormal.png" id="2_po2us"]
+[ext_resource type="Texture2D" uid="uid://cjp5oq8ors5ua" path="res://Paddle/PaddleSmall.png" id="3_jvb7q"]
+[ext_resource type="Texture2D" uid="uid://dx3a3rva5g7ex" path="res://Paddle/PaddleBig.png" id="5_w5k41"]
+[ext_resource type="AudioStream" uid="uid://ds7om6qbk3p6l" path="res://Sounds/Grow.wav" id="6_hpb6a"]
+[ext_resource type="AudioStream" uid="uid://bd2o8lynhy3wn" path="res://Sounds/Shrink.wav" id="7_3krfd"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3bg1o"]
-size = Vector2(32, 8)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tamfm"]
+radius = 4.0
+height = 32.0
 
 [node name="Paddle" type="StaticBody2D"]
 collision_layer = 3
 input_pickable = true
-constant_linear_velocity = Vector2(0, -50)
+physics_material_override = ExtResource("1_oa72h")
 script = ExtResource("1_swo0j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_3bg1o")
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_tamfm")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-16, -4, 16, -4, 16, 4, -16, 4)
+[node name="Small" type="Node2D" parent="."]
+visible = false
 
-[connection signal="input_event" from="." to="." method="_on_input_event"]
+[node name="Polygon2D" type="Polygon2D" parent="Small"]
+z_index = -1
+position = Vector2(2, 4)
+color = Color(0, 0, 0, 0.247059)
+polygon = PackedVector2Array(-10, -4, 10, -4, 12, -2, 12, 2, 10, 4, -10, 4, -12, 2, -12, -2)
+
+[node name="TextureRect" type="TextureRect" parent="Small"]
+offset_left = -12.0
+offset_top = -4.0
+offset_right = 12.0
+offset_bottom = 4.0
+texture = ExtResource("3_jvb7q")
+
+[node name="Normal" type="Node2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="Normal"]
+z_index = -1
+position = Vector2(2, 4)
+color = Color(0, 0, 0, 0.247059)
+polygon = PackedVector2Array(-14, -4, 14, -4, 16, -2, 16, 2, 14, 4, -14, 4, -16, 2, -16, -2)
+
+[node name="TextureRect" type="TextureRect" parent="Normal"]
+offset_left = -16.0
+offset_top = -4.0
+offset_right = 16.0
+offset_bottom = 4.0
+texture = ExtResource("2_po2us")
+
+[node name="Big" type="Node2D" parent="."]
+visible = false
+
+[node name="Polygon2D" type="Polygon2D" parent="Big"]
+z_index = -1
+position = Vector2(2, 4)
+color = Color(0, 0, 0, 0.247059)
+polygon = PackedVector2Array(-18, -4, 18, -4, 20, -2, 20, 2, 18, 4, -18, 4, -20, 2, -20, -2)
+
+[node name="TextureRect" type="TextureRect" parent="Big"]
+offset_left = -20.0
+offset_top = -4.0
+offset_right = 20.0
+offset_bottom = 4.0
+texture = ExtResource("5_w5k41")
+
+[node name="EffectTimer" type="Timer" parent="."]
+
+[node name="GrowSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_hpb6a")
+
+[node name="ShrinkSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_3krfd")
+
+[connection signal="timeout" from="EffectTimer" to="." method="_on_effect_timer_timeout"]

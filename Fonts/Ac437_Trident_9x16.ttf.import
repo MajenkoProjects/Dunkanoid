@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bx41ej4o03nbx"
-path="res://.godot/imported/Arka_solid.ttf-ab8598b9789dfaf2a40c59663eefac9d.fontdata"
+uid="uid://by778rb8miy2e"
+path="res://.godot/imported/Ac437_Trident_9x16.ttf-0d70ff9fe9bf5cfb2ba2856958a74f71.fontdata"
 
 [deps]
 
-source_file="res://Fonts/arkanoid/Arka_solid.ttf"
-dest_files=["res://.godot/imported/Arka_solid.ttf-ab8598b9789dfaf2a40c59663eefac9d.fontdata"]
+source_file="res://Fonts/Ac437_Trident_9x16.ttf"
+dest_files=["res://.godot/imported/Ac437_Trident_9x16.ttf-0d70ff9fe9bf5cfb2ba2856958a74f71.fontdata"]
 
 [params]
 

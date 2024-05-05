@@ -74,6 +74,63 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="Settings" type="Button" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("3_8d2ix")
+text = "SETTINGS"
+icon_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="Editor" type="Button" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme = ExtResource("3_8d2ix")
+text = "LEVEL EDITOR"
+icon_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="Exit" type="Button" parent="VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+theme = ExtResource("3_8d2ix")
+text = "EXIT"
+icon_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 offset_left = 18.0
 offset_top = 297.0
@@ -119,3 +176,6 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Play" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer3/Editor" to="." method="_on_editor_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer4/Exit" to="." method="_on_exit_pressed"]

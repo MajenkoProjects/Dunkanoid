@@ -15,86 +15,8 @@ enum {
 }
 
 var mode = MODE_WAIT
-
+var round : int = 0
 signal update_lives
-
-const levels = {
-	"TEST": {
-		"data": [
-			"             ",
-			"             ",
-			"      R      ",
-		],
-		"left": "RAINBOW",
-		"right": "SATERRANOID",
-		"round": 1
-	},
-	"DUNKANOID": {
-		"data": [
-			"             ",
-			"             ",
-			"sssssssssssss",
-			"YYYBYYsCCRCCC",
-			"YYBBYYsCCRRCC",
-			"YBBBBBsRRRRRC",
-			"BBBBBBsRRRRRR",
-			"YBBBBBsRRRRRC",
-			"YYBBYYsCCRRCC",
-			"YYYBYYsCCRCCC",
-			"ssisssssssiss"
-		],
-		"left": "RAINBOW",
-		"right": "SATERRANOID",
-		"round": 1
-	},
-	"RAINBOW": {
-		"data": [
-			"             ",
-			"             ",
-			"    RRRRR    ",
-			"   RRRRRRR   ",
-			"  RROOOOORR  ",
-			"  RROOOOORR  ",
-			" RROOYYYOORR ",
-			" ROOYBBBYOOR ",
-			" ROYBBBBBYOR ",
-			"RROYB   BYORR",
-			"ROYBg   gBYOR",
-			"ROYB     BYOR",
-			"ROYB     BYOR",
-			"ROYB     BYOR",
-			"ROYB     BYOR",
-			"ROYB     BYOR",
-			"sssss s sssss"
-		],
-		"left": "DUNKANOID",
-		"right": "DUNKANOID",
-		"round": 2
-	},
-	"SATERRANOID": {
-		"data": [
-			"             ",
-			"             ",
-			"WWOOCCgGGRRBB",
-			"WWOOCCgGGRRBB",
-			"OOCCGGgRRBBMM",
-			"OOCCGGgRRBBMM",
-			"CCGGRRgBBMMYY",
-			"CCGGRRgBBMMYY",
-			"GGRRBBgMMYYWW",
-			"GGRRBBgMMYYWW",
-			"RRBBMMgYYWWOO",
-			"RRBBMMgYYWWOO",
-			"BBMMYYgWWOOCC",
-			"BBMMYYgWWOOCC",
-			"MMYYWWgOOCCGG",
-			"MMYYWWgOOCCGG"
-		],
-		"left": "DUNKANOID",
-		"right": "DUNKANOID",
-		"round": 2
-	}
-}
 
 var capture_mode : bool = false
 var lives : int = 3 :
@@ -104,7 +26,11 @@ var lives : int = 3 :
 
 var level : String = "DUNKANOID"
 
+var level_data : Dictionary = {}
+
 var leave_direction : int = 0
+
+var paused : bool = false
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
@@ -112,17 +38,23 @@ func _ready() -> void:
 	new_level()
 
 func _process(delta : float) -> void:
+	
+	if OS.has_feature("editor"):
+		if Input.is_action_just_pressed("cheat"):
+			for i in 10:
+				add_ball()
+				
 	if mode == MODE_EXIT:
-		if $Paddle.global_position.x == 32:
-			level = levels[level].left
+		if $Paddle.global_position.x - ($Paddle.width / 2) <= 20:
+			level = level_data.left
 			leave(-1)
-		if $Paddle.global_position.x == 416:
-			level = levels[level].right
+		if $Paddle.global_position.x + ($Paddle.width / 2) >= 412:
+			level = level_data.right
 			leave(+1)
 	
 	if mode == MODE_LEAVE:
 		$Paddle.global_position.x += (delta * leave_direction * 20.0)
-		if $Paddle.global_position.x < -16 or $Paddle.global_position.x > 448:
+		if $Paddle.global_position.x < -16 or $Paddle.global_position.x > 428:
 			if not $Sounds/RoundWon.playing:
 				new_level()
 			
@@ -132,6 +64,7 @@ func leave(dir : int) -> void:
 	leave_direction = dir
 
 func new_level() -> void:
+	$Paddle.normal()
 	mode = MODE_WAIT
 	$Exits.visible = false
 	for ball in balls:
@@ -142,10 +75,13 @@ func new_level() -> void:
 		remove_child(brick)
 		brick.queue_free()
 	bricks.clear()
-		
+	round += 1
+	level_data = load_level_from_disk(level)
+
 	$Start/Title.text = level
-	$Start/Round.text = "ROUND %3d" % [levels[level].round]
-	load_level(levels[level].data)
+	$Start/Round.text = "ROUND %3d" % [round]
+	$Background.texture = load("res://Backgrounds/%s.png" % level_data.background)
+	load_level(level_data.data)
 	var ball = _Ball.instantiate()
 	ball.capture($Paddle, Vector2((randf() * 32) - 16, 8))
 	ball.hit_paddle.connect(_on_hit_paddle)
@@ -163,13 +99,17 @@ func _brick_destroyed(brick) -> void:
 		var upgrade = _Upgrade.instantiate()
 		upgrade.position = brick.position
 		upgrade.upgrade_collected.connect(_on_upgrade_collected)
-		match randi() % 3:
+		match randi() % 5:
 			0:
 				upgrade.set_upgrade("C", Color.BLUE)
 			1:
 				upgrade.set_upgrade("T", Color.GREEN)
 			2:
-				upgrade.set_upgrade("X", Color.RED)
+				upgrade.set_upgrade("S", Color.CYAN)
+			3:
+				upgrade.set_upgrade("E", Color.DARK_SEA_GREEN)
+			4:
+				upgrade.set_upgrade("R", Color.LIGHT_CORAL)
 		add_child(upgrade)
 	bricks.erase(brick)
 	var brick_count = 0
@@ -194,9 +134,11 @@ func _brick_destroyed(brick) -> void:
 
 	
 func _input(event: InputEvent) -> void:
+	if paused:
+		return
 	if event is InputEventMouseMotion:
 		if mode != MODE_LEAVE:
-			$Paddle.position = Vector2(min(max(32, event.position.x), 432-16), 340)
+			$Paddle.position = Vector2(min(max(16 + $Paddle.width/2, event.position.x), 432-$Paddle.width/2), 340)
 	if event is InputEventMouseButton:
 		if mode != MODE_PLAY:
 			return
@@ -251,19 +193,24 @@ func _on_upgrade_collected(code : String) -> void:
 		"T":
 			add_ball()
 			add_ball()
-		"X":
-			for i in 10:
-				add_ball()
+		"S":
+			for ball in balls:
+				ball.slowdown()
+		"E":
+			$Paddle.big()
+		"R":
+			$Paddle.small()
 
 func add_ball() -> void:
 	if balls.size() == 0: 
 		return
 	var newball = _Ball.instantiate()
 	newball.position = balls[0].position
-	newball.linear_velocity = (balls[0].linear_velocity - Vector2((randf() - 0.5) * 100 , 0)).normalized() * balls[0].linear_velocity.length()
+	newball.linear_velocity = (balls[0].linear_velocity - Vector2((randf() - 0.5) * 180 , 0)).normalized() * balls[0].linear_velocity.length()
 	newball.angular_velocity = 0
 	newball.hit_paddle.connect(_on_hit_paddle)
 	newball.hit_floor.connect(_on_hit_floor)
+	newball.speed = balls[0].speed
 	if balls[0].captured:
 		newball.capture($Paddle, Vector2((randf() - 0.5) * 32, 8))
 	add_child(newball)
@@ -293,7 +240,7 @@ func load_level(data) -> void:
 				"Y":
 					brick.type(Brick.NORMAL, Color.YELLOW)
 				"B":
-					brick.type(Brick.NORMAL, Color.BLUE)
+					brick.type(Brick.NORMAL, Color.ROYAL_BLUE)
 				"M":
 					brick.type(Brick.NORMAL, Color.MAGENTA)
 				"C":
@@ -303,9 +250,9 @@ func load_level(data) -> void:
 				"O":
 					brick.type(Brick.NORMAL, Color.ORANGE)
 				"s":
-					brick.type(Brick.SHINY, Color.SILVER)
+					brick.type(Brick.SILVER, Color.SILVER)
 				"g":
-					brick.type(Brick.SHINY, Color.GOLD)
+					brick.type(Brick.GOLD, Color.GOLD)
 				"i":
 					brick.type(Brick.INVULNERABLE, Color.GRAY)
 
@@ -323,3 +270,10 @@ func _on_start_round_finished() -> void:
 
 func _on_update_lives() -> void:
 	$LivesBox.text = "%d" % lives
+
+func load_level_from_disk(name : String) -> Dictionary:
+	if FileAccess.file_exists("user://Levels/%s.json" % name):
+		return JSON.parse_string(FileAccess.get_file_as_string("user://Levels/%s.json" % name))
+	if FileAccess.file_exists("res://Levels/%s.json" % name):
+		return JSON.parse_string(FileAccess.get_file_as_string("res://Levels/%s.json" % name))
+	return JSON.parse_string(FileAccess.get_file_as_string("res://Levels/NOTFOUND.json"))
