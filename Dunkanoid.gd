@@ -46,8 +46,13 @@ func _process(delta : float) -> void:
 	
 	if OS.has_feature("editor"):
 		if Input.is_action_just_pressed("cheat"):
-			for i in 10:
-				add_ball()
+			var upgrade = _Upgrade.instantiate()
+			upgrade.position = balls[0].position
+			upgrade.upgrade_collected.connect(_on_upgrade_collected)
+			upgrade.set_upgrade("C", Color.BLUE)
+			add_child(upgrade)
+			#for i in 10:
+				#add_ball()
 				
 	if mode == MODE_EXIT:
 		if $Paddle.global_position.x - ($Paddle.width / 2) <= 20:
@@ -119,22 +124,21 @@ func new_level() -> void:
 	
 func _brick_destroyed(brick) -> void:
 	Global.score += brick.value
-	if randf() > 0.4:
+	if randf() > 0.9:
 		var upgrade = _Upgrade.instantiate()
 		upgrade.position = brick.position
 		upgrade.upgrade_collected.connect(_on_upgrade_collected)
 		match randi() % 5:
-			#0:
-			_:
+			0:
 				upgrade.set_upgrade("C", Color.BLUE)
-			#1:
-				#upgrade.set_upgrade("T", Color.GREEN)
-			#2:
-				#upgrade.set_upgrade("S", Color.CYAN)
-			#3:
-				#upgrade.set_upgrade("E", Color.DARK_SEA_GREEN)
-			#4:
-				#upgrade.set_upgrade("R", Color.LIGHT_CORAL)
+			1:
+				upgrade.set_upgrade("T", Color.GREEN)
+			2:
+				upgrade.set_upgrade("S", Color.CYAN)
+			3:
+				upgrade.set_upgrade("E", Color.DARK_SEA_GREEN)
+			4:
+				upgrade.set_upgrade("R", Color.LIGHT_CORAL)
 		add_child(upgrade)
 	bricks.erase(brick)
 	var brick_count = 0

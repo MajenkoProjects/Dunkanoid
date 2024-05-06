@@ -23,13 +23,15 @@ func hit() -> void:
 	pass
 
 func _switch_effect(effect : int, time : int = 0) -> void:
-	if mode != PADDLE_NORMAL:
-		effect_finished.emit(mode)
+	if mode != effect: 
+		if mode != PADDLE_NORMAL:
+			effect_finished.emit(mode)
+		if effect != PADDLE_NORMAL:
+			effect_started.emit(mode)
+			
 	mode = effect
-	if mode != PADDLE_NORMAL:
-		effect_started.emit(mode)
-		if time > 0:
-			$EffectTimer.start(time)
+	if time > 0:
+		$EffectTimer.start(time)
 	else:
 		$EffectTimer.stop()
 

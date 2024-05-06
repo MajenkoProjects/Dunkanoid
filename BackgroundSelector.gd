@@ -7,13 +7,13 @@ func update_background_list() -> void:
 	clear()
 	var i : int = 0
 	for file in DirAccess.get_files_at("res://Backgrounds"):
-		if file.ends_with(".png"):
-			add_item(file.left(-4), i)
-			set_item_metadata(i, "res://Backgrounds/%s" % file)
+		if file.ends_with(".png.import"):
+			add_item(file.left(-11), i)
+			set_item_metadata(i, "res://Backgrounds/%s" % file.left(-7)) 
 			i += 1
 	for file in DirAccess.get_files_at("user://Backgrounds"):
 		if file.ends_with(".png"):
-			add_item(file.left(-4), i)
+			add_item(file.left(-11), i)
 			set_item_metadata(i, "user://Backgrounds/%s" % file)
 			i += 1
 

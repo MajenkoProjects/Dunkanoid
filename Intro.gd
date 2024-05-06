@@ -1,6 +1,8 @@
 extends Node2D
 
 func _ready() -> void:
+	#	dump_all("res://")
+	
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		EventBus.update_score.connect(_on_update_score)
 		EventBus.update_highscore.connect(_on_update_highscore)
@@ -28,3 +30,12 @@ func _on_editor_pressed() -> void:
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()
+
+func dump_all(dir : String, indent : String = "") -> void:
+	for file in DirAccess.get_directories_at(dir):
+		print("%s%s" % [indent, file])
+		dump_all("%s/%s" % [dir, file], "%s  " % indent)
+		
+	for file in DirAccess.get_files_at(dir):
+		print("%s%s" % [indent, file])
+		
