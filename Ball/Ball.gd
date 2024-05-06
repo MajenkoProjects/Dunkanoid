@@ -31,8 +31,6 @@ func _physics_process(delta: float) -> void:
 
 
 
-func _on_body_entered(body: Node) -> void:
-	pass
 
 func capture(ob : Node2D, offset : Vector2 = Vector2.ZERO) -> void:
 	captured = true

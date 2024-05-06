@@ -6,6 +6,7 @@ func _ready() -> void:
 		EventBus.update_highscore.connect(_on_update_highscore)
 		_on_update_score(Global.score)
 		_on_update_highscore(Global.highscore)
+		$VBoxContainer/HBoxContainer/Play.grab_focus()
 
 func _on_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://Dunkanoid.tscn")
@@ -19,8 +20,7 @@ func _on_update_highscore(score : int) -> void:
 
 
 func _on_settings_pressed() -> void:
-	pass # Replace with function body.
-
+	get_tree().change_scene_to_file("res://Settings.tscn")
 
 func _on_editor_pressed() -> void:
 	get_tree().change_scene_to_file("res://LevelEditor.tscn")

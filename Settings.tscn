@@ -1,0 +1,89 @@
+[gd_scene load_steps=5 format=3 uid="uid://dm61ni80p8hll"]
+
+[ext_resource type="Script" path="res://Settings.gd" id="1_a8wdi"]
+[ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="1_lirja"]
+[ext_resource type="ButtonGroup" uid="uid://6t0fev6x6qyf" path="res://MouseMode.tres" id="2_5uw4g"]
+[ext_resource type="AudioStream" uid="uid://d3g30x1n2ncjj" path="res://Sounds/PaddleHit.wav" id="4_hgwvx"]
+
+[node name="Settings" type="Node2D"]
+script = ExtResource("1_a8wdi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_top = 38.0
+offset_right = 640.0
+offset_bottom = 324.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LeftGutter" type="HSeparator" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_lirja")
+
+[node name="LeftPanel" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MouseModeLabel" type="Label" parent="VBoxContainer/HBoxContainer/LeftPanel"]
+layout_mode = 2
+theme = ExtResource("1_lirja")
+text = "Mouse Mode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Relative" type="CheckButton" parent="VBoxContainer/HBoxContainer/LeftPanel"]
+layout_mode = 2
+theme = ExtResource("1_lirja")
+button_group = ExtResource("2_5uw4g")
+text = "Relative"
+
+[node name="Absolute" type="CheckButton" parent="VBoxContainer/HBoxContainer/LeftPanel"]
+layout_mode = 2
+theme = ExtResource("1_lirja")
+button_group = ExtResource("2_5uw4g")
+text = "Absolute"
+
+[node name="CenterGutter" type="HSeparator" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme = ExtResource("1_lirja")
+
+[node name="RightPanel" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VolumeLabel" type="Label" parent="VBoxContainer/HBoxContainer/RightPanel"]
+layout_mode = 2
+theme = ExtResource("1_lirja")
+text = "Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Volume" type="HSlider" parent="VBoxContainer/HBoxContainer/RightPanel"]
+layout_mode = 2
+min_value = -80.0
+max_value = 6.0
+tick_count = 10
+
+[node name="RightGutter" type="HSeparator" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_lirja")
+
+[node name="Exit" type="Button" parent="."]
+offset_left = 590.0
+offset_top = 324.0
+offset_right = 630.0
+offset_bottom = 350.0
+theme = ExtResource("1_lirja")
+text = "Exit"
+
+[node name="Boink" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_hgwvx")
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/LeftPanel/Relative" to="." method="_on_relative_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/LeftPanel/Absolute" to="." method="_on_absolute_pressed"]
+[connection signal="drag_ended" from="VBoxContainer/HBoxContainer/RightPanel/Volume" to="." method="_on_volume_drag_ended"]
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

@@ -33,39 +33,17 @@ distance = -360.0
 texture_filter = 1
 script = ExtResource("1_kv4if")
 
-[node name="Paused" type="Node2D" parent="."]
-process_mode = 3
-visible = false
-z_index = 2
-script = ExtResource("12_8qv0d")
-
-[node name="ColorRect" type="ColorRect" parent="Paused"]
-offset_right = 448.0
-offset_bottom = 360.0
-color = Color(0, 0, 0, 0.247059)
-
-[node name="Label" type="Label" parent="Paused"]
-material = ExtResource("9_ouuij")
-offset_right = 448.0
-offset_bottom = 360.0
-theme = ExtResource("8_wcf7g")
-theme_type_variation = &"Arkanoid"
-text = "PAUSED"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Background" type="TextureRect" parent="."]
 z_index = -2
 texture_repeat = 2
 clip_contents = true
-offset_right = 640.0
-offset_bottom = 514.0
-scale = Vector2(0.7, 0.7)
+offset_right = 448.0
+offset_bottom = 360.0
 texture = ExtResource("5_j5mmn")
 stretch_mode = 1
 
 [node name="Paddle" parent="." instance=ExtResource("2_26c5i")]
-position = Vector2(39, 340)
+position = Vector2(224, 340)
 input_pickable = false
 physics_material_override = null
 
@@ -215,6 +193,61 @@ offset_right = 641.0
 offset_bottom = 360.0
 color = Color(0, 0, 0, 1)
 
+[node name="Bricks" type="Node2D" parent="."]
+
+[node name="Paused" type="Node2D" parent="."]
+process_mode = 3
+visible = false
+script = ExtResource("12_8qv0d")
+
+[node name="ColorRect" type="ColorRect" parent="Paused"]
+offset_right = 448.0
+offset_bottom = 360.0
+color = Color(0, 0, 0, 0.247059)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Paused"]
+offset_right = 448.0
+offset_bottom = 360.0
+
+[node name="VSeparator" type="VSeparator" parent="Paused/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="Label" type="Label" parent="Paused/VBoxContainer"]
+material = ExtResource("9_ouuij")
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+theme_type_variation = &"Arkanoid"
+text = "PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Paused/VBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="Paused/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="Quit" type="Button" parent="Paused/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+text = "QUIT"
+
+[node name="HSeparator2" type="HSeparator" parent="Paused/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="VSeparator2" type="VSeparator" parent="Paused/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("8_wcf7g")
+
 [connection signal="update_lives" from="." to="." method="_on_update_lives"]
+[connection signal="effect_finished" from="Paddle" to="." method="_on_paddle_effect_finished"]
 [connection signal="finished" from="Sounds/StartRound" to="." method="_on_start_round_finished"]
 [connection signal="finished" from="Sounds/RoundWon" to="." method="_on_round_won_finished"]
+[connection signal="pressed" from="Paused/VBoxContainer/HBoxContainer/Quit" to="Paused" method="_on_quit_pressed"]

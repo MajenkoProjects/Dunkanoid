@@ -9,8 +9,8 @@ var character = "C"
 func _ready() -> void:
 	linear_velocity = Vector2(0, 40)
 
-func set_upgrade(char : String, color : Color) -> void:
-	character = char
+func set_upgrade(chr : String, color : Color) -> void:
+	character = chr
 	$Label.text = character
 	$Polygon2D.color = color
 	

@@ -8,12 +8,22 @@ func _process(_delta : float) -> void:
 			visible = false
 			paused = false
 			get_tree().paused = false
-			Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
+			if Global.relative_mouse:
+				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			else:
+				Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
+			$VBoxContainer/HBoxContainer/Quit.release_focus()
 		else:
 			visible = true
 			paused = true
 			get_tree().paused = true
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			$VBoxContainer/HBoxContainer/Quit.grab_focus()
 
 	if Input.is_action_just_pressed("mute"):
 		AudioServer.set_bus_mute(0, !AudioServer.is_bus_mute(0))
+
+func _on_quit_pressed() -> void:
+	paused = false
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://Intro.tscn")

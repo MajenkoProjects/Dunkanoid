@@ -7,6 +7,8 @@ var _Upgrade = preload("res://Upgrade/Upgrade.tscn")
 var bricks : Array = []
 var balls : Array[Node] = []
 
+const PADDLE_SPEED : float = 150
+
 enum {
 	MODE_WAIT,
 	MODE_PLAY,
@@ -15,10 +17,9 @@ enum {
 }
 
 var mode = MODE_WAIT
-var round : int = 0
+var chr : int = 0
 signal update_lives
 
-var capture_mode : bool = false
 var lives : int = 3 :
 	set(x):
 		lives = x
@@ -33,7 +34,11 @@ var leave_direction : int = 0
 var paused : bool = false
 
 func _ready() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
+	if Global.relative_mouse:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
+
 	EventBus.update_score.connect(_on_update_score)
 	new_level()
 
@@ -57,7 +62,25 @@ func _process(delta : float) -> void:
 		if $Paddle.global_position.x < -16 or $Paddle.global_position.x > 428:
 			if not $Sounds/RoundWon.playing:
 				new_level()
-			
+	else:
+		if Input.is_action_pressed("left"):
+			var leftmost = 16 + $Paddle.width / 2
+			$Paddle.position.x -= delta * PADDLE_SPEED
+			$Paddle.position.y = 340
+			if $Paddle.position.x < leftmost:
+				$Paddle.position.x = leftmost
+		if Input.is_action_pressed("right"):
+			var rightmost = 432 - $Paddle.width / 2
+			$Paddle.position.x += delta * PADDLE_SPEED
+			$Paddle.position.y = 340
+			if $Paddle.position.x > rightmost:
+				$Paddle.position.x = rightmost
+		if Input.is_action_just_pressed("fire"):
+			if mode == MODE_PLAY:
+				for ball in balls:
+					if (ball.captured):
+						ball.release()
+
 
 func leave(dir : int) -> void:
 	mode = MODE_LEAVE
@@ -65,6 +88,7 @@ func leave(dir : int) -> void:
 
 func new_level() -> void:
 	$Paddle.normal()
+	$Paddle.position.x = 224
 	mode = MODE_WAIT
 	$Exits.visible = false
 	for ball in balls:
@@ -72,14 +96,14 @@ func new_level() -> void:
 		ball.queue_free()
 	balls.clear()
 	for brick in bricks:
-		remove_child(brick)
+		$Bricks.remove_child(brick)
 		brick.queue_free()
 	bricks.clear()
-	round += 1
+	chr += 1
 	level_data = load_level_from_disk(level)
 
 	$Start/Title.text = level
-	$Start/Round.text = "ROUND %3d" % [round]
+	$Start/Round.text = "ROUND %3d" % [chr]
 	$Background.texture = load("res://Backgrounds/%s.png" % level_data.background)
 	load_level(level_data.data)
 	var ball = _Ball.instantiate()
@@ -95,21 +119,22 @@ func new_level() -> void:
 	
 func _brick_destroyed(brick) -> void:
 	Global.score += brick.value
-	if randf() > 0.9:
+	if randf() > 0.4:
 		var upgrade = _Upgrade.instantiate()
 		upgrade.position = brick.position
 		upgrade.upgrade_collected.connect(_on_upgrade_collected)
 		match randi() % 5:
-			0:
+			#0:
+			_:
 				upgrade.set_upgrade("C", Color.BLUE)
-			1:
-				upgrade.set_upgrade("T", Color.GREEN)
-			2:
-				upgrade.set_upgrade("S", Color.CYAN)
-			3:
-				upgrade.set_upgrade("E", Color.DARK_SEA_GREEN)
-			4:
-				upgrade.set_upgrade("R", Color.LIGHT_CORAL)
+			#1:
+				#upgrade.set_upgrade("T", Color.GREEN)
+			#2:
+				#upgrade.set_upgrade("S", Color.CYAN)
+			#3:
+				#upgrade.set_upgrade("E", Color.DARK_SEA_GREEN)
+			#4:
+				#upgrade.set_upgrade("R", Color.LIGHT_CORAL)
 		add_child(upgrade)
 	bricks.erase(brick)
 	var brick_count = 0
@@ -138,7 +163,17 @@ func _input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouseMotion:
 		if mode != MODE_LEAVE:
-			$Paddle.position = Vector2(min(max(16 + $Paddle.width/2, event.position.x), 432-$Paddle.width/2), 340)
+			if Global.relative_mouse:
+				var leftmost = 16 + $Paddle.width / 2
+				var rightmost = 432 - $Paddle.width / 2
+				$Paddle.position.x += event.relative.x
+				$Paddle.position.y = 340
+				if $Paddle.position.x < leftmost:
+					$Paddle.position.x = leftmost
+				if $Paddle.position.x > rightmost:
+					$Paddle.position.x = rightmost
+			else:
+				$Paddle.position = Vector2(min(max(16 + $Paddle.width/2, event.position.x), 432-$Paddle.width/2), 340)
 	if event is InputEventMouseButton:
 		if mode != MODE_PLAY:
 			return
@@ -147,7 +182,7 @@ func _input(event: InputEvent) -> void:
 				ball.release()
 
 func _on_hit_paddle(ball) -> void:
-	if capture_mode:
+	if $Paddle.is_capture():
 		var diff = $Paddle.global_position.x - ball.global_position.x
 		ball.capture($Paddle, Vector2(diff, 8))
 
@@ -161,7 +196,7 @@ func _on_hit_floor(ball) -> void:
 			if c is Upgrade:
 				remove_child(c)
 				c.queue_free()
-		capture_mode = false
+		$Paddle.normal()
 		ball = _Ball.instantiate()
 		ball.capture($Paddle, Vector2((randf() * 32) - 16, 8))
 		ball.hit_paddle.connect(_on_hit_paddle)
@@ -188,8 +223,7 @@ func _on_upgrade_collected(code : String) -> void:
 	$Sounds/UpgradeCollected.play()
 	match code:
 		"C":
-			capture_mode = true
-			get_tree().create_timer(10).timeout.connect(_cancel_capture_mode)
+			$Paddle.capture()
 		"T":
 			add_ball()
 			add_ball()
@@ -216,12 +250,7 @@ func add_ball() -> void:
 	add_child(newball)
 	balls.push_back(newball)
 	
-			
-func _cancel_capture_mode() -> void:
-	capture_mode = false
-	for ball in balls:
-		if ball.captured:
-			ball.release()
+
 
 func load_level(data) -> void:
 	for y in data.size():
@@ -259,14 +288,11 @@ func load_level(data) -> void:
 			brick.position = Vector2(x * 32 + 16 + 16, y * 16 + 8 + 16)
 			bricks.push_back(brick)
 			brick.brick_destroyed.connect(_brick_destroyed)
-			add_child(brick)
-
-
+			$Bricks.add_child(brick)
 
 func _on_start_round_finished() -> void:
 	$Start.visible = false
 	mode = MODE_PLAY
-
 
 func _on_update_lives() -> void:
 	$LivesBox.text = "%d" % lives
@@ -277,3 +303,9 @@ func load_level_from_disk(name : String) -> Dictionary:
 	if FileAccess.file_exists("res://Levels/%s.json" % name):
 		return JSON.parse_string(FileAccess.get_file_as_string("res://Levels/%s.json" % name))
 	return JSON.parse_string(FileAccess.get_file_as_string("res://Levels/NOTFOUND.json"))
+
+func _on_paddle_effect_finished(effect: int) -> void:
+	if effect == Paddle.PADDLE_CAPTURE:
+		for ball in balls:
+			if ball.captured:
+				ball.release()
