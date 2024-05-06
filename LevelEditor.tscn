@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bxkneahqum6hb"]
+[gd_scene load_steps=11 format=3 uid="uid://bxkneahqum6hb"]
 
 [ext_resource type="Script" path="res://LevelEditor.gd" id="1_p7hit"]
 [ext_resource type="Script" path="res://LevelEditCell.gd" id="2_ayd4g"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://LevelSelector.gd" id="6_brm2b"]
 [ext_resource type="Script" path="res://BackgroundSelector.gd" id="7_x1vot"]
 [ext_resource type="Script" path="res://LoadPanel.gd" id="8_0o6x4"]
+[ext_resource type="Script" path="res://ExportPanel.gd" id="9_nmcps"]
+[ext_resource type="Script" path="res://ImportPanel.gd" id="10_q6s0l"]
 
 [node name="LevelEditor" type="Node2D"]
 texture_filter = 1
@@ -2027,6 +2029,23 @@ focus_mode = 0
 theme = ExtResource("4_usb0o")
 text = "SAVE"
 
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Import" type="Button" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme = ExtResource("4_usb0o")
+text = "IMPORT"
+
+[node name="Export" type="Button" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme = ExtResource("4_usb0o")
+text = "EXPORT"
+
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
@@ -2075,10 +2094,77 @@ focus_mode = 0
 theme = ExtResource("4_usb0o")
 text = "CANCEL"
 
+[node name="ExportPanel" type="PanelContainer" parent="."]
+visible = false
+offset_left = 464.0
+offset_top = 16.0
+offset_right = 624.0
+offset_bottom = 344.0
+theme = ExtResource("4_usb0o")
+script = ExtResource("9_nmcps")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ExportPanel"]
+layout_mode = 2
+
+[node name="ExportedCode" type="TextEdit" parent="ExportPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_usb0o")
+text = "ewogICJiYWNrZ3JvdW5kIjogIlJlZEJveGVzIiwKICAiZGF0YSI6IFsKICAgICIgICAgICAgICAgICAgIiwKICAgICIgICAgICAgICAgICAgIiwKICAgICIgICAgICAgICAgICAgIiwKICAgICIgICAgICAgICAgICAgIiwKICAgICIgICAgIHNzcyAgICAgIiwKICAgICIgICAgIENDQyAgICAgIiwKICAgICIgICAgIEdHRyAgICAgIiwKICAgICIgICAgIFJSUiAgICAgIiwKICAgICIgICAgIEJCQiAgICAgIiwKICAgICIgICAgIE1NTSAgICAgIiwKICAgICIgICAgIHNzcyAgICAgIiwKICAgICIgICAgICAgICAgICAgIiwKICAgICIgIGcgICBnICAgZyAgIiwKICAgICIgICAgICAgICAgICAgIiwKICAgICIgICAgICAgICAgICAgIiwKICAgICIgICAgICAgICAgICAgIiwKICAgICIgICAgICAgICAgICAgIiwKICAgICIgICAgICAgICAgICAgIgogIF0sCiAgImxlZnQiOiAiRFVOS0FOT0lEIiwKICAibmFtZSI6ICJUT1dFUiIsCiAgInJpZ2h0IjogIkRVTktBTk9JRCIKfQ=="
+editable = false
+wrap_mode = 1
+autowrap_mode = 1
+
+[node name="Close" type="Button" parent="ExportPanel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_usb0o")
+text = "CLOSE"
+
+[node name="ImportPanel" type="PanelContainer" parent="."]
+visible = false
+offset_left = 464.0
+offset_top = 16.0
+offset_right = 624.0
+offset_bottom = 344.0
+theme = ExtResource("4_usb0o")
+script = ExtResource("10_q6s0l")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ImportPanel"]
+layout_mode = 2
+
+[node name="ImportedCode" type="TextEdit" parent="ImportPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_usb0o")
+placeholder_text = "Paste code here"
+wrap_mode = 1
+autowrap_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ImportPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Import" type="Button" parent="ImportPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_usb0o")
+text = "IMPORT"
+
+[node name="Cancel" type="Button" parent="ImportPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_usb0o")
+text = "CANCEL"
+
 [connection signal="item_selected" from="VBoxContainer/Background" to="." method="_on_background_item_selected"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer3/Import" to="." method="_on_import_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer3/Export" to="." method="_on_export_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/New" to="." method="_on_new_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/Exit" to="." method="_on_exit_pressed"]
 [connection signal="load_file" from="LoadPanel" to="." method="_on_load_panel_load_file"]
 [connection signal="pressed" from="LoadPanel/VBoxContainer/HBoxContainer/Cancel" to="LoadPanel" method="_on_cancel_pressed"]
+[connection signal="pressed" from="ExportPanel/VBoxContainer/Close" to="ExportPanel" method="_on_close_pressed"]
+[connection signal="object_imported" from="ImportPanel" to="." method="_on_import_panel_object_imported"]
+[connection signal="pressed" from="ImportPanel/VBoxContainer/HBoxContainer/Import" to="ImportPanel" method="_on_import_pressed"]
+[connection signal="pressed" from="ImportPanel/VBoxContainer/HBoxContainer/Cancel" to="ImportPanel" method="_on_cancel_pressed"]

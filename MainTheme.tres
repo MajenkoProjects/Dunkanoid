@@ -1,8 +1,9 @@
-[gd_resource type="Theme" load_steps=14 format=3 uid="uid://cfvww0geatnnk"]
+[gd_resource type="Theme" load_steps=15 format=3 uid="uid://cfvww0geatnnk"]
 
 [ext_resource type="FontFile" uid="uid://dfkm2dibf0c3b" path="res://Fonts/fonts-DSEG_v046/DSEG7-Classic-MINI/DSEG7ClassicMini-Italic.ttf" id="1_17to7"]
 [ext_resource type="FontFile" uid="uid://bx41ej4o03nbx" path="res://Fonts/arkanoid/Arka_solid.ttf" id="1_s07ae"]
 [ext_resource type="FontFile" uid="uid://by778rb8miy2e" path="res://Fonts/Ac437_Trident_9x16.ttf" id="2_7inlg"]
+[ext_resource type="FontFile" uid="uid://c7hlot6dsm01s" path="res://Fonts/Ac437_Trident_8x8.ttf" id="4_btndm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tyvdl"]
 content_margin_left = 3.0
@@ -102,6 +103,8 @@ Button/styles/hover = SubResource("StyleBoxFlat_l4f7v")
 Button/styles/normal = SubResource("StyleBoxFlat_ibocc")
 Button/styles/pressed = SubResource("StyleBoxFlat_ebwwv")
 HSeparator/styles/separator = SubResource("StyleBoxEmpty_y3y82")
+InternalFile/base_type = &"Button"
+InternalFile/colors/font_color = Color(0.670588, 0.458824, 0.52549, 1)
 Label/font_sizes/font_size = 20
 Label/fonts/font = ExtResource("2_7inlg")
 LineEdit/font_sizes/font_size = 20
@@ -120,8 +123,12 @@ Numbers/constants/shadow_outline_size = 3
 Numbers/font_sizes/font_size = 18
 Numbers/fonts/font = ExtResource("1_17to7")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_sf0ln")
+TextEdit/font_sizes/font_size = 9
+TextEdit/fonts/font = ExtResource("4_btndm")
 Upgrade/base_type = &"Label"
 Upgrade/colors/font_color = Color(0, 0, 0, 1)
 Upgrade/font_sizes/font_size = 16
 Upgrade/fonts/font = ExtResource("2_7inlg")
+UserFile/base_type = &"Button"
+UserFile/colors/font_color = Color(0.439216, 0.603922, 0.529412, 1)
 VSeparator/styles/separator = SubResource("StyleBoxEmpty_m7r63")
