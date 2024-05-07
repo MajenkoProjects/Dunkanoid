@@ -13,7 +13,9 @@ func _process(_delta : float) -> void:
 			else:
 				Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
 			$VBoxContainer/HBoxContainer/Quit.release_focus()
+			EventBus.unpaused.emit()
 		else:
+			EventBus.paused.emit()
 			visible = true
 			paused = true
 			get_tree().paused = true

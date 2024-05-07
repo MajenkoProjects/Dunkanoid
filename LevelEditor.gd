@@ -1,6 +1,8 @@
 extends Node2D
 
-
+func _ready() -> void:
+	Music.pause()
+	
 func _on_background_item_selected(index: int) -> void:
 	$Background.texture = load($VBoxContainer/Background.get_item_metadata(index))
 
@@ -10,6 +12,7 @@ func get_level_object() -> Dictionary:
 		"left": $VBoxContainer/Left.get_selected_text(),
 		"right": $VBoxContainer/Right.get_selected_text(),
 		"background": $VBoxContainer/Background.get_selected_text(),
+		"tint": $VBoxContainer/Tint.text,
 		"data": []
 	}
 	for row in 18:
@@ -35,6 +38,7 @@ func _on_save_pressed() -> void:
 	$VBoxContainer/Right.select_by_name(data.right)
 	
 func _on_exit_pressed() -> void:
+	Music.resume()
 	get_tree().change_scene_to_file("res://Intro.tscn")
 
 
@@ -50,11 +54,13 @@ func _on_load_panel_load_file(filename: String) -> void:
 
 func load_level_from_object(data : Dictionary) -> void:
 	if data != null:
-		$VBoxContainer/Name.text = data.name
-		$VBoxContainer/Left.select_by_name(data.left)
-		$VBoxContainer/Right.select_by_name(data.right)
-		$VBoxContainer/Background.select_by_name(data.background)
+		$VBoxContainer/Name.text = data.get("name", "")
+		$VBoxContainer/Left.select_by_name(data.get("left", "DUNKANOID"))
+		$VBoxContainer/Right.select_by_name(data.get("right", "DUNKANOID"))
+		$VBoxContainer/Background.select_by_name(data.get("background", "BlueSlash"))
 		$Background.texture = load($VBoxContainer/Background.get_selected_filename())
+		$VBoxContainer/Tint.text = data.get("tint", "FFFFFF")
+		$Background.modulate = Color("#%s" % $VBoxContainer/Tint.text)
 	for row in 18:
 		for col in 13:
 			var brick = get_node("Bricks/Row%d/Col%d" % [row, col])
@@ -68,6 +74,7 @@ func _on_new_pressed() -> void:
 	$VBoxContainer/Right.select_by_name("DUNKANOID")
 	$VBoxContainer/Background.select_by_name("BlueSlash")
 	$Background.texture = load($VBoxContainer/Background.get_selected_filename())
+	$VBoxContainer/Tint.text = "FFFFFF"
 	for row in 18:
 		for col in 13:
 			var brick = get_node("Bricks/Row%d/Col%d" % [row, col])
@@ -84,4 +91,9 @@ func _on_import_pressed() -> void:
 
 func _on_import_panel_object_imported(data: Dictionary) -> void:
 	load_level_from_object(data)
+	pass # Replace with function body.
+
+
+func _on_tint_tint_changed(color: Color) -> void:
+	$Background.modulate = color
 	pass # Replace with function body.

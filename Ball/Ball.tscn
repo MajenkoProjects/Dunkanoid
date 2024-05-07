@@ -38,13 +38,16 @@ shape = SubResource("CircleShape2D_nwcsc")
 
 [node name="WallSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_bwkax")
+bus = &"Effects"
 
 [node name="BrickSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_ly8mo")
 max_polyphony = 5
+bus = &"Effects"
 
 [node name="PaddleSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_f8nt3")
+bus = &"Effects"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

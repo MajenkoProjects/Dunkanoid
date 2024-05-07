@@ -1,0 +1,27 @@
+{
+  "background": "Pipes",
+  "data": [
+    "             ",
+    "             ",
+    "   ggg ggg   ",
+    "  gWWWgWWWg  ",
+    "  gWWWgWWWg  ",
+    "  gWWBgBWWg  ",
+    "  gWWBgBWWg  ",
+    "   RRRRRRR   ",
+    "  RRWWRWWRR  ",
+    " RWsWWsWWsWR ",
+    "RsWsWWsWWsWsR",
+    "RsWsWWsWWsWsR",
+    "RWsWssWssWsWR",
+    " RRWssWssWRR ",
+    "   RRRRRRR   ",
+    "      Y      ",
+    "      RYR    ",
+    "             "
+  ],
+  "left": "DUNKANOID",
+  "name": "GOOBER",
+  "right": "DUNKANOID",
+  "tint": "4444CC"
+}

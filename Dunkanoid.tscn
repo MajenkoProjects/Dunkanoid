@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://4q0epdnb0x4s"]
+[gd_scene load_steps=17 format=3 uid="uid://4q0epdnb0x4s"]
 
 [ext_resource type="Script" path="res://Dunkanoid.gd" id="1_kv4if"]
 [ext_resource type="PackedScene" uid="uid://dndemjw7up2r6" path="res://Paddle/Paddle.tscn" id="2_26c5i"]
@@ -6,13 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://3r13ufv5sq3w" path="res://Backgrounds/BlueSlash.png" id="5_j5mmn"]
 [ext_resource type="AudioStream" uid="uid://bkw4xksukx0dd" path="res://Sounds/Fail.wav" id="5_p5ta8"]
 [ext_resource type="Script" path="res://Floor.gd" id="5_sravy"]
-[ext_resource type="AudioStream" uid="uid://818gpo5mes22" path="res://Sounds/Start.wav" id="6_s0pha"]
 [ext_resource type="PhysicsMaterial" uid="uid://cql6t5hd40fgn" path="res://CorePhysics.tres" id="7_300m5"]
-[ext_resource type="AudioStream" uid="uid://bh2blx1uovmyt" path="res://Sounds/Win.wav" id="7_xrjor"]
 [ext_resource type="AudioStream" uid="uid://bojc0es7165ed" path="res://Sounds/Collected.wav" id="8_fpbsr"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="8_wcf7g"]
 [ext_resource type="Material" uid="uid://bv4vhjg83fqpn" path="res://ArkanoidMaterial.tres" id="9_ouuij"]
 [ext_resource type="Script" path="res://Paused.gd" id="12_8qv0d"]
+[ext_resource type="Script" path="res://RunTimer.gd" id="12_nyw3s"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jsudl"]
 normal = Vector2(0, 1)
@@ -71,57 +70,11 @@ shape = SubResource("WorldBoundaryShape2D_48dqy")
 
 [node name="FloorSound" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("5_p5ta8")
-
-[node name="StartRound" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("6_s0pha")
-
-[node name="RoundWon" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("7_xrjor")
+bus = &"Effects"
 
 [node name="UpgradeCollected" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("8_fpbsr")
-
-[node name="ScoreLabel" type="Label" parent="."]
-offset_left = 448.0
-offset_top = 29.0
-offset_right = 639.0
-offset_bottom = 52.0
-theme = ExtResource("8_wcf7g")
-text = "SCORE"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ScoreBox" type="Label" parent="."]
-offset_left = 448.0
-offset_top = 54.0
-offset_right = 639.0
-offset_bottom = 77.0
-theme = ExtResource("8_wcf7g")
-theme_type_variation = &"Numbers"
-text = "00000000"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="LivesLabel" type="Label" parent="."]
-offset_left = 448.0
-offset_top = 82.0
-offset_right = 639.0
-offset_bottom = 105.0
-theme = ExtResource("8_wcf7g")
-text = "LIVES"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="LivesBox" type="Label" parent="."]
-offset_left = 448.0
-offset_top = 105.0
-offset_right = 639.0
-offset_bottom = 128.0
-theme = ExtResource("8_wcf7g")
-theme_type_variation = &"Numbers"
-text = "3"
-horizontal_alignment = 1
-vertical_alignment = 1
+bus = &"Effects"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 16.0
@@ -135,41 +88,6 @@ offset_bottom = 360.0
 [node name="ColorRect3" type="ColorRect" parent="."]
 offset_right = 432.0
 offset_bottom = 16.0
-
-[node name="Start" type="Node2D" parent="."]
-z_index = 1
-
-[node name="Title" type="Label" parent="Start"]
-material = ExtResource("9_ouuij")
-offset_left = 16.0
-offset_top = 199.0
-offset_right = 432.0
-offset_bottom = 224.0
-theme = ExtResource("8_wcf7g")
-theme_type_variation = &"Arkanoid"
-text = "DUNKANOID"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Round" type="Label" parent="Start"]
-offset_left = 16.0
-offset_top = 224.0
-offset_right = 432.0
-offset_bottom = 247.0
-theme = ExtResource("8_wcf7g")
-text = "ROUND 1"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Ready" type="Label" parent="Start"]
-offset_left = 16.0
-offset_top = 247.0
-offset_right = 432.0
-offset_bottom = 270.0
-theme = ExtResource("8_wcf7g")
-text = "READY"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Exits" type="Node2D" parent="."]
 
@@ -194,6 +112,167 @@ offset_bottom = 360.0
 color = Color(0, 0, 0, 1)
 
 [node name="Bricks" type="Node2D" parent="."]
+
+[node name="RunTimer" type="Node" parent="."]
+script = ExtResource("12_nyw3s")
+
+[node name="NewBestTime" type="VBoxContainer" parent="."]
+visible = false
+offset_right = 448.0
+offset_bottom = 360.0
+
+[node name="VSeparator" type="VSeparator" parent="NewBestTime"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="NewBestTime" type="Label" parent="NewBestTime"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+text = "NEW BEST TIME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BestTime" type="Label" parent="NewBestTime"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+theme_type_variation = &"Numbers"
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="NewBestTime"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="ScoreCard" type="VBoxContainer" parent="."]
+offset_left = 448.0
+offset_top = 40.0
+offset_right = 640.0
+offset_bottom = 312.0
+
+[node name="ScoreLabel" type="Label" parent="ScoreCard"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+text = "SCORE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreBox" type="Label" parent="ScoreCard"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+theme_type_variation = &"Numbers"
+text = "00000000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="ScoreCard"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="LivesLabel" type="Label" parent="ScoreCard"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+text = "LIVES"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LivesBox" type="Label" parent="ScoreCard"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+theme_type_variation = &"Numbers"
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="ScoreCard"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="RunLabel" type="Label" parent="ScoreCard"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+text = "TIME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RunTime" type="Label" parent="ScoreCard"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+theme_type_variation = &"Numbers"
+text = "00:00.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator3" type="VSeparator" parent="ScoreCard"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="BestLabel" type="Label" parent="ScoreCard"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+text = "BEST TIME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BestTime" type="Label" parent="ScoreCard"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+theme_type_variation = &"Numbers"
+text = "00:00.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Start" type="Node2D" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Start"]
+offset_right = 448.0
+offset_bottom = 360.0
+
+[node name="VSeparator" type="VSeparator" parent="Start/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="PanelContainer" type="PanelContainer" parent="Start/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+theme_type_variation = &"RoundStart"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Start/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Start/VBoxContainer/PanelContainer/VBoxContainer"]
+material = ExtResource("9_ouuij")
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+theme_type_variation = &"Arkanoid"
+text = "DUNKANOID"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Round" type="Label" parent="Start/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+text = "ROUND 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Ready" type="Label" parent="Start/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+text = "READY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="Start/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("8_wcf7g")
 
 [node name="Paused" type="Node2D" parent="."]
 process_mode = 3
@@ -248,6 +327,4 @@ theme = ExtResource("8_wcf7g")
 
 [connection signal="update_lives" from="." to="." method="_on_update_lives"]
 [connection signal="effect_finished" from="Paddle" to="." method="_on_paddle_effect_finished"]
-[connection signal="finished" from="Sounds/StartRound" to="." method="_on_start_round_finished"]
-[connection signal="finished" from="Sounds/RoundWon" to="." method="_on_round_won_finished"]
 [connection signal="pressed" from="Paused/VBoxContainer/HBoxContainer/Quit" to="Paused" method="_on_quit_pressed"]

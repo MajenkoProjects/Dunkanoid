@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://osk2pq7a4mat"
+path="res://.godot/imported/Absolutely Nothing - Jeremy Blake.mp3-ab36837ef722c0a363e031c45ab30a0d.mp3str"
+
+[deps]
+
+source_file="res://Music/Absolutely Nothing - Jeremy Blake.mp3"
+dest_files=["res://.godot/imported/Absolutely Nothing - Jeremy Blake.mp3-ab36837ef722c0a363e031c45ab30a0d.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

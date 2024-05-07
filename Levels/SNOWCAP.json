@@ -20,7 +20,8 @@
     "             ",
     "             "
   ],
-  "left": "DUNKANOID",
+  "left": "KNOT",
   "name": "SNOWCAP",
-  "right": "DUNKANOID"
+  "right": "GOOBER",
+  "tint": "00FF00"
 }

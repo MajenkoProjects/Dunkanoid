@@ -1,0 +1,27 @@
+{
+  "background": "Pipes",
+  "data": [
+    "             ",
+    "             ",
+    "       sOs   ",
+    "       sOs   ",
+    "   ggggsOsggg",
+    "   g   sOs   ",
+    "   gBBBsOsBBB",
+    "   gCggsOsggg",
+    "   gCg sOs   ",
+    "   gCg sOs   ",
+    "sssgCgssOs   ",
+    "   gCg  Os   ",
+    "RRRgCgRRRs   ",
+    "sssgCgssss   ",
+    "   gCg       ",
+    "   gCg       ",
+    "             ",
+    "             "
+  ],
+  "left": "DUNKANOID",
+  "name": "KNOT",
+  "right": "DUNKANOID",
+  "tint": "4444CC"
+}

@@ -26,12 +26,11 @@ var lives : int = 3 :
 		update_lives.emit()
 
 var level : String = "DUNKANOID"
-
 var level_data : Dictionary = {}
-
 var leave_direction : int = 0
-
 var paused : bool = false
+var level_starting : bool = false
+var time_run : bool = false
 
 func _ready() -> void:
 	if Global.relative_mouse:
@@ -41,18 +40,14 @@ func _ready() -> void:
 
 	EventBus.update_score.connect(_on_update_score)
 	new_level()
+	Music.play_game()
 
 func _process(delta : float) -> void:
 	
 	if OS.has_feature("editor"):
 		if Input.is_action_just_pressed("cheat"):
-			var upgrade = _Upgrade.instantiate()
-			upgrade.position = balls[0].position
-			upgrade.upgrade_collected.connect(_on_upgrade_collected)
-			upgrade.set_upgrade("C", Color.BLUE)
-			add_child(upgrade)
-			#for i in 10:
-				#add_ball()
+			for i in 10:
+				add_ball()
 				
 	if mode == MODE_EXIT:
 		if $Paddle.global_position.x - ($Paddle.width / 2) <= 20:
@@ -65,7 +60,7 @@ func _process(delta : float) -> void:
 	if mode == MODE_LEAVE:
 		$Paddle.global_position.x += (delta * leave_direction * 20.0)
 		if $Paddle.global_position.x < -16 or $Paddle.global_position.x > 428:
-			if not $Sounds/RoundWon.playing:
+			if not Music.jingle_playing:
 				new_level()
 	else:
 		if Input.is_action_pressed("left"):
@@ -82,9 +77,17 @@ func _process(delta : float) -> void:
 				$Paddle.position.x = rightmost
 		if Input.is_action_just_pressed("fire"):
 			if mode == MODE_PLAY:
+				if level_starting:
+					level_starting = false
+					$RunTimer.start()
+					time_run = true
 				for ball in balls:
 					if (ball.captured):
 						ball.release()
+
+
+	if time_run:
+		$ScoreCard/RunTime.text = "%02d:%05.2f" % [$RunTimer.elapsed_time / 60000, $RunTimer.elapsed_time % 60000 / 1000.0]
 
 
 func leave(dir : int) -> void:
@@ -92,6 +95,9 @@ func leave(dir : int) -> void:
 	leave_direction = dir
 
 func new_level() -> void:
+	$NewBestTime.visible = false
+	time_run = false
+	level_starting = true
 	$Paddle.normal()
 	$Paddle.position.x = 224
 	mode = MODE_WAIT
@@ -106,10 +112,11 @@ func new_level() -> void:
 	bricks.clear()
 	chr += 1
 	level_data = load_level_from_disk(level)
-
-	$Start/Title.text = level
-	$Start/Round.text = "ROUND %3d" % [chr]
+	$ScoreCard/BestTime.text = format_time(Global.get_best_time(level_data.name))
+	$Start/VBoxContainer/PanelContainer/VBoxContainer/Title.text = level
+	$Start/VBoxContainer/PanelContainer/VBoxContainer/Round.text = "ROUND %3d" % [chr]
 	$Background.texture = load("res://Backgrounds/%s.png" % level_data.background)
+	$Background.modulate = Color("#%s" % level_data.get("tint", "FFFFFF"))
 	load_level(level_data.data)
 	var ball = _Ball.instantiate()
 	ball.capture($Paddle, Vector2((randf() * 32) - 16, 8))
@@ -119,8 +126,8 @@ func new_level() -> void:
 	balls.push_back(ball)
 
 	$Start.visible = true
-	$Sounds/StartRound.play()
-
+	Music.jingle_finished.connect(_on_start_round_finished)
+	Music.jingle(Music.JINGLE_LEVEL_START)
 	
 func _brick_destroyed(brick) -> void:
 	Global.score += brick.value
@@ -159,8 +166,21 @@ func _brick_destroyed(brick) -> void:
 
 		mode = MODE_EXIT
 		$Exits.visible = true
-		$Sounds/RoundWon.play()
+		Music.jingle(Music.JINGLE_LEVEL_WON)
+		var elapsed = $RunTimer.elapsed_time
+		var best = Global.get_best_time(level_data.name)
+		if elapsed < best:
+			Global.set_best_time(level_data.name, elapsed)
+			$RunTimer.pause()
+			$NewBestTime/BestTime.text = format_time(elapsed)
+			$NewBestTime.visible = true
+		print($RunTimer.elapsed_time)
 
+func format_time(time : int) -> String:
+	print(time)
+	if time > 3600000:
+		return "--:--.--"
+	return "%02d:%05.2f" % [time / 60000, time % 60000 / 1000.0]
 	
 func _input(event: InputEvent) -> void:
 	if paused:
@@ -179,11 +199,15 @@ func _input(event: InputEvent) -> void:
 			else:
 				$Paddle.position = Vector2(min(max(16 + $Paddle.width/2, event.position.x), 432-$Paddle.width/2), 340)
 	if event is InputEventMouseButton:
-		if mode != MODE_PLAY:
-			return
-		for ball in balls:
-			if (ball.captured):
-				ball.release()
+		if mode == MODE_PLAY:
+			if level_starting:
+				$RunTimer.start()
+				level_starting = false
+				time_run = true
+
+			for ball in balls:
+				if (ball.captured):
+					ball.release()
 
 func _on_hit_paddle(ball) -> void:
 	if $Paddle.is_capture():
@@ -207,7 +231,8 @@ func _on_hit_floor(ball) -> void:
 		ball.hit_floor.connect(_on_hit_floor)
 		add_child(ball)
 		balls.push_back(ball)
-		$Sounds/StartRound.play()
+		Music.jingle_finished.connect(_on_start_round_finished)
+		Music.jingle(Music.JINGLE_LEVEL_START)
 		$Start.visible = true
 		mode = MODE_WAIT
 		lives -= 1
@@ -220,7 +245,7 @@ func _on_round_won_finished() -> void:
 
 
 func _on_update_score(score) -> void:
-	$ScoreBox.text = "%08d" % score
+	$ScoreCard/ScoreBox.text = "%08d" % score
 	pass # Replace with function body.
 
 func _on_upgrade_collected(code : String) -> void:
@@ -294,12 +319,14 @@ func load_level(data) -> void:
 			brick.brick_destroyed.connect(_brick_destroyed)
 			$Bricks.add_child(brick)
 
-func _on_start_round_finished() -> void:
+func _on_start_round_finished(item : int) -> void:
+	print("Jingle done")
+	Music.jingle_finished.disconnect(_on_start_round_finished)
 	$Start.visible = false
 	mode = MODE_PLAY
 
 func _on_update_lives() -> void:
-	$LivesBox.text = "%d" % lives
+	$ScoreCard/LivesBox.text = "%d" % lives
 
 func load_level_from_disk(name : String) -> Dictionary:
 	if FileAccess.file_exists("user://Levels/%s.json" % name):

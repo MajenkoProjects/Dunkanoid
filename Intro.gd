@@ -1,5 +1,14 @@
 extends Node2D
 
+const credits = [
+	["Design", "Majenko"],
+	["Programming", "Majenko"],
+	["Music", "Jeremy Blake"],
+	["Sound Effects", "Majenko"]
+]
+
+var credit : int = 0
+
 func _ready() -> void:
 	#	dump_all("res://")
 	
@@ -9,6 +18,33 @@ func _ready() -> void:
 		_on_update_score(Global.score)
 		_on_update_highscore(Global.highscore)
 		$VBoxContainer/HBoxContainer/Play.grab_focus()
+		Music.play_intro()
+		get_tree().create_timer(5).timeout.connect(_show_credits)
+
+func _show_credits() -> void:
+	$HBoxContainer/Credits/CreditsRole.modulate = Color(0, 0, 0, 0)
+	$HBoxContainer/Credits/CreditsPerson.modulate = Color(0, 0, 0, 0)
+	$HBoxContainer/Credits/CreditsRole.text = credits[credit][0]
+	$HBoxContainer/Credits/CreditsPerson.text = credits[credit][1]
+	var tween = get_tree().create_tween()
+	tween.tween_property($HBoxContainer/Credits/CreditsRole, "modulate", Color(1, 1, 1, 1), 1)
+	tween.tween_property($HBoxContainer/Credits/CreditsPerson, "modulate", Color(1, 1, 1, 1), 1)
+	tween.finished.connect(_show_credits_done)
+
+func _show_credits_done() -> void:
+	credit += 1
+	if credit >= credits.size():
+		credit = 0
+	get_tree().create_timer(5).timeout.connect(_hide_credits)
+
+func _hide_credits() -> void:
+	var tween = get_tree().create_tween().set_parallel(true)
+	tween.tween_property($HBoxContainer/Credits/CreditsRole, "modulate", Color(0, 0, 0, 0), 1)
+	tween.tween_property($HBoxContainer/Credits/CreditsPerson, "modulate", Color(0, 0, 0, 0), 1)
+	tween.finished.connect(_hide_credits_done)
+
+func _hide_credits_done() -> void:
+	get_tree().create_timer(1).timeout.connect(_show_credits)
 
 func _on_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://Dunkanoid.tscn")

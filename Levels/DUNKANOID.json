@@ -1,5 +1,5 @@
 {
-  "background": "BlueSlash",
+  "background": "BlueBlobs",
   "data": [
     "             ",
     "             ",
@@ -22,5 +22,6 @@
   ],
   "left": "RAINBOW",
   "name": "DUNKANOID",
-  "right": "CUBISM"
+  "right": "CUBISM",
+  "tint": "FFFFFF"
 }

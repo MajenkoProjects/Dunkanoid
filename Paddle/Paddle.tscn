@@ -73,8 +73,10 @@ texture = ExtResource("5_w5k41")
 
 [node name="GrowSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_hpb6a")
+bus = &"Effects"
 
 [node name="ShrinkSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_3krfd")
+bus = &"Effects"
 
 [connection signal="timeout" from="EffectTimer" to="." method="_on_effect_timer_timeout"]

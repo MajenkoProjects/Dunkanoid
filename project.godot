@@ -24,6 +24,7 @@ config/windows_native_icon="res://icon.ico"
 
 Global="*res://Global.gd"
 EventBus="*res://EventBus.gd"
+Music="*res://Music.gd"
 
 [display]
 

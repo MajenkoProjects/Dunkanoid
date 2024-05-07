@@ -154,10 +154,21 @@ theme_type_variation = &"Numbers"
 text = "00000000"
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer"]
+[node name="Credits" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="CreditsRole" type="Label" parent="HBoxContainer/Credits"]
+layout_mode = 2
 theme = ExtResource("3_8d2ix")
+horizontal_alignment = 1
+
+[node name="CreditsPerson" type="Label" parent="HBoxContainer/Credits"]
+layout_mode = 2
+theme = ExtResource("3_8d2ix")
+theme_type_variation = &"LargeLabel"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HighScore" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
