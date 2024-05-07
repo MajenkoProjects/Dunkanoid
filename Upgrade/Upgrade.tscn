@@ -1,19 +1,36 @@
-[gd_scene load_steps=4 format=3 uid="uid://dbf2kicev8ma7"]
+[gd_scene load_steps=5 format=3 uid="uid://dbf2kicev8ma7"]
 
 [ext_resource type="Script" path="res://Upgrade/Upgrade.gd" id="1_3jp1b"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="2_iabep"]
+
+[sub_resource type="Gradient" id="Gradient_ll6dt"]
+colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 0)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_slgxc"]
 radius = 6.0
 height = 24.0
 
 [node name="Upgrade" type="RigidBody2D"]
-collision_layer = 4
+collision_layer = 0
 collision_mask = 2
 continuous_cd = 2
 max_contacts_reported = 2
 contact_monitor = true
 script = ExtResource("1_3jp1b")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 100
+lifetime = 2.0
+emission_shape = 3
+emission_rect_extents = Vector2(10, 1)
+direction = Vector2(0, -1)
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+color = Color(1, 1, 0, 1)
+color_ramp = SubResource("Gradient_ll6dt")
+hue_variation_min = 1.0
+hue_variation_max = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708

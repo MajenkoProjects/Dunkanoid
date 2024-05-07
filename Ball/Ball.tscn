@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://clfo2nrropg8y"]
+[gd_scene load_steps=9 format=3 uid="uid://clfo2nrropg8y"]
 
 [ext_resource type="Script" path="res://Ball/Ball.gd" id="1_2xu4j"]
 [ext_resource type="PhysicsMaterial" uid="uid://cql6t5hd40fgn" path="res://CorePhysics.tres" id="1_vk3rj"]
@@ -10,8 +10,12 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_nwcsc"]
 radius = 3.0
 
+[sub_resource type="Gradient" id="Gradient_umh5r"]
+colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 0)
+
 [node name="Ball" type="RigidBody2D"]
-collision_layer = 0
+collision_layer = 4
+collision_mask = 5
 mass = 0.01
 physics_material_override = ExtResource("1_vk3rj")
 gravity_scale = 0.0
@@ -48,6 +52,21 @@ bus = &"Effects"
 [node name="PaddleSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_f8nt3")
 bus = &"Effects"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 200
+emission_shape = 1
+emission_sphere_radius = 3.0
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+color = Color(1, 1, 0, 1)
+color_ramp = SubResource("Gradient_umh5r")
+hue_variation_min = 1.0
+hue_variation_max = 1.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

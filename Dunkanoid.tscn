@@ -325,6 +325,10 @@ layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("8_wcf7g")
 
+[node name="PowerBallTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="update_lives" from="." to="." method="_on_update_lives"]
 [connection signal="effect_finished" from="Paddle" to="." method="_on_paddle_effect_finished"]
 [connection signal="pressed" from="Paused/VBoxContainer/HBoxContainer/Quit" to="Paused" method="_on_quit_pressed"]
+[connection signal="timeout" from="PowerBallTimer" to="." method="_on_power_ball_timer_timeout"]

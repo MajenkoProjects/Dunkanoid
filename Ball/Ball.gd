@@ -1,4 +1,5 @@
 extends RigidBody2D
+class_name Ball
 
 const MIN_SPEED = 50.0
 const MAX_SPEED = 500.0
@@ -23,6 +24,7 @@ func _physics_process(delta: float) -> void:
 			PhysicsServer2D.BODY_STATE_TRANSFORM,
 			Transform2D.IDENTITY.translated(capture_object.global_position - capture_offset)
 		)
+		global_position = capture_object.global_position - capture_offset
 		linear_velocity = Vector2.ZERO
 		angular_velocity = 0
 	else:
@@ -77,3 +79,13 @@ func _on_body_exited(body: Node) -> void:
 
 func slowdown() -> void:
 	speed = 100
+
+
+func _on_body_entered(body: Node) -> void:
+	pass # Replace with function body.
+
+func enable_sparkles() -> void:
+	$CPUParticles2D.emitting = true
+
+func disable_sparkles() -> void:
+	$CPUParticles2D.emitting = false

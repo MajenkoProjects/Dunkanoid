@@ -14,6 +14,7 @@ var hits : int = 1
 var value : int = 100
 var original_color : Color = Color.WHITE
 var my_type : int = NORMAL
+var pass_mode : bool = false
 
 func _ready() -> void:
 	pass
@@ -45,7 +46,8 @@ func _show_block() -> void:
 	var tween = create_tween()
 	tween.tween_property($TextureRect, "modulate", original_color, 0.25)
 	visible = true
-	collision_layer = 1
+	if not pass_mode:
+		collision_layer = 1
 
 
 func type(base : int, color : Color) -> void:
@@ -72,5 +74,17 @@ func type(base : int, color : Color) -> void:
 			$TextureRect.modulate = color
 			hits = 2
 			value = 0
-			
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body is Ball:
+		body._on_body_exited(self)
+	pass # Replace with function body.
+
+func enable_pass() -> void:
+	collision_layer = 0
+	pass_mode = true
 	
+func disable_pass() -> void:
+	if visible:
+		collision_layer = 1
+	pass_mode = false

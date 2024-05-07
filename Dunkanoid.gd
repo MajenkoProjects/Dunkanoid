@@ -135,7 +135,7 @@ func _brick_destroyed(brick) -> void:
 		var upgrade = _Upgrade.instantiate()
 		upgrade.position = brick.position
 		upgrade.upgrade_collected.connect(_on_upgrade_collected)
-		match randi() % 5:
+		match randi() % 6:
 			0:
 				upgrade.set_upgrade("C", Color.BLUE)
 			1:
@@ -146,6 +146,8 @@ func _brick_destroyed(brick) -> void:
 				upgrade.set_upgrade("E", Color.DARK_SEA_GREEN)
 			4:
 				upgrade.set_upgrade("R", Color.LIGHT_CORAL)
+			5:
+				upgrade.set_upgrade("P", Color.AQUAMARINE)
 		add_child(upgrade)
 	bricks.erase(brick)
 	var brick_count = 0
@@ -174,10 +176,8 @@ func _brick_destroyed(brick) -> void:
 			$RunTimer.pause()
 			$NewBestTime/BestTime.text = format_time(elapsed)
 			$NewBestTime.visible = true
-		print($RunTimer.elapsed_time)
 
 func format_time(time : int) -> String:
-	print(time)
 	if time > 3600000:
 		return "--:--.--"
 	return "%02d:%05.2f" % [time / 60000, time % 60000 / 1000.0]
@@ -263,6 +263,8 @@ func _on_upgrade_collected(code : String) -> void:
 			$Paddle.big()
 		"R":
 			$Paddle.small()
+		"P":
+			start_powerball()
 
 func add_ball() -> void:
 	if balls.size() == 0: 
@@ -320,7 +322,6 @@ func load_level(data) -> void:
 			$Bricks.add_child(brick)
 
 func _on_start_round_finished(item : int) -> void:
-	print("Jingle done")
 	Music.jingle_finished.disconnect(_on_start_round_finished)
 	$Start.visible = false
 	mode = MODE_PLAY
@@ -340,3 +341,20 @@ func _on_paddle_effect_finished(effect: int) -> void:
 		for ball in balls:
 			if ball.captured:
 				ball.release()
+
+func start_powerball() -> void:
+	for ball in balls:
+		ball.enable_sparkles()
+	for brick in $Bricks.get_children():
+		brick.enable_pass()
+	$PowerBallTimer.start(10)
+
+func stop_powerball() -> void:
+	for ball in balls:
+		ball.disable_sparkles()
+	for brick in $Bricks.get_children():
+		brick.disable_pass()
+
+
+func _on_power_ball_timer_timeout() -> void:
+	stop_powerball()
