@@ -76,7 +76,9 @@ func type(base : int, color : Color) -> void:
 			value = 0
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
+	if not pass_mode: return
 	if body is Ball:
+		print("Area hit ball")
 		body._on_body_exited(self)
 	pass # Replace with function body.
 

@@ -35,33 +35,36 @@ func _switch_effect(effect : int, time : int = 0) -> void:
 	else:
 		$EffectTimer.stop()
 
+func show_paddle(paddle : Node2D) -> void:
+	$Normal.visible = true if paddle == $Normal else false
+	$Small.visible = true if paddle == $Small else false
+	$Big.visible = true if paddle == $Big else false
+	$Magnet.visible = true if paddle == $Magnet else false
+
+	$CollisionShape2D.shape.height = 32
+	if paddle == $Big: $CollisionShape2D.shape.height = 40
+	if paddle == $Small: $CollisionShape2D.shape.height = 24	 
+
+	
+	
 func big() -> void:
-	$Normal.visible = false
-	$Small.visible = false
-	$Big.visible = true
-	$CollisionShape2D.shape.height = 40
+	show_paddle($Big)
 	$GrowSound.play()
 	_switch_effect(PADDLE_LARGE, 30)
 
 func small() -> void:
-	$Normal.visible = false
-	$Small.visible = true
-	$Big.visible = false
+	show_paddle($Small)
 	$CollisionShape2D.shape.height = 24
 	$ShrinkSound.play()
 	_switch_effect(PADDLE_SMALL, 30)
 
 func normal() -> void:
-	$Normal.visible = true
-	$Small.visible = false
-	$Big.visible = false
+	show_paddle($Normal)
 	$CollisionShape2D.shape.height = 32
 	_switch_effect(PADDLE_NORMAL)
 	
 func capture() -> void:
-	$Normal.visible = true
-	$Small.visible = false
-	$Big.visible = false
+	show_paddle($Magnet)
 	$CollisionShape2D.shape.height = 32
 	_switch_effect(PADDLE_CAPTURE, 15)
 	
