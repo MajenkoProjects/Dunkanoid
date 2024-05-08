@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dh1lp7tib4d78"]
+[gd_scene load_steps=5 format=3 uid="uid://dh1lp7tib4d78"]
 
 [ext_resource type="PhysicsMaterial" uid="uid://cql6t5hd40fgn" path="res://CorePhysics.tres" id="1_nbsxj"]
 [ext_resource type="Script" path="res://Bullet.gd" id="2_ym7mu"]
+[ext_resource type="AudioStream" uid="uid://swcd1jarrvlf" path="res://Sounds/LaserShot.wav" id="3_of1j8"]
 
 [sub_resource type="Gradient" id="Gradient_gcqhp"]
 colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 0)
@@ -35,5 +36,11 @@ color = Color(1, 1, 0, 1)
 color_ramp = SubResource("Gradient_gcqhp")
 hue_variation_min = 1.0
 hue_variation_max = 1.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_of1j8")
+volume_db = -11.243
+autoplay = true
+bus = &"Effects"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
