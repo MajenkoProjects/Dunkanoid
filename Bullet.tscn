@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://dh1lp7tib4d78"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://cql6t5hd40fgn" path="res://CorePhysics.tres" id="1_nbsxj"]
+[ext_resource type="Script" path="res://Bullet.gd" id="2_ym7mu"]
+
+[sub_resource type="Gradient" id="Gradient_gcqhp"]
+colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 0)
+
+[node name="Bullet" type="RigidBody2D"]
+collision_layer = 16
+collision_mask = 0
+physics_material_override = ExtResource("1_nbsxj")
+continuous_cd = 1
+max_contacts_reported = 5
+contact_monitor = true
+script = ExtResource("2_ym7mu")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.572549, 0.976471, 0.945098, 1)
+polygon = PackedVector2Array(0, 0, 1, 1, 1, 4, 0, 3, -1, 4, -1, 1)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 1, 1, 1, 4, 0, 3, -1, 4, -1, 1)
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="."]
+position = Vector2(0, 3)
+amount = 10
+lifetime = 0.3
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+color = Color(1, 1, 0, 1)
+color_ramp = SubResource("Gradient_gcqhp")
+hue_variation_min = 1.0
+hue_variation_max = 1.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

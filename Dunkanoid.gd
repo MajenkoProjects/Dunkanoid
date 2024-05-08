@@ -4,6 +4,7 @@ var _Brick = preload("res://Brick/Brick.tscn")
 var _Ball = preload("res://Ball/Ball.tscn")
 var _Upgrade = preload("res://Upgrade/Upgrade.tscn")
 var _Alien = preload("res://Alien.tscn")
+var _Bullet = preload("res://Bullet.tscn")
 
 @onready var ScoreNode = $ScoreCard/Score/ScoreBox
 @onready var LivesNode = $ScoreCard/Lives/LivesBox
@@ -69,9 +70,11 @@ func _process(delta : float) -> void:
 	
 	if OS.has_feature("editor"):
 		if Input.is_action_just_pressed("cheat"):
-			spawn_alien()
-			for i in 50:
-				add_ball()				
+			fire_bullet()
+	
+	if PaddleNode.is_laser():
+		if Input.is_action_just_pressed("fire"):
+			fire_bullet()
 				
 	if mode == MODE_EXIT:
 		if PaddleNode.global_position.x - (PaddleNode.width / 2) <= 20:
@@ -164,7 +167,7 @@ func _brick_destroyed(brick) -> void:
 		var upgrade = _Upgrade.instantiate()
 		upgrade.position = brick.position
 		upgrade.upgrade_collected.connect(_on_upgrade_collected)
-		match randi() % 6:
+		match randi() % 7:
 			0:
 				upgrade.set_upgrade("C", Color.BLUE)
 			1:
@@ -177,6 +180,8 @@ func _brick_destroyed(brick) -> void:
 				upgrade.set_upgrade("R", Color.LIGHT_CORAL)
 			5:
 				upgrade.set_upgrade("P", Color.AQUAMARINE)
+			6:
+				upgrade.set_upgrade("L", Color.GOLD)
 		call_deferred("add_child", upgrade)
 	bricks.erase(brick)
 	var brick_count = 0
@@ -234,15 +239,18 @@ func _input(event: InputEvent) -> void:
 			else:
 				PaddleNode.position = Vector2(min(max(16 + PaddleNode.width/2, event.position.x), 432-PaddleNode.width/2), 340)
 	if event is InputEventMouseButton:
-		if mode == MODE_PLAY:
-			if level_starting:
-				RunTimerNode.start()
-				level_starting = false
-				time_run = true
+		if event.pressed:
+			if mode == MODE_PLAY:
+				if PaddleNode.is_laser():
+					fire_bullet()
+				if level_starting:
+					RunTimerNode.start()
+					level_starting = false
+					time_run = true
 
-			for ball in balls:
-				if (ball.captured):
-					ball.release()
+				for ball in balls:
+					if (ball.captured):
+						ball.release()
 
 func _on_hit_paddle(ball) -> void:
 	if PaddleNode.is_capture():
@@ -300,6 +308,8 @@ func _on_upgrade_collected(code : String) -> void:
 			PaddleNode.small()
 		"P":
 			start_powerball()
+		"L":
+			PaddleNode.laser()
 
 func add_ball() -> void:
 	if balls.size() == 0: 
@@ -432,3 +442,17 @@ func _on_alien_timer_timeout() -> void:
 func _alien_died(points : int) -> void:
 	Global.score += points
 	AlienDieSoundNode.play()
+
+func fire_bullet() -> void:
+	var bullet = _Bullet.instantiate()
+	bullet.global_position = PaddleNode.global_position - Vector2(0, 8)
+	bullet.hit_brick.connect(_on_bullet_hit_brick)
+	bullet.hit_alien.connect(_on_bullet_hit_alien)
+	add_child(bullet)
+	bullet.linear_velocity = Vector2(0, -500)
+
+func _on_bullet_hit_brick(node) -> void:
+	node.hit()
+
+func _on_bullet_hit_alien(node) -> void:
+	node.hit()

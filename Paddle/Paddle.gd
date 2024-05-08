@@ -9,7 +9,7 @@ enum {
 	PADDLE_CAPTURE,
 	PADDLE_SMALL,
 	PADDLE_LARGE,
-	PADDLE_LAZER
+	PADDLE_LASER
 }
 
 var mode : int = PADDLE_NORMAL
@@ -40,6 +40,7 @@ func show_paddle(paddle : Node2D) -> void:
 	$Small.visible = true if paddle == $Small else false
 	$Big.visible = true if paddle == $Big else false
 	$Magnet.visible = true if paddle == $Magnet else false
+	$Laser.visible = true if paddle == $Laser else false
 
 	$CollisionShape2D.shape.height = 32
 	if paddle == $Big: $CollisionShape2D.shape.height = 40
@@ -62,6 +63,11 @@ func normal() -> void:
 	show_paddle($Normal)
 	$CollisionShape2D.shape.height = 32
 	_switch_effect(PADDLE_NORMAL)
+
+func laser() -> void:
+	show_paddle($Laser)
+	$CollisionShape2D.shape.height = 32
+	_switch_effect(PADDLE_LASER, 15)
 	
 func capture() -> void:
 	show_paddle($Magnet)
@@ -83,5 +89,5 @@ func is_normal() -> bool:
 func is_capture() -> bool:
 	return mode == PADDLE_CAPTURE
 
-func is_lazer() -> bool:
-	return mode == PADDLE_LAZER
+func is_laser() -> bool:
+	return mode == PADDLE_LASER

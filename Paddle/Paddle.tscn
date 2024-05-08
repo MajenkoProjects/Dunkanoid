@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dndemjw7up2r6"]
+[gd_scene load_steps=11 format=3 uid="uid://dndemjw7up2r6"]
 
 [ext_resource type="PhysicsMaterial" uid="uid://cql6t5hd40fgn" path="res://CorePhysics.tres" id="1_oa72h"]
 [ext_resource type="Script" path="res://Paddle/Paddle.gd" id="1_swo0j"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bmwoidu5wsvu6" path="res://Paddle/PaddleMagnet.png" id="6_8ubfk"]
 [ext_resource type="AudioStream" uid="uid://ds7om6qbk3p6l" path="res://Sounds/Grow.wav" id="6_hpb6a"]
 [ext_resource type="AudioStream" uid="uid://bd2o8lynhy3wn" path="res://Sounds/Shrink.wav" id="7_3krfd"]
+[ext_resource type="Texture2D" uid="uid://byb16ek3xcdn1" path="res://Paddle/PaddleLaser.png" id="7_3m0i8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tamfm"]
 radius = 4.0
@@ -85,6 +86,22 @@ offset_top = -4.0
 offset_right = 16.0
 offset_bottom = 4.0
 texture = ExtResource("6_8ubfk")
+
+[node name="Laser" type="Node2D" parent="."]
+visible = false
+
+[node name="Polygon2D" type="Polygon2D" parent="Laser"]
+z_index = -1
+position = Vector2(2, 4)
+color = Color(0, 0, 0, 0.247059)
+polygon = PackedVector2Array(-14, -4, 14, -4, 16, -2, 16, 2, 14, 4, -14, 4, -16, 2, -16, -2)
+
+[node name="TextureRect" type="TextureRect" parent="Laser"]
+offset_left = -16.0
+offset_top = -4.0
+offset_right = 16.0
+offset_bottom = 4.0
+texture = ExtResource("7_3m0i8")
 
 [node name="EffectTimer" type="Timer" parent="."]
 
