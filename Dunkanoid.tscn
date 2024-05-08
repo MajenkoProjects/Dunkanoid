@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://4q0epdnb0x4s"]
+[gd_scene load_steps=27 format=3 uid="uid://4q0epdnb0x4s"]
 
 [ext_resource type="Script" path="res://Dunkanoid.gd" id="1_kv4if"]
 [ext_resource type="PackedScene" uid="uid://dndemjw7up2r6" path="res://Paddle/Paddle.tscn" id="2_26c5i"]
@@ -9,9 +9,19 @@
 [ext_resource type="PhysicsMaterial" uid="uid://cql6t5hd40fgn" path="res://CorePhysics.tres" id="7_300m5"]
 [ext_resource type="AudioStream" uid="uid://bojc0es7165ed" path="res://Sounds/Collected.wav" id="8_fpbsr"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="8_wcf7g"]
+[ext_resource type="AudioStream" uid="uid://cpf0y72o6wrv2" path="res://Sounds/AlienDie.wav" id="9_lt28f"]
 [ext_resource type="Material" uid="uid://bv4vhjg83fqpn" path="res://ArkanoidMaterial.tres" id="9_ouuij"]
 [ext_resource type="Script" path="res://Paused.gd" id="12_8qv0d"]
 [ext_resource type="Script" path="res://RunTimer.gd" id="12_nyw3s"]
+[ext_resource type="Script" path="res://Pipes.gd" id="13_12te1"]
+[ext_resource type="Texture2D" uid="uid://biqt5k34w683i" path="res://Pipes/vPipe.png" id="14_33cmo"]
+[ext_resource type="Texture2D" uid="uid://cg5olju1mcceh" path="res://Pipes/hPipe.png" id="15_n2p48"]
+[ext_resource type="Texture2D" uid="uid://bh8om6bv1qumy" path="res://Pipes/vPipeEndLow.png" id="16_osyku"]
+[ext_resource type="Texture2D" uid="uid://n81u6nrroi18" path="res://Pipes/CornerTopLeft.png" id="17_jvxfq"]
+[ext_resource type="Texture2D" uid="uid://btiaapyjul68s" path="res://Pipes/CornerTopRight.png" id="18_2ed71"]
+[ext_resource type="Texture2D" uid="uid://1ar54kb0l0sm" path="res://Pipes/vPipeEndHigh.png" id="19_6cngp"]
+[ext_resource type="Texture2D" uid="uid://bj28rs6816gn8" path="res://Pipes/hPipeEndLeft.png" id="20_fr68l"]
+[ext_resource type="Texture2D" uid="uid://dnm2slmsm5wnw" path="res://Pipes/hPipeEndRight.png" id="21_hha8q"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jsudl"]
 normal = Vector2(0, 1)
@@ -47,6 +57,8 @@ input_pickable = false
 physics_material_override = null
 
 [node name="Wall" type="StaticBody2D" parent="."]
+collision_layer = 17
+collision_mask = 17
 physics_material_override = ExtResource("7_300m5")
 script = ExtResource("4_evt42")
 
@@ -60,7 +72,8 @@ shape = SubResource("WorldBoundaryShape2D_3e48c")
 shape = SubResource("WorldBoundaryShape2D_jt2f6")
 
 [node name="Floor" type="StaticBody2D" parent="."]
-collision_layer = 3
+collision_layer = 19
+collision_mask = 17
 script = ExtResource("5_sravy")
 
 [node name="Bottom" type="CollisionShape2D" parent="Floor"]
@@ -76,33 +89,9 @@ bus = &"Effects"
 stream = ExtResource("8_fpbsr")
 bus = &"Effects"
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 16.0
-offset_bottom = 360.0
-
-[node name="ColorRect2" type="ColorRect" parent="."]
-offset_left = 432.0
-offset_right = 448.0
-offset_bottom = 360.0
-
-[node name="ColorRect3" type="ColorRect" parent="."]
-offset_right = 432.0
-offset_bottom = 16.0
-
-[node name="Exits" type="Node2D" parent="."]
-
-[node name="Left" type="ColorRect" parent="Exits"]
-offset_top = 312.0
-offset_right = 16.0
-offset_bottom = 360.0
-color = Color(0, 0, 1, 1)
-
-[node name="Right" type="ColorRect" parent="Exits"]
-offset_left = 432.0
-offset_top = 312.0
-offset_right = 448.0
-offset_bottom = 360.0
-color = Color(0, 0, 1, 1)
+[node name="AlienDie" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("9_lt28f")
+bus = &"Effects"
 
 [node name="ColorRect4" type="ColorRect" parent="."]
 offset_left = 448.0
@@ -113,11 +102,12 @@ color = Color(0, 0, 0, 1)
 
 [node name="Bricks" type="Node2D" parent="."]
 
+[node name="Aliens" type="Node2D" parent="."]
+
 [node name="RunTimer" type="Node" parent="."]
 script = ExtResource("12_nyw3s")
 
 [node name="NewBestTime" type="VBoxContainer" parent="."]
-visible = false
 offset_right = 448.0
 offset_bottom = 360.0
 
@@ -133,13 +123,26 @@ text = "NEW BEST TIME"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BestTime" type="Label" parent="NewBestTime"]
+[node name="HBoxContainer" type="HBoxContainer" parent="NewBestTime"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="NewBestTime/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="BestTime" type="Label" parent="NewBestTime/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("8_wcf7g")
 theme_type_variation = &"Numbers"
-text = "00:00"
+text = "00:00.00"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="NewBestTime/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("8_wcf7g")
 
 [node name="VSeparator2" type="VSeparator" parent="NewBestTime"]
 layout_mode = 2
@@ -149,7 +152,7 @@ theme = ExtResource("8_wcf7g")
 [node name="ScoreCard" type="VBoxContainer" parent="."]
 offset_left = 448.0
 offset_top = 40.0
-offset_right = 640.0
+offset_right = 641.0
 offset_bottom = 312.0
 
 [node name="ScoreLabel" type="Label" parent="ScoreCard"]
@@ -159,13 +162,26 @@ text = "SCORE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScoreBox" type="Label" parent="ScoreCard"]
+[node name="Score" type="HBoxContainer" parent="ScoreCard"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="ScoreCard/Score"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="ScoreBox" type="Label" parent="ScoreCard/Score"]
 layout_mode = 2
 theme = ExtResource("8_wcf7g")
 theme_type_variation = &"Numbers"
 text = "00000000"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="ScoreCard/Score"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("8_wcf7g")
 
 [node name="VSeparator" type="VSeparator" parent="ScoreCard"]
 layout_mode = 2
@@ -179,13 +195,26 @@ text = "LIVES"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LivesBox" type="Label" parent="ScoreCard"]
+[node name="Lives" type="HBoxContainer" parent="ScoreCard"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="ScoreCard/Lives"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="LivesBox" type="Label" parent="ScoreCard/Lives"]
 layout_mode = 2
 theme = ExtResource("8_wcf7g")
 theme_type_variation = &"Numbers"
 text = "3"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="ScoreCard/Lives"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("8_wcf7g")
 
 [node name="VSeparator2" type="VSeparator" parent="ScoreCard"]
 layout_mode = 2
@@ -199,13 +228,26 @@ text = "TIME"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RunTime" type="Label" parent="ScoreCard"]
+[node name="RunTime" type="HBoxContainer" parent="ScoreCard"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="ScoreCard/RunTime"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="RunTime" type="Label" parent="ScoreCard/RunTime"]
 layout_mode = 2
 theme = ExtResource("8_wcf7g")
 theme_type_variation = &"Numbers"
 text = "00:00.00"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="ScoreCard/RunTime"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("8_wcf7g")
 
 [node name="VSeparator3" type="VSeparator" parent="ScoreCard"]
 layout_mode = 2
@@ -219,13 +261,26 @@ text = "BEST TIME"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BestTime" type="Label" parent="ScoreCard"]
+[node name="BestTime" type="HBoxContainer" parent="ScoreCard"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="ScoreCard/BestTime"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="BestTime" type="Label" parent="ScoreCard/BestTime"]
 layout_mode = 2
 theme = ExtResource("8_wcf7g")
 theme_type_variation = &"Numbers"
 text = "00:00.00"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="ScoreCard/BestTime"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("8_wcf7g")
 
 [node name="Start" type="Node2D" parent="."]
 
@@ -328,7 +383,182 @@ theme = ExtResource("8_wcf7g")
 [node name="PowerBallTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="Pipes" type="Node2D" parent="."]
+script = ExtResource("13_12te1")
+
+[node name="LeftDoor" type="TextureRect" parent="Pipes"]
+offset_top = 312.0
+offset_right = 16.0
+offset_bottom = 360.0
+texture = ExtResource("14_33cmo")
+metadata/open = Vector2(0, 265)
+metadata/closed = Vector2(0, 312)
+
+[node name="RightDoor" type="TextureRect" parent="Pipes"]
+offset_left = 432.0
+offset_top = 312.0
+offset_right = 448.0
+offset_bottom = 360.0
+texture = ExtResource("14_33cmo")
+metadata/open = Vector2(432, 265)
+metadata/closed = Vector2(432, 312)
+
+[node name="TopDoor1L" type="TextureRect" parent="Pipes"]
+offset_left = 112.0
+offset_right = 128.0
+offset_bottom = 16.0
+texture = ExtResource("15_n2p48")
+metadata/open = Vector2(96, 0)
+metadata/closed = Vector2(112, 0)
+
+[node name="TopDoor1R" type="TextureRect" parent="Pipes"]
+offset_left = 128.0
+offset_right = 144.0
+offset_bottom = 16.0
+texture = ExtResource("15_n2p48")
+metadata/open = Vector2(144, 0)
+metadata/closed = Vector2(128, 0)
+
+[node name="TopDoor2L" type="TextureRect" parent="Pipes"]
+offset_left = 304.0
+offset_right = 320.0
+offset_bottom = 16.0
+texture = ExtResource("15_n2p48")
+metadata/open = Vector2(288, 0)
+metadata/closed = Vector2(304, 0)
+
+[node name="TopDoor2R" type="TextureRect" parent="Pipes"]
+offset_left = 320.0
+offset_right = 336.0
+offset_bottom = 16.0
+texture = ExtResource("15_n2p48")
+metadata/open = Vector2(336, 0)
+metadata/closed = Vector2(320, 0)
+
+[node name="LeftWall" type="TextureRect" parent="Pipes"]
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 296.0
+texture = ExtResource("14_33cmo")
+
+[node name="RightWall" type="TextureRect" parent="Pipes"]
+offset_left = 432.0
+offset_top = 16.0
+offset_right = 448.0
+offset_bottom = 296.0
+texture = ExtResource("14_33cmo")
+
+[node name="LeftLowEnd" type="TextureRect" parent="Pipes"]
+offset_top = 296.0
+offset_right = 16.0
+offset_bottom = 312.0
+texture = ExtResource("16_osyku")
+
+[node name="RightLowEnd" type="TextureRect" parent="Pipes"]
+offset_left = 432.0
+offset_top = 296.0
+offset_right = 448.0
+offset_bottom = 312.0
+texture = ExtResource("16_osyku")
+
+[node name="LeftCorner" type="TextureRect" parent="Pipes"]
+offset_right = 16.0
+offset_bottom = 16.0
+texture = ExtResource("17_jvxfq")
+
+[node name="RightCorner" type="TextureRect" parent="Pipes"]
+offset_left = 432.0
+offset_right = 448.0
+offset_bottom = 16.0
+texture = ExtResource("18_2ed71")
+
+[node name="LeftJoin1" type="TextureRect" parent="Pipes"]
+offset_top = 96.0
+offset_right = 16.0
+offset_bottom = 112.0
+texture = ExtResource("16_osyku")
+
+[node name="LeftJoin15" type="TextureRect" parent="Pipes"]
+offset_left = 432.0
+offset_top = 162.0
+offset_right = 448.0
+offset_bottom = 178.0
+texture = ExtResource("16_osyku")
+
+[node name="LeftJoin2" type="TextureRect" parent="Pipes"]
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 32.0
+texture = ExtResource("19_6cngp")
+
+[node name="LeftJoin16" type="TextureRect" parent="Pipes"]
+offset_left = 432.0
+offset_top = 16.0
+offset_right = 448.0
+offset_bottom = 32.0
+texture = ExtResource("19_6cngp")
+
+[node name="LeftJoin3" type="TextureRect" parent="Pipes"]
+offset_left = 16.0
+offset_right = 32.0
+offset_bottom = 16.0
+texture = ExtResource("20_fr68l")
+
+[node name="LeftJoin5" type="TextureRect" parent="Pipes"]
+offset_left = 144.0
+offset_right = 160.0
+offset_bottom = 16.0
+texture = ExtResource("20_fr68l")
+
+[node name="LeftJoin11" type="TextureRect" parent="Pipes"]
+offset_left = 336.0
+offset_right = 352.0
+offset_bottom = 16.0
+texture = ExtResource("20_fr68l")
+
+[node name="LeftJoin6" type="TextureRect" parent="Pipes"]
+offset_left = 96.0
+offset_right = 112.0
+offset_bottom = 16.0
+texture = ExtResource("21_hha8q")
+
+[node name="LeftJoin9" type="TextureRect" parent="Pipes"]
+offset_left = 288.0
+offset_right = 304.0
+offset_bottom = 16.0
+texture = ExtResource("21_hha8q")
+
+[node name="LeftJoin4" type="TextureRect" parent="Pipes"]
+offset_left = 32.0
+offset_right = 96.0
+offset_bottom = 16.0
+texture = ExtResource("15_n2p48")
+
+[node name="LeftJoin8" type="TextureRect" parent="Pipes"]
+offset_left = 160.0
+offset_right = 288.0
+offset_bottom = 16.0
+texture = ExtResource("15_n2p48")
+
+[node name="LeftJoin12" type="TextureRect" parent="Pipes"]
+offset_left = 352.0
+offset_right = 416.0
+offset_bottom = 16.0
+texture = ExtResource("15_n2p48")
+
+[node name="LeftJoin17" type="TextureRect" parent="Pipes"]
+offset_left = 416.0
+offset_right = 432.0
+offset_bottom = 16.0
+texture = ExtResource("21_hha8q")
+
+[node name="AlienTimer" type="Timer" parent="."]
+wait_time = 30.0
+autostart = true
+
 [connection signal="update_lives" from="." to="." method="_on_update_lives"]
 [connection signal="effect_finished" from="Paddle" to="." method="_on_paddle_effect_finished"]
 [connection signal="pressed" from="Paused/VBoxContainer/HBoxContainer/Quit" to="Paused" method="_on_quit_pressed"]
 [connection signal="timeout" from="PowerBallTimer" to="." method="_on_power_ball_timer_timeout"]
+[connection signal="door_opened" from="Pipes" to="." method="_on_pipes_door_opened"]
+[connection signal="timeout" from="AlienTimer" to="." method="_on_alien_timer_timeout"]

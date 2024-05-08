@@ -16,11 +16,11 @@ func set_upgrade(chr : String, color : Color) -> void:
 	
 func _on_body_entered(body: Node) -> void:
 	if body is Floor:
-		get_parent().remove_child(self)
-		queue_free()
+		get_parent().call_deferred("remove_child", self)
+		call_deferred("queue_free")
 		return
 	if body is Paddle:
 		upgrade_collected.emit(character)
-		get_parent().remove_child(self)
-		queue_free()
+		get_parent().call_deferred("remove_child", self)
+		call_deferred("queue_free")
 		

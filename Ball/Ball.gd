@@ -8,6 +8,7 @@ signal hit_brick(ball : Node, brick : Node)
 signal hit_paddle(ball : Node)
 signal hit_floor(ball : Node)
 signal hit_wall(ball : Node)
+signal hit_alien(ball : Node, alien : Node)
 
 var captured : bool = false
 var capture_object : Node2D
@@ -15,7 +16,7 @@ var capture_offset : Vector2 = Vector2.ZERO
 
 var speed : float = 100
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 #	angular_velocity = 0
 	rotation = 0
 	if captured:
@@ -50,6 +51,10 @@ func release() -> void:
 
 
 func _on_body_exited(body: Node) -> void:
+	if body is Alien:
+		body.hit()
+		hit_alien.emit(self, body)
+		return
 	if body is Brick:
 		if not body.visible:
 			return
@@ -81,7 +86,7 @@ func slowdown() -> void:
 	speed = 100
 
 
-func _on_body_entered(body: Node) -> void:
+func _on_body_entered(_body: Node) -> void:
 	pass # Replace with function body.
 
 func enable_sparkles() -> void:
@@ -89,3 +94,6 @@ func enable_sparkles() -> void:
 
 func disable_sparkles() -> void:
 	$CPUParticles2D.emitting = false
+
+func is_sparkles() -> bool:
+	return $CPUParticles2D.emitting

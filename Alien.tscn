@@ -1,0 +1,95 @@
+[gd_scene load_steps=21 format=3 uid="uid://bob33k7lrnm6o"]
+
+[ext_resource type="Script" path="res://Alien.gd" id="1_ciw1s"]
+[ext_resource type="Texture2D" uid="uid://deqh06kv1anp5" path="res://Aliens/Tri/Tri-0001.png" id="2_1hklp"]
+[ext_resource type="AudioStream" uid="uid://sfyq2erohryl" path="res://Sounds/AlienHit.wav" id="2_j1jdb"]
+[ext_resource type="Texture2D" uid="uid://dsuvjulxsa5l" path="res://Aliens/Tri/Tri-0002.png" id="3_1x3cl"]
+[ext_resource type="Texture2D" uid="uid://b8in8j4yaxowb" path="res://Aliens/Tri/Tri-0003.png" id="4_nyt8o"]
+[ext_resource type="Texture2D" uid="uid://0upjpvbh4oeg" path="res://Aliens/Tri/Tri-0004.png" id="5_x2w4f"]
+[ext_resource type="Texture2D" uid="uid://dpoftuxompm4s" path="res://Aliens/Tri/Tri-0005.png" id="6_bae3i"]
+[ext_resource type="Texture2D" uid="uid://5pwc323g6n8c" path="res://Aliens/Tri/Tri-0006.png" id="7_vmnl7"]
+[ext_resource type="Texture2D" uid="uid://btnvtnpebha76" path="res://Aliens/Tri/Tri-0007.png" id="8_06vyj"]
+[ext_resource type="Texture2D" uid="uid://bhux6lxg17klj" path="res://Aliens/Tri/Tri-0008.png" id="9_juw8u"]
+[ext_resource type="Texture2D" uid="uid://2q8t5flat6dl" path="res://Aliens/Tri/Tri-0009.png" id="10_ig0fr"]
+[ext_resource type="Texture2D" uid="uid://bayl5uu7b1akh" path="res://Aliens/Tri/Tri-0010.png" id="11_pvk2s"]
+[ext_resource type="Texture2D" uid="uid://d51nga80ks41" path="res://Aliens/Tri/Tri-0011.png" id="12_3racv"]
+[ext_resource type="Texture2D" uid="uid://dlvu83w7pugwa" path="res://Aliens/Tri/Tri-0012.png" id="13_5ljjq"]
+[ext_resource type="Texture2D" uid="uid://qrrrwetvtu3a" path="res://Aliens/Tri/Tri-0013.png" id="14_wewpv"]
+[ext_resource type="Texture2D" uid="uid://i6e0y736pxql" path="res://Aliens/Tri/Tri-0014.png" id="15_arfuj"]
+[ext_resource type="Texture2D" uid="uid://cguwuqqbomqx1" path="res://Aliens/Tri/Tri-0015.png" id="16_diyot"]
+[ext_resource type="Texture2D" uid="uid://e8700wifkedm" path="res://Aliens/Tri/Tri-0016.png" id="17_8rd6i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kcrvk"]
+size = Vector2(24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nevay"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1hklp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1x3cl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_nyt8o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_x2w4f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_bae3i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_vmnl7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_06vyj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_juw8u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ig0fr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_pvk2s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_3racv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_5ljjq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_wewpv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_arfuj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_diyot")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_8rd6i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="Alien" type="CharacterBody2D"]
+position = Vector2(64, 32)
+collision_layer = 32
+collision_mask = 16
+script = ExtResource("1_ciw1s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kcrvk")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nevay")
+
+[node name="AlienSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_j1jdb")
+bus = &"Effects"

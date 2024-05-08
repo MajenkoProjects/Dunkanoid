@@ -48,8 +48,8 @@ func _ready() -> void:
 	else:
 		highscore = 0
 		relative_mouse = true
-		music_volume = AudioServer.get_bus_volume_db(1)	
-		effects_volume = AudioServer.get_bus_volume_db(2)	
+		music_volume = int(AudioServer.get_bus_volume_db(1))
+		effects_volume = int(AudioServer.get_bus_volume_db(2))
 		best_times = {}
 	_loading = false
 
