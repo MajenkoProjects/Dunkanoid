@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://deyotp28r4uwj"]
+
+[ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="1_v1yul"]
+[ext_resource type="Script" path="res://LoadPanel.gd" id="2_rj17x"]
+
+[node name="LoadPanel" type="PanelContainer"]
+visible = false
+offset_left = 464.0
+offset_right = 624.0
+offset_bottom = 360.0
+theme = ExtResource("1_v1yul")
+script = ExtResource("2_rj17x")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Cancel" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme = ExtResource("1_v1yul")
+text = "CANCEL"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Cancel" to="." method="_on_cancel_pressed"]

@@ -6,7 +6,7 @@ func _ready() -> void:
 
 func _on_text_changed(new_text : String) -> void:
 	var caret_pos = caret_column
-	text = new_text.to_upper().replace(" ", "")
+	text = new_text.to_upper()
 	caret_column = caret_pos
 
 func _on_text_submitted(new_text : String) -> void:

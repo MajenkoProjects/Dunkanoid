@@ -34,6 +34,8 @@ var effects_volume : int :
 
 var best_times : Dictionary
 
+var start_level : String = "DUNKANOID"
+
 var _loading : bool = false
 
 func _ready() -> void:

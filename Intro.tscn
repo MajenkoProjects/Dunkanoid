@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2oboya05agti"]
+[gd_scene load_steps=9 format=3 uid="uid://c2oboya05agti"]
 
 [ext_resource type="Script" path="res://Intro.gd" id="1_1hnh1"]
 [ext_resource type="Material" uid="uid://bv4vhjg83fqpn" path="res://ArkanoidMaterial.tres" id="2_a44d8"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="3_8d2ix"]
+[ext_resource type="Script" path="res://ArkaLabel.gd" id="3_dqq2b"]
+[ext_resource type="Script" path="res://ExitButton.gd" id="4_ty0na"]
+[ext_resource type="PackedScene" uid="uid://deyotp28r4uwj" path="res://LoadPanel.tscn" id="5_esv62"]
 
 [sub_resource type="Curve" id="Curve_jhhjd"]
 min_value = -200.0
@@ -34,29 +37,10 @@ color_ramp = SubResource("Gradient_431mb")
 hue_variation_max = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-offset_top = 104.0
 offset_right = 640.0
-offset_bottom = 232.0
+offset_bottom = 297.0
 
-[node name="Dunkanoid" type="Label" parent="VBoxContainer"]
-material = ExtResource("2_a44d8")
-layout_mode = 2
-theme = ExtResource("3_8d2ix")
-theme_type_variation = &"Arkanoid"
-text = "DUNKANOID"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Revenge" type="Label" parent="VBoxContainer"]
-material = ExtResource("2_a44d8")
-layout_mode = 2
-theme = ExtResource("3_8d2ix")
-theme_type_variation = &"Arkanoid"
-text = "REVENGE OF AAH"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer"]
+[node name="VSeparator3" type="VSeparator" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("3_8d2ix")
@@ -69,11 +53,13 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
-[node name="Play" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="ArkaLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+material = ExtResource("2_a44d8")
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
-text = "PLAY"
-icon_alignment = 1
+theme_type_variation = &"Arkanoid"
+text = "DUNKANOID"
+script = ExtResource("3_dqq2b")
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -88,53 +74,123 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
-[node name="Settings" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="Revenge" type="Label" parent="VBoxContainer/HBoxContainer2"]
+material = ExtResource("2_a44d8")
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
-text = "SETTINGS"
-icon_alignment = 1
+theme_type_variation = &"Arkanoid"
+text = "REVENGE OF AAH"
+script = ExtResource("3_dqq2b")
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="Play" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer3"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/Play"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
-[node name="Editor" type="Button" parent="VBoxContainer/HBoxContainer3"]
+[node name="Play" type="Button" parent="VBoxContainer/Play"]
+layout_mode = 2
+theme = ExtResource("3_8d2ix")
+text = "PLAY"
+icon_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/Play"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="PlayLevel" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/PlayLevel"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="PlayLevel" type="Button" parent="VBoxContainer/PlayLevel"]
+layout_mode = 2
+theme = ExtResource("3_8d2ix")
+text = "PLAY LEVEL"
+icon_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/PlayLevel"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="LevelEditor" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/LevelEditor"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="Editor" type="Button" parent="VBoxContainer/LevelEditor"]
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 text = "LEVEL EDITOR"
 icon_alignment = 1
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/HBoxContainer3"]
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/LevelEditor"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Settings" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer4"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/Settings"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
-[node name="Exit" type="Button" parent="VBoxContainer/HBoxContainer4"]
+[node name="Settings" type="Button" parent="VBoxContainer/Settings"]
+layout_mode = 2
+theme = ExtResource("3_8d2ix")
+text = "SETTINGS"
+icon_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/Settings"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="ExitButton" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+script = ExtResource("4_ty0na")
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/ExitButton"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="Exit" type="Button" parent="VBoxContainer/ExitButton"]
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 text = "EXIT"
 icon_alignment = 1
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/HBoxContainer4"]
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/ExitButton"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 theme = ExtResource("3_8d2ix")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -192,7 +248,15 @@ text = "00000000"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Play" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer3/Editor" to="." method="_on_editor_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer4/Exit" to="." method="_on_exit_pressed"]
+[node name="LoadPanel" parent="." instance=ExtResource("5_esv62")]
+offset_left = 239.0
+offset_top = 116.0
+offset_right = 399.0
+offset_bottom = 297.0
+
+[connection signal="pressed" from="VBoxContainer/Play/Play" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/PlayLevel/PlayLevel" to="." method="_on_play_level_pressed"]
+[connection signal="pressed" from="VBoxContainer/LevelEditor/Editor" to="." method="_on_editor_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/ExitButton/Exit" to="." method="_on_exit_pressed"]
+[connection signal="load_level" from="LoadPanel" to="." method="_on_load_panel_load_level"]

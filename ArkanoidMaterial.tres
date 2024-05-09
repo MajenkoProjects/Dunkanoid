@@ -1,6 +1,8 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bv4vhjg83fqpn"]
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bv4vhjg83fqpn"]
 
 [ext_resource type="Shader" path="res://Arkanoid.gdshader" id="1_otqlg"]
+[ext_resource type="Texture2D" uid="uid://b56kjbt4ub52n" path="res://NoidTex.png" id="2_rlu6f"]
 
 [resource]
 shader = ExtResource("1_otqlg")
+shader_parameter/ColourTexture = ExtResource("2_rlu6f")

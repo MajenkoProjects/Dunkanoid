@@ -39,7 +39,7 @@ hue_variation_max = 1.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_of1j8")
-volume_db = -11.243
+volume_db = -1.874
 autoplay = true
 bus = &"Effects"
 

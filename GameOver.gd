@@ -10,7 +10,7 @@ func _on_timer_timeout() -> void:
 	get_tree().change_scene_to_file("res://Intro.tscn")
 
 func _on_update_score(score : int) -> void:
-	$VBoxContainer/ScoreBox.text = "%08d" % score
+	$VBoxContainer/HBoxContainer/ScoreBox.text = "%08d" % score
 
 
 func _on_game_over_sound_finished() -> void:

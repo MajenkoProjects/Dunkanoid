@@ -1,8 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://c3ikcjhbrm0hp"]
+[gd_scene load_steps=7 format=3 uid="uid://c3ikcjhbrm0hp"]
 
 [ext_resource type="Script" path="res://GameOver.gd" id="1_clfqa"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="3_km2fx"]
-[ext_resource type="Material" uid="uid://bv4vhjg83fqpn" path="res://ArkanoidMaterial.tres" id="4_et3vd"]
+[ext_resource type="Shader" path="res://Arkanoid.gdshader" id="3_u76hk"]
+[ext_resource type="Texture2D" uid="uid://b56kjbt4ub52n" path="res://NoidTex.png" id="4_lxs2b"]
+[ext_resource type="Script" path="res://ArkaLabel.gd" id="5_g14o8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qq8am"]
+shader = ExtResource("3_u76hk")
+shader_parameter/rect_global_position = Vector2(0, 0.205567)
+shader_parameter/rect_size = Vector2(640, 25)
+shader_parameter/ColourTexture = ExtResource("4_lxs2b")
 
 [node name="GameOver" type="Node2D"]
 texture_filter = 1
@@ -23,13 +31,14 @@ size_flags_vertical = 3
 theme = ExtResource("3_km2fx")
 
 [node name="GameOver" type="Label" parent="VBoxContainer"]
-material = ExtResource("4_et3vd")
+material = SubResource("ShaderMaterial_qq8am")
 layout_mode = 2
 theme = ExtResource("3_km2fx")
 theme_type_variation = &"Arkanoid"
 text = "GAME OVER"
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("5_g14o8")
 
 [node name="VSeparator2" type="VSeparator" parent="VBoxContainer"]
 layout_mode = 2

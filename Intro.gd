@@ -17,7 +17,7 @@ func _ready() -> void:
 		EventBus.update_highscore.connect(_on_update_highscore)
 		_on_update_score(Global.score)
 		_on_update_highscore(Global.highscore)
-		$VBoxContainer/HBoxContainer/Play.grab_focus()
+		$VBoxContainer/Play/Play.grab_focus()
 		Music.play_intro()
 		get_tree().create_timer(5).timeout.connect(_show_credits)
 
@@ -47,6 +47,7 @@ func _hide_credits_done() -> void:
 	get_tree().create_timer(1).timeout.connect(_show_credits)
 
 func _on_button_pressed() -> void:
+	Global.start_level = "DUNKANOID"
 	get_tree().change_scene_to_file("res://Dunkanoid.tscn")
 	
 
@@ -75,3 +76,11 @@ func dump_all(dir : String, indent : String = "") -> void:
 	for file in DirAccess.get_files_at(dir):
 		print("%s%s" % [indent, file])
 		
+
+
+func _on_play_level_pressed() -> void:
+	$LoadPanel.show_panel(true)
+
+func _on_load_panel_load_level(level_name: String) -> void:
+	Global.start_level = level_name
+	get_tree().change_scene_to_file("res://Dunkanoid.tscn")

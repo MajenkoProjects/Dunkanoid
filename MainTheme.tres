@@ -96,6 +96,12 @@ shadow_size = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sf0ln"]
 bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color(1, 0.701961, 0.172549, 0.247059)
+shadow_size = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mruxx"]
 content_margin_top = 20.0
@@ -108,9 +114,13 @@ shadow_size = 25
 
 [resource]
 Arkanoid/base_type = &"Label"
-Arkanoid/colors/font_color = Color(1, 0, 1, 1)
-Arkanoid/colors/font_outline_color = Color(1, 0.647059, 0, 1)
+Arkanoid/colors/font_color = Color(1, 1, 0, 1)
+Arkanoid/colors/font_outline_color = Color(0.85098, 0.647059, 0, 0.721569)
+Arkanoid/colors/font_shadow_color = Color(0.917647, 0.427451, 0, 0.615686)
 Arkanoid/constants/outline_size = 2
+Arkanoid/constants/shadow_offset_x = 0
+Arkanoid/constants/shadow_offset_y = 0
+Arkanoid/constants/shadow_outline_size = 6
 Arkanoid/font_sizes/font_size = 24
 Arkanoid/fonts/font = ExtResource("1_s07ae")
 Button/font_sizes/font_size = 20

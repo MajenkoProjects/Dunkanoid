@@ -7,8 +7,8 @@
 [ext_resource type="Script" path="res://AllCapsEntry.gd" id="5_aqqxj"]
 [ext_resource type="Script" path="res://LevelSelector.gd" id="6_brm2b"]
 [ext_resource type="Script" path="res://BackgroundSelector.gd" id="7_x1vot"]
-[ext_resource type="Script" path="res://LoadPanel.gd" id="8_0o6x4"]
 [ext_resource type="Script" path="res://HexOnly.gd" id="8_72pke"]
+[ext_resource type="PackedScene" uid="uid://deyotp28r4uwj" path="res://LoadPanel.tscn" id="9_joiqc"]
 [ext_resource type="Script" path="res://ExportPanel.gd" id="9_nmcps"]
 [ext_resource type="Script" path="res://ImportPanel.gd" id="10_q6s0l"]
 
@@ -2077,35 +2077,7 @@ focus_mode = 0
 theme = ExtResource("4_usb0o")
 text = "EXIT"
 
-[node name="LoadPanel" type="PanelContainer" parent="."]
-visible = false
-offset_left = 464.0
-offset_right = 624.0
-offset_bottom = 360.0
-theme = ExtResource("4_usb0o")
-script = ExtResource("8_0o6x4")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="LoadPanel"]
-layout_mode = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="LoadPanel/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="LoadPanel/VBoxContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="LoadPanel/VBoxContainer"]
-layout_mode = 2
-
-[node name="Cancel" type="Button" parent="LoadPanel/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-focus_mode = 0
-theme = ExtResource("4_usb0o")
-text = "CANCEL"
+[node name="LoadPanel" parent="." instance=ExtResource("9_joiqc")]
 
 [node name="ExportPanel" type="PanelContainer" parent="."]
 visible = false
@@ -2174,8 +2146,6 @@ text = "CANCEL"
 [connection signal="pressed" from="VBoxContainer/HBoxContainer3/Export" to="." method="_on_export_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/New" to="." method="_on_new_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/Exit" to="." method="_on_exit_pressed"]
-[connection signal="load_file" from="LoadPanel" to="." method="_on_load_panel_load_file"]
-[connection signal="pressed" from="LoadPanel/VBoxContainer/HBoxContainer/Cancel" to="LoadPanel" method="_on_cancel_pressed"]
 [connection signal="pressed" from="ExportPanel/VBoxContainer/Close" to="ExportPanel" method="_on_close_pressed"]
 [connection signal="object_imported" from="ImportPanel" to="." method="_on_import_panel_object_imported"]
 [connection signal="pressed" from="ImportPanel/VBoxContainer/HBoxContainer/Import" to="ImportPanel" method="_on_import_pressed"]

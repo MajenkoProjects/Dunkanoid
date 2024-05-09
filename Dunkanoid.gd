@@ -55,6 +55,8 @@ var level_starting : bool = false
 var time_run : bool = false
 
 func _ready() -> void:
+	level = Global.start_level
+	
 	if Global.relative_mouse:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	else:
