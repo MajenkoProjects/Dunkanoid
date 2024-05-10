@@ -2146,6 +2146,7 @@ text = "CANCEL"
 [connection signal="pressed" from="VBoxContainer/HBoxContainer3/Export" to="." method="_on_export_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/New" to="." method="_on_new_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/Exit" to="." method="_on_exit_pressed"]
+[connection signal="load_file" from="LoadPanel" to="." method="_on_load_panel_load_file"]
 [connection signal="pressed" from="ExportPanel/VBoxContainer/Close" to="ExportPanel" method="_on_close_pressed"]
 [connection signal="object_imported" from="ImportPanel" to="." method="_on_import_panel_object_imported"]
 [connection signal="pressed" from="ImportPanel/VBoxContainer/HBoxContainer/Import" to="ImportPanel" method="_on_import_pressed"]

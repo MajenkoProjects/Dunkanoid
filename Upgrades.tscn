@@ -1,0 +1,130 @@
+[gd_scene load_steps=5 format=3 uid="uid://bfibb6fr6rox7"]
+
+[ext_resource type="Script" path="res://Upgrades.gd" id="1_ouypj"]
+[ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="1_rv7oa"]
+[ext_resource type="SpriteFrames" uid="uid://c6wwkgmwfpdu7" path="res://Coin/Coin.tres" id="2_woppf"]
+[ext_resource type="PackedScene" uid="uid://bdhok2nkoirl0" path="res://PermUpgrade/PermUpgrade.tscn" id="4_rlh0r"]
+
+[node name="Upgrades" type="Node2D"]
+script = ExtResource("1_ouypj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 624.0
+offset_bottom = 344.0
+
+[node name="Tokens" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/Tokens"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_rv7oa")
+
+[node name="Label" type="Label" parent="VBoxContainer/Tokens"]
+layout_mode = 2
+theme = ExtResource("1_rv7oa")
+text = "23"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Tokens"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VBoxContainer/Tokens/MarginContainer"]
+sprite_frames = ExtResource("2_woppf")
+autoplay = "default"
+centered = false
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_rv7oa")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+vertical_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_rv7oa")
+
+[node name="EffectTime" parent="VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("4_rlh0r")]
+layout_mode = 2
+Name = "Effect Time"
+GlobalVariable = "effect_time"
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_rv7oa")
+
+[node name="EffectChance" parent="VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("4_rlh0r")]
+layout_mode = 2
+Name = "Effect Chance"
+GlobalVariable = "powerup_percent"
+
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_rv7oa")
+
+[node name="LaserPower" parent="VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("4_rlh0r")]
+layout_mode = 2
+Name = "Laser Power"
+GlobalVariable = "laser_power"
+
+[node name="HSeparator4" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_rv7oa")
+
+[node name="Lives" parent="VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("4_rlh0r")]
+layout_mode = 2
+Name = "Lives"
+GlobalVariable = "extra_lives"
+
+[node name="HSeparator5" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_rv7oa")
+
+[node name="Split" parent="VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("4_rlh0r")]
+layout_mode = 2
+Name = "Split"
+GlobalVariable = "ball_split"
+
+[node name="HSeparator6" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_rv7oa")
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_rv7oa")
+
+[node name="Exit" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/Exit"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_rv7oa")
+
+[node name="Exit" type="Button" parent="VBoxContainer/Exit"]
+layout_mode = 2
+theme = ExtResource("1_rv7oa")
+text = "EXIT"
+
+[connection signal="pressed" from="VBoxContainer/Exit/Exit" to="." method="_on_exit_pressed"]

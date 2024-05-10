@@ -19,7 +19,7 @@ var width : int :
 	get:
 		return $CollisionShape2D.shape.height
 
-func hit() -> void:
+func hit(_power : int) -> void:
 	pass
 
 func _switch_effect(effect : int, time : int = 0) -> void:
@@ -51,13 +51,13 @@ func show_paddle(paddle : Node2D) -> void:
 func big() -> void:
 	show_paddle($Big)
 	$GrowSound.play()
-	_switch_effect(PADDLE_LARGE, 30)
+	_switch_effect(PADDLE_LARGE, Global.get_effect_time())
 
 func small() -> void:
 	show_paddle($Small)
 	$CollisionShape2D.shape.height = 24
 	$ShrinkSound.play()
-	_switch_effect(PADDLE_SMALL, 30)
+	_switch_effect(PADDLE_SMALL, Global.get_effect_time())
 
 func normal() -> void:
 	show_paddle($Normal)
@@ -67,12 +67,12 @@ func normal() -> void:
 func laser() -> void:
 	show_paddle($Laser)
 	$CollisionShape2D.shape.height = 32
-	_switch_effect(PADDLE_LASER, 15)
+	_switch_effect(PADDLE_LASER, Global.get_effect_time())
 	
 func capture() -> void:
 	show_paddle($Magnet)
 	$CollisionShape2D.shape.height = 32
-	_switch_effect(PADDLE_CAPTURE, 15)
+	_switch_effect(PADDLE_CAPTURE, Global.get_effect_time())
 	
 func _on_effect_timer_timeout() -> void:
 	normal()

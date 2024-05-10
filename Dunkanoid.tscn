@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://4q0epdnb0x4s"]
+[gd_scene load_steps=33 format=3 uid="uid://4q0epdnb0x4s"]
 
 [ext_resource type="Script" path="res://Dunkanoid.gd" id="1_kv4if"]
 [ext_resource type="PackedScene" uid="uid://dndemjw7up2r6" path="res://Paddle/Paddle.tscn" id="2_26c5i"]
@@ -9,6 +9,7 @@
 [ext_resource type="PhysicsMaterial" uid="uid://cql6t5hd40fgn" path="res://CorePhysics.tres" id="7_300m5"]
 [ext_resource type="AudioStream" uid="uid://bojc0es7165ed" path="res://Sounds/Collected.wav" id="8_fpbsr"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="8_wcf7g"]
+[ext_resource type="AudioStream" uid="uid://b6vosap1la1ts" path="res://Sounds/BrickHit.wav" id="9_3ju8x"]
 [ext_resource type="AudioStream" uid="uid://cpf0y72o6wrv2" path="res://Sounds/AlienDie.wav" id="9_lt28f"]
 [ext_resource type="Script" path="res://Paused.gd" id="12_8qv0d"]
 [ext_resource type="Shader" path="res://Arkanoid.gdshader" id="12_ljnes"]
@@ -24,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://1ar54kb0l0sm" path="res://Pipes/vPipeEndHigh.png" id="19_6cngp"]
 [ext_resource type="Texture2D" uid="uid://bj28rs6816gn8" path="res://Pipes/hPipeEndLeft.png" id="20_fr68l"]
 [ext_resource type="Texture2D" uid="uid://dnm2slmsm5wnw" path="res://Pipes/hPipeEndRight.png" id="21_hha8q"]
+[ext_resource type="SpriteFrames" uid="uid://c6wwkgmwfpdu7" path="res://Coin/Coin.tres" id="26_ahhyt"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jsudl"]
 normal = Vector2(0, 1)
@@ -40,13 +42,13 @@ distance = -432.0
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_48dqy"]
 distance = -360.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xvkhj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_acp7s"]
 shader = ExtResource("12_ljnes")
-shader_parameter/rect_global_position = Vector2(0, 0.30621)
-shader_parameter/rect_size = Vector2(448, 25)
+shader_parameter/rect_global_position = Vector2(0, 0)
+shader_parameter/rect_size = Vector2(150, 25)
 shader_parameter/ColourTexture = ExtResource("13_u52d1")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_j13aj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cxvt8"]
 shader = ExtResource("12_ljnes")
 shader_parameter/rect_global_position = Vector2(0, 0)
 shader_parameter/rect_size = Vector2(89, 25)
@@ -101,6 +103,10 @@ bus = &"Effects"
 
 [node name="UpgradeCollected" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("8_fpbsr")
+bus = &"Effects"
+
+[node name="CoinCollected" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("9_3ju8x")
 bus = &"Effects"
 
 [node name="AlienDie" type="AudioStreamPlayer" parent="Sounds"]
@@ -316,7 +322,7 @@ theme_type_variation = &"RoundStart"
 layout_mode = 2
 
 [node name="Title" type="Label" parent="Start/VBoxContainer/PanelContainer/VBoxContainer"]
-material = SubResource("ShaderMaterial_xvkhj")
+material = SubResource("ShaderMaterial_acp7s")
 layout_mode = 2
 theme = ExtResource("8_wcf7g")
 theme_type_variation = &"Arkanoid"
@@ -364,7 +370,7 @@ size_flags_vertical = 3
 theme = ExtResource("8_wcf7g")
 
 [node name="Label" type="Label" parent="Paused/VBoxContainer"]
-material = SubResource("ShaderMaterial_j13aj")
+material = SubResource("ShaderMaterial_cxvt8")
 layout_mode = 2
 theme = ExtResource("8_wcf7g")
 theme_type_variation = &"Arkanoid"
@@ -571,6 +577,34 @@ texture = ExtResource("21_hha8q")
 [node name="AlienTimer" type="Timer" parent="."]
 wait_time = 30.0
 autostart = true
+
+[node name="Tokens" type="HBoxContainer" parent="."]
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 624.0
+offset_bottom = 38.0
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="Tokens"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("8_wcf7g")
+
+[node name="TokenLabel" type="Label" parent="Tokens"]
+layout_mode = 2
+theme = ExtResource("8_wcf7g")
+text = "23"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Tokens"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Tokens/MarginContainer"]
+sprite_frames = ExtResource("26_ahhyt")
+autoplay = "default"
+centered = false
 
 [connection signal="update_lives" from="." to="." method="_on_update_lives"]
 [connection signal="effect_finished" from="Paddle" to="." method="_on_paddle_effect_finished"]

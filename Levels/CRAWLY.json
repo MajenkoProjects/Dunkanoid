@@ -1,0 +1,27 @@
+{
+  "background": "BlueBlobs",
+  "data": [
+    "             ",
+    "             ",
+    "   gg   gg   ",
+    "     g g     ",
+    "     CCC     ",
+    "    CCCCC    ",
+    "    CCGCC    ",
+    " ggggYYYgggg ",
+    "g   GGGGG   g",
+    "     YYY     ",
+    "  gggGGGggg  ",
+    " g  YYYYY  g ",
+    "     GGG     ",
+    "   ggYYYgg   ",
+    "  g  GGG  g  ",
+    "      G      ",
+    "    gg gg    ",
+    "   g     g   "
+  ],
+  "left": "GRILLE",
+  "name": "CRAWLY",
+  "right": "THOPTER",
+  "tint": "FFFFFF"
+}

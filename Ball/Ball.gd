@@ -4,11 +4,11 @@ class_name Ball
 const MIN_SPEED = 50.0
 const MAX_SPEED = 500.0
 
-signal hit_brick(ball : Node, brick : Node)
-signal hit_paddle(ball : Node)
-signal hit_floor(ball : Node)
-signal hit_wall(ball : Node)
-signal hit_alien(ball : Node, alien : Node)
+signal hit_brick(ball : Node, brick : Node, power : int)
+signal hit_paddle(ball : Node, power : int)
+signal hit_floor(ball : Node, power : int)
+signal hit_wall(ball : Node, power : int)
+signal hit_alien(ball : Node, alien : Node, power : int)
 
 var captured : bool = false
 var capture_object : Node2D
@@ -31,7 +31,8 @@ func _physics_process(_delta: float) -> void:
 	else:
 		if linear_velocity.length() != speed:
 			linear_velocity = linear_velocity.normalized() * speed
-
+		if linear_velocity == Vector2.ZERO:
+			linear_velocity = Vector2(randf() - 0.5, randf() - 0.5).normalized() * speed
 
 
 
@@ -52,23 +53,23 @@ func release() -> void:
 
 func _on_body_exited(body: Node) -> void:
 	if body is Alien:
-		body.hit()
-		hit_alien.emit(self, body)
+		body.hit(1)
+		hit_alien.emit(self, body, 1)
 		return
 	if body is Brick:
 		if not body.visible:
 			return
 		$BrickSound.play()
-		body.hit()
-		hit_brick.emit(self, body)
+		body.hit(1)
+		hit_brick.emit(self, body, 1)
 		speed += 1
 		return
 	if body is Paddle:
 		var diff = (position.x - body.position.x) / (body.width/2)
 		linear_velocity = (Vector2(diff, -1).normalized()) * speed
 		$PaddleSound.play()
-		body.hit()
-		hit_paddle.emit(self)
+		body.hit(1)
+		hit_paddle.emit(self, 1)
 		return
 	if body is Wall:
 		if abs(linear_velocity.y) < 0.01:
@@ -76,10 +77,10 @@ func _on_body_exited(body: Node) -> void:
 		elif abs(linear_velocity.y) < 1:
 			linear_velocity.y *= 10.0
 		$WallSound.play()
-		hit_wall.emit(self)
+		hit_wall.emit(self, 1)
 		return
 	if body is Floor:
-		hit_floor.emit(self)
+		hit_floor.emit(self, 1)
 		return
 
 func slowdown() -> void:

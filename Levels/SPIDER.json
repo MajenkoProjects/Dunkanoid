@@ -1,0 +1,27 @@
+{
+  "background": "RedBoxes",
+  "data": [
+    "             ",
+    "             ",
+    "             ",
+    "             ",
+    "    gsssg    ",
+    "   gYYYYYg   ",
+    "O gYYYYYYYg O",
+    "O gYYYYYYYg O",
+    "O gYYYYYYYg O",
+    "O gYYYYYYYg O",
+    "O gsgYYYgsg O",
+    "O g CgggC g O",
+    "O g C B C g O",
+    "O g C B C g O",
+    "O g C B C g O",
+    "OgggC B CgggO",
+    "             ",
+    "             "
+  ],
+  "left": "DUNKANOID",
+  "name": "SPIDER",
+  "right": "DUNKANOID",
+  "tint": "FFFFFF"
+}

@@ -1,0 +1,27 @@
+{
+  "background": "RedBoxes",
+  "data": [
+    "             ",
+    "             ",
+    "             ",
+    " g         g ",
+    " Rg       gR ",
+    " RGg     gGR ",
+    " RGCg   gCGR ",
+    " RGCOg gOCGR ",
+    " RGCOWsWOCGR ",
+    " RGCOW WOCGR ",
+    " RGCOW WOCGR ",
+    " gGCOW WOCGg ",
+    "  gCOW WOCg  ",
+    "   gOW WOg   ",
+    "    gW Wg    ",
+    "     gig     ",
+    "             ",
+    "             "
+  ],
+  "left": "DUNKANOID",
+  "name": "WINGS",
+  "right": "DUNKANOID",
+  "tint": "FFFFFF"
+}

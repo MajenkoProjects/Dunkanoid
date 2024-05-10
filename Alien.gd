@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name Alien
 
-signal alien_died(value : int)
+signal alien_died(alien : Node2D, value : int)
 
 @export var hits : int = 5
 @export var points : int = 500
@@ -21,10 +21,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		move_and_slide()
 
-func hit() -> void:
-	hits -= 1
+func hit(power : int) -> void:
+	hits -= power
 	if hits <= 0:
-		alien_died.emit(points)
+		alien_died.emit(self, points)
 		get_parent().call_deferred("remove_child", self)
 		call_deferred("queue_free")	
 	else:

@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2oboya05agti"]
+[gd_scene load_steps=13 format=3 uid="uid://c2oboya05agti"]
 
 [ext_resource type="Script" path="res://Intro.gd" id="1_1hnh1"]
-[ext_resource type="Material" uid="uid://bv4vhjg83fqpn" path="res://ArkanoidMaterial.tres" id="2_a44d8"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="3_8d2ix"]
 [ext_resource type="Script" path="res://ArkaLabel.gd" id="3_dqq2b"]
+[ext_resource type="Shader" path="res://Arkanoid.gdshader" id="3_eo4f3"]
 [ext_resource type="Script" path="res://ExitButton.gd" id="4_ty0na"]
+[ext_resource type="Texture2D" uid="uid://b56kjbt4ub52n" path="res://NoidTex.png" id="4_v8i0c"]
 [ext_resource type="PackedScene" uid="uid://deyotp28r4uwj" path="res://LoadPanel.tscn" id="5_esv62"]
+[ext_resource type="SpriteFrames" uid="uid://c6wwkgmwfpdu7" path="res://Coin/Coin.tres" id="7_2tpc7"]
 
 [sub_resource type="Curve" id="Curve_jhhjd"]
 min_value = -200.0
@@ -15,6 +17,18 @@ point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_431mb"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ciis"]
+shader = ExtResource("3_eo4f3")
+shader_parameter/rect_global_position = Vector2(0, 0)
+shader_parameter/rect_size = Vector2(150, 25)
+shader_parameter/ColourTexture = ExtResource("4_v8i0c")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ug7r"]
+shader = ExtResource("3_eo4f3")
+shader_parameter/rect_global_position = Vector2(0, 0)
+shader_parameter/rect_size = Vector2(242, 25)
+shader_parameter/ColourTexture = ExtResource("4_v8i0c")
 
 [node name="Intro" type="Node2D"]
 script = ExtResource("1_1hnh1")
@@ -54,7 +68,7 @@ size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
 [node name="ArkaLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
-material = ExtResource("2_a44d8")
+material = SubResource("ShaderMaterial_4ciis")
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 theme_type_variation = &"Arkanoid"
@@ -75,7 +89,7 @@ size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
 [node name="Revenge" type="Label" parent="VBoxContainer/HBoxContainer2"]
-material = ExtResource("2_a44d8")
+material = SubResource("ShaderMaterial_5ug7r")
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 theme_type_variation = &"Arkanoid"
@@ -126,6 +140,25 @@ text = "PLAY LEVEL"
 icon_alignment = 1
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer/PlayLevel"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="Upgrades" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/Upgrades"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="Upgrades" type="Button" parent="VBoxContainer/Upgrades"]
+layout_mode = 2
+theme = ExtResource("3_8d2ix")
+text = "UPGRADES"
+icon_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/Upgrades"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
@@ -248,6 +281,34 @@ text = "00000000"
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 624.0
+offset_bottom = 38.0
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_8d2ix")
+
+[node name="Label" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("3_8d2ix")
+text = "23"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer2"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HBoxContainer2/MarginContainer"]
+sprite_frames = ExtResource("7_2tpc7")
+autoplay = "default"
+centered = false
+
 [node name="LoadPanel" parent="." instance=ExtResource("5_esv62")]
 offset_left = 239.0
 offset_top = 116.0
@@ -256,6 +317,7 @@ offset_bottom = 297.0
 
 [connection signal="pressed" from="VBoxContainer/Play/Play" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/PlayLevel/PlayLevel" to="." method="_on_play_level_pressed"]
+[connection signal="pressed" from="VBoxContainer/Upgrades/Upgrades" to="." method="_on_upgrades_pressed"]
 [connection signal="pressed" from="VBoxContainer/LevelEditor/Editor" to="." method="_on_editor_pressed"]
 [connection signal="pressed" from="VBoxContainer/Settings/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/ExitButton/Exit" to="." method="_on_exit_pressed"]

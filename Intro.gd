@@ -1,5 +1,7 @@
 extends Node2D
 
+@onready var UpgradeTokensNode = $HBoxContainer2/Label
+
 const credits = [
 	["Design", "Majenko"],
 	["Programming", "Majenko"],
@@ -12,6 +14,7 @@ var credit : int = 0
 func _ready() -> void:
 	#	dump_all("res://")
 	
+		UpgradeTokensNode.text = "%d" % Global.upgrade_tokens
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		EventBus.update_score.connect(_on_update_score)
 		EventBus.update_highscore.connect(_on_update_highscore)
@@ -84,3 +87,7 @@ func _on_play_level_pressed() -> void:
 func _on_load_panel_load_level(level_name: String) -> void:
 	Global.start_level = level_name
 	get_tree().change_scene_to_file("res://Dunkanoid.tscn")
+
+
+func _on_upgrades_pressed() -> void:
+	get_tree().change_scene_to_file("res://Upgrades.tscn")

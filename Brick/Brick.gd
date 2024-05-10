@@ -22,10 +22,10 @@ func _ready() -> void:
 func _process(_delta) -> void:
 	pass
 
-func hit() -> void:
+func hit(power : int) -> void:
 	if hits <= 0:
 		return
-	hits -= 1
+	hits -= power
 	if hits <= 0:
 		collision_layer = 0
 		if my_type == INVULNERABLE:

@@ -1,0 +1,27 @@
+{
+  "background": "BlueBlobs",
+  "data": [
+    "             ",
+    "             ",
+    " g         g ",
+    " gg       gg ",
+    " ggg     ggg ",
+    " gOgg   ggBg ",
+    " gOgggggggBg ",
+    " g gCgggRg g ",
+    " g gCgGgRg g ",
+    " g g gGg g g ",
+    " g g g g g g ",
+    " g g g g g g ",
+    " g g g g g g ",
+    " g g g g g g ",
+    "   g g g g   ",
+    "   g g g g   ",
+    "     g g     ",
+    "     g g     "
+  ],
+  "left": "GRILLE",
+  "name": "TINSEL",
+  "right": "THOPTER",
+  "tint": "FFFFFF"
+}

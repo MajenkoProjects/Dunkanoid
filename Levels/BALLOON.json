@@ -1,0 +1,27 @@
+{
+  "background": "BlueBlobs",
+  "data": [
+    "             ",
+    "     BWR     ",
+    "    BBWRR    ",
+    "   GBWWWRY   ",
+    "   GBWWWRY   ",
+    "  GBBWWWRRY  ",
+    "  GBBWWWRRY  ",
+    "  GBBWWWRRY  ",
+    "  GBBWWWRRY  ",
+    "   GBWWWRY   ",
+    "   GBWWWRY   ",
+    "   sBBWRRs   ",
+    "   s BWR s   ",
+    "    s s s    ",
+    "    s s s    ",
+    "     ggg     ",
+    "     ggg     ",
+    "     ggg     "
+  ],
+  "left": "TIC TAC",
+  "name": "BALLOON",
+  "right": "X-BOX",
+  "tint": "FFFFFF"
+}

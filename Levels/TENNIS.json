@@ -1,0 +1,27 @@
+{
+  "background": "BlueBlobs",
+  "data": [
+    "             ",
+    "             ",
+    "    sss      ",
+    "   sB Bs     ",
+    "  sCCCCCs    ",
+    "  s B B s    ",
+    "  sCCCCCs    ",
+    "  s B B s    ",
+    "  sCCCCCs    ",
+    "   sB Bs     ",
+    "    sss      ",
+    "     s       ",
+    "     s   gg  ",
+    "     s  gggg ",
+    "     g  gggg ",
+    "     g  gggg ",
+    "     g  gggg ",
+    "     g   gg  "
+  ],
+  "left": "TIC TAC",
+  "name": "TENNIS",
+  "right": "X-BOX",
+  "tint": "FFFFFF"
+}

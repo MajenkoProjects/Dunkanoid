@@ -5,6 +5,7 @@ var _Ball = preload("res://Ball/Ball.tscn")
 var _Upgrade = preload("res://Upgrade/Upgrade.tscn")
 var _Alien = preload("res://Alien.tscn")
 var _Bullet = preload("res://Bullet.tscn")
+var _Coin = preload("res://Coin/Coin.tscn")
 
 @onready var ScoreNode = $ScoreCard/Score/ScoreBox
 @onready var LivesNode = $ScoreCard/Lives/LivesBox
@@ -25,6 +26,8 @@ var _Bullet = preload("res://Bullet.tscn")
 @onready var FloorSoundNode = $Sounds/FloorSound
 @onready var UpgradeSoundNode = $Sounds/UpgradeCollected
 @onready var AlienDieSoundNode = $Sounds/AlienDie
+@onready var CoinCollectedSoundNode = $Sounds/CoinCollected
+@onready var TokenLabelNode = $Tokens/TokenLabel
 
 var bricks : Array = []
 var balls : Array[Node] = []
@@ -56,6 +59,9 @@ var time_run : bool = false
 
 func _ready() -> void:
 	level = Global.start_level
+	lives = Global.get_lives()
+	TokenLabelNode.text = "%d" % Global.upgrade_tokens
+	EventBus.upgrade_tokens_updated.connect(_on_upgrade_tokens_updated)
 	
 	if Global.relative_mouse:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -165,7 +171,7 @@ func new_level() -> void:
 	
 func _brick_destroyed(brick) -> void:
 	Global.score += brick.value
-	if randf() > 0.9:
+	if randf() >= Global.get_powerup_percent():
 		var upgrade = _Upgrade.instantiate()
 		upgrade.position = brick.position
 		upgrade.upgrade_collected.connect(_on_upgrade_collected)
@@ -173,7 +179,7 @@ func _brick_destroyed(brick) -> void:
 			0:
 				upgrade.set_upgrade("C", Color.BLUE)
 			1:
-				upgrade.set_upgrade("T", Color.GREEN)
+				upgrade.set_upgrade("D", Color.GREEN)
 			2:
 				upgrade.set_upgrade("S", Color.CYAN)
 			3:
@@ -254,12 +260,12 @@ func _input(event: InputEvent) -> void:
 					if (ball.captured):
 						ball.release()
 
-func _on_hit_paddle(ball) -> void:
+func _on_hit_paddle(ball, _power) -> void:
 	if PaddleNode.is_capture():
 		var diff = PaddleNode.global_position.x - ball.global_position.x
 		ball.capture(PaddleNode, Vector2(diff, 8))
 
-func _on_hit_floor(ball) -> void:
+func _on_hit_floor(ball, _power) -> void:
 	FloorSoundNode.play()
 	balls.erase(ball)
 	call_deferred("remove_child", ball)
@@ -274,7 +280,7 @@ func _on_hit_floor(ball) -> void:
 		ball.capture(PaddleNode, Vector2((randf() * 32) - 16, 8))
 		ball.hit_paddle.connect(_on_hit_paddle)
 		ball.hit_floor.connect(_on_hit_floor)
-		add_child(ball)
+		call_deferred("add_child", ball)
 		balls.push_back(ball)
 		Music.jingle_finished.connect(_on_start_round_finished)
 		Music.jingle(Music.JINGLE_LEVEL_START)
@@ -298,9 +304,9 @@ func _on_upgrade_collected(code : String) -> void:
 	match code:
 		"C":
 			PaddleNode.capture()
-		"T":
-			add_ball()
-			add_ball()
+		"D":
+			for i in Global.get_num_balls() - 1:
+				add_ball()
 		"S":
 			for ball in balls:
 				ball.slowdown()
@@ -396,7 +402,7 @@ func start_powerball() -> void:
 		ball.enable_sparkles()
 	for brick in BricksNode.get_children():
 		brick.enable_pass()
-	PowerballTimerNode.start(10)
+	PowerballTimerNode.start(Global.get_effect_time())
 
 func stop_powerball() -> void:
 	for ball in balls:
@@ -441,10 +447,15 @@ func _close_top_right() -> void:
 func _on_alien_timer_timeout() -> void:
 	spawn_alien()
 
-func _alien_died(points : int) -> void:
+func _alien_died(alien : Node2D, points : int) -> void:
+	var pos : Vector2 = alien.global_position
 	Global.score += points
 	AlienDieSoundNode.play()
-
+	var coin = _Coin.instantiate()
+	coin.global_position = pos
+	coin.coin_collected.connect(_on_coin_collected)
+	call_deferred("add_child", coin)
+	
 func fire_bullet() -> void:
 	var bullet = _Bullet.instantiate()
 	bullet.global_position = PaddleNode.global_position - Vector2(0, 8)
@@ -453,8 +464,15 @@ func fire_bullet() -> void:
 	add_child(bullet)
 	bullet.linear_velocity = Vector2(0, -500)
 
-func _on_bullet_hit_brick(node) -> void:
-	node.hit()
+func _on_bullet_hit_brick(node, power) -> void:
+	node.hit(power)
 
-func _on_bullet_hit_alien(node) -> void:
-	node.hit()
+func _on_bullet_hit_alien(node, power) -> void:
+	node.hit(power)
+
+func _on_coin_collected() -> void:
+	CoinCollectedSoundNode.play()
+	Global.upgrade_tokens += 1
+
+func _on_upgrade_tokens_updated(qty : int) -> void:
+	TokenLabelNode.text = "%d" % qty

@@ -9,9 +9,10 @@
 script = ExtResource("1_a8wdi")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-offset_top = 38.0
-offset_right = 640.0
-offset_bottom = 324.0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 608.0
+offset_bottom = 328.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -85,11 +86,22 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("1_lirja")
 
-[node name="Exit" type="Button" parent="."]
-offset_left = 590.0
-offset_top = 324.0
-offset_right = 630.0
-offset_bottom = 350.0
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ResetTimes" type="Button" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("1_lirja")
+text = "Reset Best Times
+"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_lirja")
+
+[node name="Exit" type="Button" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
 theme = ExtResource("1_lirja")
 text = "Exit"
 
@@ -101,4 +113,5 @@ bus = &"Effects"
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/LeftPanel/Absolute" to="." method="_on_absolute_pressed"]
 [connection signal="drag_ended" from="VBoxContainer/HBoxContainer/RightPanel/Music" to="." method="_on_music_volume_drag_ended"]
 [connection signal="drag_ended" from="VBoxContainer/HBoxContainer/RightPanel/Effects" to="." method="_on_effects_volume_drag_ended"]
-[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/ResetTimes" to="." method="_on_reset_times_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Exit" to="." method="_on_exit_pressed"]

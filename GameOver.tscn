@@ -6,10 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://b56kjbt4ub52n" path="res://NoidTex.png" id="4_lxs2b"]
 [ext_resource type="Script" path="res://ArkaLabel.gd" id="5_g14o8"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qq8am"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ne3hd"]
 shader = ExtResource("3_u76hk")
-shader_parameter/rect_global_position = Vector2(0, 0.205567)
-shader_parameter/rect_size = Vector2(640, 25)
+shader_parameter/rect_global_position = Vector2(0, 0)
+shader_parameter/rect_size = Vector2(160, 25)
 shader_parameter/ColourTexture = ExtResource("4_lxs2b")
 
 [node name="GameOver" type="Node2D"]
@@ -31,7 +31,7 @@ size_flags_vertical = 3
 theme = ExtResource("3_km2fx")
 
 [node name="GameOver" type="Label" parent="VBoxContainer"]
-material = SubResource("ShaderMaterial_qq8am")
+material = SubResource("ShaderMaterial_ne3hd")
 layout_mode = 2
 theme = ExtResource("3_km2fx")
 theme_type_variation = &"Arkanoid"

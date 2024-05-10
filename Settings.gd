@@ -21,3 +21,8 @@ func _on_music_volume_drag_ended(value_changed: bool) -> void:
 func _on_effects_volume_drag_ended(value_changed: bool) -> void:
 	Global.effects_volume = $VBoxContainer/HBoxContainer/RightPanel/Effects.value
 	$Boink.play()
+
+
+func _on_reset_times_pressed() -> void:
+	Global.reset_best_times()
+	pass # Replace with function body.

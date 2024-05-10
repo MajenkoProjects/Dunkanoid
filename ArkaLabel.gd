@@ -14,7 +14,6 @@ func _ready() -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSFORM_CHANGED:
 		var pos = global_position / get_viewport_rect().size
-		print(pos)
 		material.set_shader_parameter("rect_global_position", pos)
 		material.set_shader_parameter("rect_size", get_rect().size)
 		

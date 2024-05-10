@@ -34,8 +34,41 @@ var effects_volume : int :
 
 var best_times : Dictionary
 
-var start_level : String = "DUNKANOID"
+var upgrade_tokens : int = 0 :
+	set(x):
+		upgrade_tokens = x
+		EventBus.upgrade_tokens_updated.emit(upgrade_tokens)
+		_save()
 
+var effect_time : int = 0 :
+	set(x):
+		effect_time = x
+		_save()
+
+var laser_power : int = 0 :
+	set(x):
+		laser_power = x
+		_save()
+
+var extra_lives : int = 0 :
+	set(x):
+		extra_lives = x
+		_save()
+
+var powerup_percent : int = 0 :
+	set(x):
+		powerup_percent = x
+		_save()
+
+var ball_split : int = 0 :
+	set(x):
+		ball_split = x
+		_save()
+
+
+
+
+var start_level : String = "DUNKANOID"
 var _loading : bool = false
 
 func _ready() -> void:
@@ -47,12 +80,25 @@ func _ready() -> void:
 		music_volume = data.get("music_volume", AudioServer.get_bus_volume_db(1))
 		effects_volume = data.get("effects_volume", AudioServer.get_bus_volume_db(2))
 		best_times = data.get("best_times", {})
+		upgrade_tokens = data.get("upgrade_tokens", 0)
+		effect_time = data.get("effect_time", 0)
+		laser_power = data.get("laser_power", 0)
+		extra_lives = data.get("extra_lives", 0)
+		powerup_percent = data.get("powerup_percent", 0)
+		ball_split = data.get("ball_split", 0)
 	else:
 		highscore = 0
 		relative_mouse = true
 		music_volume = int(AudioServer.get_bus_volume_db(1))
 		effects_volume = int(AudioServer.get_bus_volume_db(2))
 		best_times = {}
+		upgrade_tokens = 0
+		effect_time = 0
+		laser_power = 0
+		extra_lives = 0
+		powerup_percent = 0
+		ball_split = 0
+		
 	_loading = false
 
 func _save() -> void:
@@ -63,7 +109,13 @@ func _save() -> void:
 		"relative_mouse": relative_mouse,
 		"music_volume": music_volume,
 		"effects_volume": effects_volume,
-		"best_times": best_times
+		"best_times": best_times,
+		"upgrade_tokens": upgrade_tokens,
+		"effect_time": effect_time,
+		"laser_power": laser_power,
+		"extra_lives": extra_lives,
+		"powerup_percent": powerup_percent,
+		"ball_split": ball_split
 	}
 	var f = FileAccess.open("user://data.json", FileAccess.WRITE)
 	f.store_string(JSON.stringify(data))
@@ -75,3 +127,41 @@ func get_best_time(level : String) -> int:
 func set_best_time(level : String, time : int) -> void:
 	best_times[level] = time
 	_save()
+
+func reset_best_times() -> void:
+	best_times.clear()
+	_save()
+
+
+func get_effect_time() -> int:
+	return 5 + (effect_time * 5)
+
+func get_laser_power() -> int:
+	return laser_power + 1
+
+func get_lives() -> int:
+	return extra_lives + 3
+
+func get_powerup_percent() -> float:
+	return 0.98 - (powerup_percent * 0.02)
+
+func get_num_balls() -> int:
+	return ball_split + 2
+
+func format_effect_time() -> String:
+	return "%d s" % get_effect_time()
+
+func format_laser_power() -> String:
+	var p = get_laser_power()
+	if p == 1:
+		return "1 hit"
+	return "%d hits" % p
+
+func format_extra_lives() -> String:
+	return "%d lives" % get_lives()
+
+func format_powerup_percent() -> String:
+	return "%d%%" % int((1 - get_powerup_percent()) * 100)
+
+func format_ball_split() -> String:
+	return "%d balls" % get_num_balls()

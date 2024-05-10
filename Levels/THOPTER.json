@@ -1,0 +1,27 @@
+{
+  "background": "RedBoxes",
+  "data": [
+    "      R      ",
+    "      s      ",
+    "      R      ",
+    "      s      ",
+    "      R      ",
+    "      R      ",
+    "      R      ",
+    "      R      ",
+    "      R      ",
+    " RRRRgRgRRRR ",
+    "sssssRRRsssss",
+    "     gRg     ",
+    "RRRRRRRRRRRRR",
+    "sssssgRgsssss",
+    "      R      ",
+    "    gg gg    ",
+    "    gg gg    ",
+    "    gg gg    "
+  ],
+  "left": "SWEET",
+  "name": "THOPTER",
+  "right": "PLATFORM",
+  "tint": "00FF00"
+}

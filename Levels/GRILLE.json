@@ -1,0 +1,27 @@
+{
+  "background": "RedBoxes",
+  "data": [
+    "             ",
+    "             ",
+    "             ",
+    "             ",
+    "             ",
+    " OOsssssssOO ",
+    "BYYCCCCCCCYYB",
+    "WWWWWWWWWWWWW",
+    "BYYWWWWWWWYYB",
+    "COOCCCCCCCOOC",
+    "CRRsssssssRRC",
+    "CRRsssssssRRC",
+    " RRsssssssRR ",
+    "             ",
+    "             ",
+    "             ",
+    "             ",
+    "             "
+  ],
+  "left": "SWEET",
+  "name": "GRILLE",
+  "right": "PLATFORM",
+  "tint": "00FF00"
+}
