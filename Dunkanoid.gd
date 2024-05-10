@@ -423,7 +423,7 @@ func _on_pipes_door_opened(door) -> void:
 	match door:
 		Pipes.TOP_LEFT:
 			var alien = _Alien.instantiate()
-			alien.position = Vector2(128, -12)
+			alien.position = Vector2(96, -12)
 			alien.velocity = Vector2(0, 50)
 			alien.alien_died.connect(_alien_died)
 			AliensNode.add_child(alien)
@@ -431,7 +431,7 @@ func _on_pipes_door_opened(door) -> void:
 			pass
 		Pipes.TOP_RIGHT:
 			var alien = _Alien.instantiate()
-			alien.position = Vector2(320, -12)
+			alien.position = Vector2(352, -12)
 			alien.velocity = Vector2(0, 50)
 			alien.alien_died.connect(_alien_died)
 			AliensNode.add_child(alien)

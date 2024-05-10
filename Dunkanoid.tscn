@@ -44,8 +44,8 @@ distance = -360.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_acp7s"]
 shader = ExtResource("12_ljnes")
-shader_parameter/rect_global_position = Vector2(0, 0)
-shader_parameter/rect_size = Vector2(150, 25)
+shader_parameter/rect_global_position = Vector2(0, 0.210294)
+shader_parameter/rect_size = Vector2(448, 25)
 shader_parameter/ColourTexture = ExtResource("13_u52d1")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cxvt8"]
@@ -426,36 +426,36 @@ metadata/open = Vector2(432, 265)
 metadata/closed = Vector2(432, 312)
 
 [node name="TopDoor1L" type="TextureRect" parent="Pipes"]
-offset_left = 112.0
-offset_right = 128.0
+offset_left = 80.0
+offset_right = 96.0
 offset_bottom = 16.0
 texture = ExtResource("15_n2p48")
-metadata/open = Vector2(96, 0)
-metadata/closed = Vector2(112, 0)
+metadata/open = Vector2(64, 0)
+metadata/closed = Vector2(80, 0)
 
 [node name="TopDoor1R" type="TextureRect" parent="Pipes"]
-offset_left = 128.0
-offset_right = 144.0
+offset_left = 96.0
+offset_right = 112.0
 offset_bottom = 16.0
 texture = ExtResource("15_n2p48")
-metadata/open = Vector2(144, 0)
-metadata/closed = Vector2(128, 0)
+metadata/open = Vector2(112, 0)
+metadata/closed = Vector2(96, 0)
 
 [node name="TopDoor2L" type="TextureRect" parent="Pipes"]
-offset_left = 304.0
-offset_right = 320.0
+offset_left = 336.0
+offset_right = 352.0
 offset_bottom = 16.0
 texture = ExtResource("15_n2p48")
-metadata/open = Vector2(288, 0)
-metadata/closed = Vector2(304, 0)
+metadata/open = Vector2(320, 0)
+metadata/closed = Vector2(336, 0)
 
 [node name="TopDoor2R" type="TextureRect" parent="Pipes"]
-offset_left = 320.0
-offset_right = 336.0
+offset_left = 352.0
+offset_right = 368.0
 offset_bottom = 16.0
 texture = ExtResource("15_n2p48")
-metadata/open = Vector2(336, 0)
-metadata/closed = Vector2(320, 0)
+metadata/open = Vector2(368, 0)
+metadata/closed = Vector2(352, 0)
 
 [node name="LeftWall" type="TextureRect" parent="Pipes"]
 offset_top = 16.0
@@ -527,43 +527,43 @@ offset_bottom = 16.0
 texture = ExtResource("20_fr68l")
 
 [node name="LeftJoin5" type="TextureRect" parent="Pipes"]
-offset_left = 144.0
-offset_right = 160.0
+offset_left = 112.0
+offset_right = 128.0
 offset_bottom = 16.0
 texture = ExtResource("20_fr68l")
 
 [node name="LeftJoin11" type="TextureRect" parent="Pipes"]
-offset_left = 336.0
-offset_right = 352.0
+offset_left = 368.0
+offset_right = 384.0
 offset_bottom = 16.0
 texture = ExtResource("20_fr68l")
 
 [node name="LeftJoin6" type="TextureRect" parent="Pipes"]
-offset_left = 96.0
-offset_right = 112.0
+offset_left = 64.0
+offset_right = 80.0
 offset_bottom = 16.0
 texture = ExtResource("21_hha8q")
 
 [node name="LeftJoin9" type="TextureRect" parent="Pipes"]
-offset_left = 288.0
-offset_right = 304.0
+offset_left = 320.0
+offset_right = 336.0
 offset_bottom = 16.0
 texture = ExtResource("21_hha8q")
 
 [node name="LeftJoin4" type="TextureRect" parent="Pipes"]
 offset_left = 32.0
-offset_right = 96.0
+offset_right = 64.0
 offset_bottom = 16.0
 texture = ExtResource("15_n2p48")
 
 [node name="LeftJoin8" type="TextureRect" parent="Pipes"]
-offset_left = 160.0
-offset_right = 288.0
+offset_left = 128.0
+offset_right = 320.0
 offset_bottom = 16.0
 texture = ExtResource("15_n2p48")
 
 [node name="LeftJoin12" type="TextureRect" parent="Pipes"]
-offset_left = 352.0
+offset_left = 384.0
 offset_right = 416.0
 offset_bottom = 16.0
 texture = ExtResource("15_n2p48")
