@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://bixdp8hwrp2b8"]
+
+[ext_resource type="Script" path="res://Coin/Coin.gd" id="1_v362k"]
+[ext_resource type="SpriteFrames" uid="uid://c6wwkgmwfpdu7" path="res://Coin/Coin.tres" id="2_l7kfu"]
+
+[sub_resource type="Gradient" id="Gradient_ll6dt"]
+colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gue31"]
+radius = 8.0
+
+[node name="Coin" type="RigidBody2D"]
+collision_layer = 0
+collision_mask = 2
+continuous_cd = 2
+max_contacts_reported = 2
+contact_monitor = true
+script = ExtResource("1_v362k")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 200
+lifetime = 2.0
+emission_shape = 1
+emission_sphere_radius = 8.0
+direction = Vector2(0, -1)
+gravity = Vector2(0, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 2.0
+color = Color(1, 1, 0, 1)
+color_ramp = SubResource("Gradient_ll6dt")
+hue_variation_min = 1.0
+hue_variation_max = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CircleShape2D_gue31")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_l7kfu")
+autoplay = "default"
+frame = 5
+frame_progress = 0.65065
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
