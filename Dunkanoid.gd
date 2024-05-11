@@ -81,7 +81,7 @@ var opened: bool = false
 func _process(delta : float) -> void:
 	
 	if OS.has_feature("editor"):
-		if Input.is_action_just_pressed("cheat"):
+		if Input.is_action_pressed("cheat"):
 			fire_bullet()
 	
 	if PaddleNode.is_laser():

@@ -1,9 +1,10 @@
-[gd_resource type="Theme" load_steps=18 format=3 uid="uid://cfvww0geatnnk"]
+[gd_resource type="Theme" load_steps=19 format=3 uid="uid://cfvww0geatnnk"]
 
 [ext_resource type="FontFile" uid="uid://dfkm2dibf0c3b" path="res://Fonts/fonts-DSEG_v046/DSEG7-Classic-MINI/DSEG7ClassicMini-Italic.ttf" id="1_17to7"]
 [ext_resource type="FontFile" uid="uid://bx41ej4o03nbx" path="res://Fonts/arkanoid/Arka_solid.ttf" id="1_s07ae"]
 [ext_resource type="FontFile" uid="uid://c3gxkerjb3w7q" path="res://Fonts/charmap-oldschool_white.png" id="2_04xve"]
 [ext_resource type="FontFile" uid="uid://0a8bjrb4tfqn" path="res://Fonts/charmap-oldschool_white_glow.png" id="3_fjg1d"]
+[ext_resource type="FontFile" uid="uid://bfue7ekap54wi" path="res://Fonts/Chunky.png" id="5_dx8ei"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_naqov"]
 
@@ -138,8 +139,8 @@ TextEdit/font_sizes/font_size = 9
 TextEdit/fonts/font = ExtResource("2_04xve")
 Upgrade/base_type = &"Label"
 Upgrade/colors/font_color = Color(0, 0, 0, 1)
-Upgrade/font_sizes/font_size = 9
-Upgrade/fonts/font = ExtResource("2_04xve")
+Upgrade/font_sizes/font_size = 8
+Upgrade/fonts/font = ExtResource("5_dx8ei")
 UpgradeContainer/base_type = &"PanelContainer"
 UpgradeContainer/styles/panel = SubResource("StyleBoxEmpty_6g8gs")
 UpgradePanel/base_type = &"VBoxContainer"

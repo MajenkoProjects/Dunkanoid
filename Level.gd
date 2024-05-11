@@ -55,7 +55,6 @@ func load_level(level_name : String) -> void:
 	push_warning("Level %s unknown" % level_name)
 
 func load_from_file(filename : String) -> void:
-	print("Loading %s" % filename)
 	var data = JSON.parse_string(FileAccess.get_file_as_string(filename))
 	if data != null:
 		load_from_data(data)

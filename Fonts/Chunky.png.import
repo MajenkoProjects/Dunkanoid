@@ -1,0 +1,22 @@
+[remap]
+
+importer="font_data_image"
+type="FontFile"
+uid="uid://bfue7ekap54wi"
+path="res://.godot/imported/Chunky.png-c0832c9d756abcfb8e32384224778b58.fontdata"
+
+[deps]
+
+source_file="res://Fonts/Chunky.png"
+dest_files=["res://.godot/imported/Chunky.png-c0832c9d756abcfb8e32384224778b58.fontdata"]
+
+[params]
+
+character_ranges=PackedStringArray("\' \'-\'}\'")
+columns=20
+rows=5
+image_margin=Rect2i(0, 0, 0, 0)
+character_margin=Rect2i(0, 0, 0, 0)
+fallbacks=[]
+compress=true
+scaling_mode=0
