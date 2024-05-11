@@ -1,6 +1,9 @@
 extends Node2D
 
 func _ready() -> void:
+	$VBoxContainer/Left.select_by_name("NOTFOUND")
+	$VBoxContainer/Right.select_by_name("NOTFOUND")
+	$VBoxContainer/Background.select_by_name("BlueSlash")
 	Music.pause()
 	
 func _on_background_item_selected(index: int) -> void:
@@ -70,8 +73,8 @@ func load_level_from_object(data : Dictionary) -> void:
 
 func _on_new_pressed() -> void:
 	$VBoxContainer/Name.text = ""
-	$VBoxContainer/Left.select_by_name("DUNKANOID")
-	$VBoxContainer/Right.select_by_name("DUNKANOID")
+	$VBoxContainer/Left.select_by_name("NOTFOUND")
+	$VBoxContainer/Right.select_by_name("NOTFOUND")
 	$VBoxContainer/Background.select_by_name("BlueSlash")
 	$Background.texture = load($VBoxContainer/Background.get_selected_filename())
 	$VBoxContainer/Tint.text = "FFFFFF"

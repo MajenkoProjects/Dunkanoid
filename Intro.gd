@@ -13,16 +13,16 @@ var credit : int = 0
 
 func _ready() -> void:
 	#	dump_all("res://")
-	
-		UpgradeTokensNode.text = "%d" % Global.upgrade_tokens
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		EventBus.update_score.connect(_on_update_score)
-		EventBus.update_highscore.connect(_on_update_highscore)
-		_on_update_score(Global.score)
-		_on_update_highscore(Global.highscore)
-		$VBoxContainer/Play/VBoxContainer/Play.grab_focus()
-		Music.play_intro()
-		get_tree().create_timer(5).timeout.connect(_show_credits)
+	$VBoxContainer/Play/VBoxContainer/Exit.visible = not OS.has_feature("web")
+	UpgradeTokensNode.text = "%d" % Global.upgrade_tokens
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	EventBus.update_score.connect(_on_update_score)
+	EventBus.update_highscore.connect(_on_update_highscore)
+	_on_update_score(Global.score)
+	_on_update_highscore(Global.highscore)
+	$VBoxContainer/Play/VBoxContainer/Play.grab_focus()
+	Music.play_intro()
+	get_tree().create_timer(5).timeout.connect(_show_credits)
 
 func _show_credits() -> void:
 	$HBoxContainer/Credits/CreditsRole.modulate = Color(0, 0, 0, 0)

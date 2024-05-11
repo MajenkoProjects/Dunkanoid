@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://deyotp28r4uwj"]
+[gd_scene load_steps=4 format=3 uid="uid://deyotp28r4uwj"]
 
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="1_v1yul"]
 [ext_resource type="Script" path="res://LoadPanel.gd" id="2_rj17x"]
+[ext_resource type="Script" path="res://HoverButton.gd" id="3_ghwix"]
 
 [node name="LoadPanel" type="PanelContainer"]
 visible = false
@@ -32,5 +33,7 @@ size_flags_horizontal = 3
 focus_mode = 0
 theme = ExtResource("1_v1yul")
 text = "CANCEL"
+script = ExtResource("3_ghwix")
+HoverVariant = "ButtonHover"
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Cancel" to="." method="_on_cancel_pressed"]

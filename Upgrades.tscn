@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bfibb6fr6rox7"]
+[gd_scene load_steps=12 format=3 uid="uid://bfibb6fr6rox7"]
 
 [ext_resource type="Script" path="res://Upgrades.gd" id="1_ouypj"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="1_rv7oa"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" path="res://Arkanoid.gdshader" id="4_waenw"]
 [ext_resource type="Texture2D" uid="uid://b56kjbt4ub52n" path="res://NoidTex.png" id="5_y0x1p"]
 [ext_resource type="Script" path="res://ArkaLabel.gd" id="6_ducwl"]
+[ext_resource type="Script" path="res://HoverButton.gd" id="8_frvhv"]
 
 [sub_resource type="Curve" id="Curve_nh5xf"]
 min_value = -200.0
@@ -17,9 +18,9 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_ucorl"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6weej"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_llrvb"]
 shader = ExtResource("4_waenw")
-shader_parameter/rect_global_position = Vector2(0.012945, 0.0794118)
+shader_parameter/rect_global_position = Vector2(8, 25)
 shader_parameter/rect_size = Vector2(608, 25)
 shader_parameter/ColourTexture = ExtResource("5_y0x1p")
 
@@ -75,7 +76,7 @@ autoplay = "default"
 centered = false
 
 [node name="ArkaLabel" type="Label" parent="VBoxContainer"]
-material = SubResource("ShaderMaterial_6weej")
+material = SubResource("ShaderMaterial_llrvb")
 layout_mode = 2
 size_flags_vertical = 6
 theme = ExtResource("1_rv7oa")
@@ -174,6 +175,8 @@ theme = ExtResource("1_rv7oa")
 layout_mode = 2
 theme = ExtResource("1_rv7oa")
 text = "EXIT"
+script = ExtResource("8_frvhv")
+HoverVariant = "ButtonHover"
 
 [connection signal="mouse_enter" from="VBoxContainer/ScrollContainer/HBoxContainer/EffectTime" to="." method="_show_description"]
 [connection signal="mouse_leave" from="VBoxContainer/ScrollContainer/HBoxContainer/EffectTime" to="." method="_hide_description"]

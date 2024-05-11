@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://4q0epdnb0x4s"]
+[gd_scene load_steps=34 format=3 uid="uid://4q0epdnb0x4s"]
 
 [ext_resource type="Script" path="res://Dunkanoid.gd" id="1_kv4if"]
 [ext_resource type="PackedScene" uid="uid://dndemjw7up2r6" path="res://Paddle/Paddle.tscn" id="2_26c5i"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://cg5olju1mcceh" path="res://Pipes/hPipe.png" id="15_n2p48"]
 [ext_resource type="Texture2D" uid="uid://bh8om6bv1qumy" path="res://Pipes/vPipeEndLow.png" id="16_osyku"]
 [ext_resource type="Texture2D" uid="uid://n81u6nrroi18" path="res://Pipes/CornerTopLeft.png" id="17_jvxfq"]
+[ext_resource type="Script" path="res://HoverButton.gd" id="17_oasph"]
 [ext_resource type="Texture2D" uid="uid://btiaapyjul68s" path="res://Pipes/CornerTopRight.png" id="18_2ed71"]
 [ext_resource type="Texture2D" uid="uid://1ar54kb0l0sm" path="res://Pipes/vPipeEndHigh.png" id="19_6cngp"]
 [ext_resource type="Texture2D" uid="uid://bj28rs6816gn8" path="res://Pipes/hPipeEndLeft.png" id="20_fr68l"]
@@ -42,13 +43,13 @@ distance = -432.0
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_48dqy"]
 distance = -360.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_j418f"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p2a4d"]
 shader = ExtResource("12_ljnes")
-shader_parameter/rect_global_position = Vector2(0, 0.210294)
+shader_parameter/rect_global_position = Vector2(0, 77)
 shader_parameter/rect_size = Vector2(448, 25)
 shader_parameter/ColourTexture = ExtResource("13_u52d1")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_u2pgi"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vti8i"]
 shader = ExtResource("12_ljnes")
 shader_parameter/rect_global_position = Vector2(0, 0)
 shader_parameter/rect_size = Vector2(89, 25)
@@ -322,7 +323,7 @@ theme_type_variation = &"RoundStart"
 layout_mode = 2
 
 [node name="Title" type="Label" parent="Start/VBoxContainer/PanelContainer/VBoxContainer"]
-material = SubResource("ShaderMaterial_j418f")
+material = SubResource("ShaderMaterial_p2a4d")
 layout_mode = 2
 theme = ExtResource("8_wcf7g")
 theme_type_variation = &"Arkanoid"
@@ -370,7 +371,7 @@ size_flags_vertical = 3
 theme = ExtResource("8_wcf7g")
 
 [node name="Label" type="Label" parent="Paused/VBoxContainer"]
-material = SubResource("ShaderMaterial_u2pgi")
+material = SubResource("ShaderMaterial_vti8i")
 layout_mode = 2
 theme = ExtResource("8_wcf7g")
 theme_type_variation = &"Arkanoid"
@@ -391,6 +392,8 @@ theme = ExtResource("8_wcf7g")
 layout_mode = 2
 theme = ExtResource("8_wcf7g")
 text = "QUIT"
+script = ExtResource("17_oasph")
+HoverVariant = "ButtonHover"
 
 [node name="HSeparator2" type="HSeparator" parent="Paused/VBoxContainer/HBoxContainer"]
 layout_mode = 2

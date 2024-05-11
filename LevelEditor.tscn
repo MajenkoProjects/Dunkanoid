@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bxkneahqum6hb"]
+[gd_scene load_steps=13 format=3 uid="uid://bxkneahqum6hb"]
 
 [ext_resource type="Script" path="res://LevelEditor.gd" id="1_p7hit"]
 [ext_resource type="Script" path="res://LevelEditCell.gd" id="2_ayd4g"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://HexOnly.gd" id="8_72pke"]
 [ext_resource type="PackedScene" uid="uid://deyotp28r4uwj" path="res://LoadPanel.tscn" id="9_joiqc"]
 [ext_resource type="Script" path="res://ExportPanel.gd" id="9_nmcps"]
+[ext_resource type="Script" path="res://HoverButton.gd" id="9_p8h7o"]
 [ext_resource type="Script" path="res://ImportPanel.gd" id="10_q6s0l"]
 
 [node name="LevelEditor" type="Node2D"]
@@ -2035,6 +2036,8 @@ size_flags_horizontal = 3
 focus_mode = 0
 theme = ExtResource("4_usb0o")
 text = "LOAD"
+script = ExtResource("9_p8h7o")
+HoverVariant = "ButtonHover"
 
 [node name="Save" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -2042,6 +2045,8 @@ size_flags_horizontal = 3
 focus_mode = 0
 theme = ExtResource("4_usb0o")
 text = "SAVE"
+script = ExtResource("9_p8h7o")
+HoverVariant = "ButtonHover"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -2052,6 +2057,8 @@ size_flags_horizontal = 3
 focus_mode = 0
 theme = ExtResource("4_usb0o")
 text = "IMPORT"
+script = ExtResource("9_p8h7o")
+HoverVariant = "ButtonHover"
 
 [node name="Export" type="Button" parent="VBoxContainer/HBoxContainer3"]
 layout_mode = 2
@@ -2059,6 +2066,8 @@ size_flags_horizontal = 3
 focus_mode = 0
 theme = ExtResource("4_usb0o")
 text = "EXPORT"
+script = ExtResource("9_p8h7o")
+HoverVariant = "ButtonHover"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -2069,6 +2078,8 @@ size_flags_horizontal = 3
 focus_mode = 0
 theme = ExtResource("4_usb0o")
 text = "NEW"
+script = ExtResource("9_p8h7o")
+HoverVariant = "ButtonHover"
 
 [node name="Exit" type="Button" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -2076,6 +2087,8 @@ size_flags_horizontal = 3
 focus_mode = 0
 theme = ExtResource("4_usb0o")
 text = "EXIT"
+script = ExtResource("9_p8h7o")
+HoverVariant = "ButtonHover"
 
 [node name="LoadPanel" parent="." instance=ExtResource("9_joiqc")]
 
@@ -2103,6 +2116,8 @@ autowrap_mode = 1
 layout_mode = 2
 theme = ExtResource("4_usb0o")
 text = "CLOSE"
+script = ExtResource("9_p8h7o")
+HoverVariant = "ButtonHover"
 
 [node name="ImportPanel" type="PanelContainer" parent="."]
 visible = false
@@ -2131,12 +2146,16 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_usb0o")
 text = "IMPORT"
+script = ExtResource("9_p8h7o")
+HoverVariant = "ButtonHover"
 
 [node name="Cancel" type="Button" parent="ImportPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_usb0o")
 text = "CANCEL"
+script = ExtResource("9_p8h7o")
+HoverVariant = "ButtonHover"
 
 [connection signal="item_selected" from="VBoxContainer/Background" to="." method="_on_background_item_selected"]
 [connection signal="tint_changed" from="VBoxContainer/Tint" to="." method="_on_tint_tint_changed"]

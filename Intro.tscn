@@ -4,9 +4,9 @@
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="3_8d2ix"]
 [ext_resource type="Script" path="res://ArkaLabel.gd" id="3_dqq2b"]
 [ext_resource type="Shader" path="res://Arkanoid.gdshader" id="3_eo4f3"]
-[ext_resource type="Script" path="res://ExitButton.gd" id="4_ty0na"]
 [ext_resource type="Texture2D" uid="uid://b56kjbt4ub52n" path="res://NoidTex.png" id="4_v8i0c"]
 [ext_resource type="PackedScene" uid="uid://deyotp28r4uwj" path="res://LoadPanel.tscn" id="5_esv62"]
+[ext_resource type="Script" path="res://HoverButton.gd" id="6_dasd2"]
 [ext_resource type="Script" path="res://Level.gd" id="6_hw2gq"]
 [ext_resource type="SpriteFrames" uid="uid://c6wwkgmwfpdu7" path="res://Coin/Coin.tres" id="7_2tpc7"]
 [ext_resource type="Script" path="res://Preview.gd" id="9_x2ejj"]
@@ -20,15 +20,15 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_431mb"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_31oge"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6od3v"]
 shader = ExtResource("3_eo4f3")
-shader_parameter/rect_global_position = Vector2(0.19822, 0.0308824)
+shader_parameter/rect_global_position = Vector2(122.5, 27.5)
 shader_parameter/rect_size = Vector2(150, 25)
 shader_parameter/ColourTexture = ExtResource("4_v8i0c")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dghtq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ipjaf"]
 shader = ExtResource("3_eo4f3")
-shader_parameter/rect_global_position = Vector2(0.161003, 0.0735294)
+shader_parameter/rect_global_position = Vector2(99.5, 42)
 shader_parameter/rect_size = Vector2(242, 25)
 shader_parameter/ColourTexture = ExtResource("4_v8i0c")
 
@@ -70,7 +70,7 @@ size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
 [node name="ArkaLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
-material = SubResource("ShaderMaterial_31oge")
+material = SubResource("ShaderMaterial_6od3v")
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 theme_type_variation = &"Arkanoid"
@@ -91,7 +91,7 @@ size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
 [node name="Revenge" type="Label" parent="VBoxContainer/HBoxContainer2"]
-material = SubResource("ShaderMaterial_dghtq")
+material = SubResource("ShaderMaterial_ipjaf")
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 theme_type_variation = &"Arkanoid"
@@ -124,37 +124,48 @@ layout_mode = 2
 theme = ExtResource("3_8d2ix")
 text = "PLAY"
 icon_alignment = 1
+script = ExtResource("6_dasd2")
+HoverVariant = "ButtonHover"
 
 [node name="PlayLevel" type="Button" parent="VBoxContainer/Play/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 text = "PLAY LEVEL"
 icon_alignment = 1
+script = ExtResource("6_dasd2")
+HoverVariant = "ButtonHover"
 
 [node name="Upgrades" type="Button" parent="VBoxContainer/Play/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 text = "UPGRADES"
 icon_alignment = 1
+script = ExtResource("6_dasd2")
+HoverVariant = "ButtonHover"
 
 [node name="Editor" type="Button" parent="VBoxContainer/Play/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 text = "LEVEL EDITOR"
 icon_alignment = 1
+script = ExtResource("6_dasd2")
+HoverVariant = "ButtonHover"
 
 [node name="Settings" type="Button" parent="VBoxContainer/Play/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 text = "SETTINGS"
 icon_alignment = 1
+script = ExtResource("6_dasd2")
+HoverVariant = "ButtonHover"
 
 [node name="Exit" type="Button" parent="VBoxContainer/Play/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 text = "EXIT"
 icon_alignment = 1
-script = ExtResource("4_ty0na")
+script = ExtResource("6_dasd2")
+HoverVariant = "ButtonHover"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer/Play"]
 layout_mode = 2
@@ -200,7 +211,7 @@ horizontal_alignment = 1
 [node name="CreditsPerson" type="Label" parent="HBoxContainer/Credits"]
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
-theme_type_variation = &"LargeLabel"
+theme_type_variation = &"GlowLabel"
 horizontal_alignment = 1
 vertical_alignment = 1
 
