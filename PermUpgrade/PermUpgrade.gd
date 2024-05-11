@@ -5,6 +5,10 @@ class_name PermUpgrade
 @export var Name : String = ""
 @export var GlobalVariable : String = ""
 @export var BaseCost : int = 10
+@export var Description : String = ""
+
+signal mouse_enter(description : String)
+signal mouse_leave()
 
 @onready var Level1 = $Container/Level1
 @onready var Level2 = $Container/Level2
@@ -72,3 +76,9 @@ func _on_cost_pressed() -> void:
 
 func _on_upgrade_tokens_updated(qty : int) -> void:
 	update()
+
+func _on_mouse_entered() -> void:
+	mouse_enter.emit(Description)
+
+func _on_mouse_exited() -> void:
+	mouse_leave.emit()

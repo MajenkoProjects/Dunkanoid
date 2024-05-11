@@ -24,19 +24,27 @@ func _on_timeout() -> void:
 	print(Time.get_ticks_msec())
 
 func _on_pause() -> void:
+	if paused:
+		return
 	paused = true
 	pause_time = Time.get_ticks_msec()
 
 func pause() -> void:
+	if paused:
+		return
 	paused = true
 	pause_time = Time.get_ticks_msec()
 
 func unpause() -> void:
+	if not paused:
+		return
 	paused = false
 	var elapsed = Time.get_ticks_msec() - pause_time
 	accumulated_pause_time += elapsed	
 
 func _on_unpause() -> void:
+	if not paused:
+		return
 	paused = false
 	var elapsed = Time.get_ticks_msec() - pause_time
 	accumulated_pause_time += elapsed

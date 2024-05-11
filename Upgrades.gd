@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var Tokens = $VBoxContainer/Tokens/Label
+@onready var Description = $VBoxContainer/Description
 
 func _ready() -> void:
 	EventBus.upgrade_tokens_updated.connect(_on_upgrade_tokens_updated)
@@ -11,3 +12,10 @@ func _on_exit_pressed() -> void:
 
 func _on_upgrade_tokens_updated(qty : int) -> void:
 	Tokens.text = "%d" % qty
+
+
+func _show_description(description: String) -> void:
+	Description.text = description
+
+func _hide_description() -> void:
+	Description.text = ""

@@ -1,12 +1,47 @@
-[gd_scene load_steps=5 format=3 uid="uid://bfibb6fr6rox7"]
+[gd_scene load_steps=11 format=3 uid="uid://bfibb6fr6rox7"]
 
 [ext_resource type="Script" path="res://Upgrades.gd" id="1_ouypj"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="1_rv7oa"]
 [ext_resource type="SpriteFrames" uid="uid://c6wwkgmwfpdu7" path="res://Coin/Coin.tres" id="2_woppf"]
 [ext_resource type="PackedScene" uid="uid://bdhok2nkoirl0" path="res://PermUpgrade/PermUpgrade.tscn" id="4_rlh0r"]
+[ext_resource type="Shader" path="res://Arkanoid.gdshader" id="4_waenw"]
+[ext_resource type="Texture2D" uid="uid://b56kjbt4ub52n" path="res://NoidTex.png" id="5_y0x1p"]
+[ext_resource type="Script" path="res://ArkaLabel.gd" id="6_ducwl"]
+
+[sub_resource type="Curve" id="Curve_nh5xf"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 200), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_ucorl"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1rhte"]
+shader = ExtResource("4_waenw")
+shader_parameter/rect_global_position = Vector2(0.012945, 0.0794118)
+shader_parameter/rect_size = Vector2(608, 25)
+shader_parameter/ColourTexture = ExtResource("5_y0x1p")
 
 [node name="Upgrades" type="Node2D"]
 script = ExtResource("1_ouypj")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(320, 180)
+amount = 250
+lifetime = 0.1
+speed_scale = 0.1
+randomness = 1.0
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 800.0
+linear_accel_min = 100.0
+linear_accel_max = 1000.0
+linear_accel_curve = SubResource("Curve_nh5xf")
+color_ramp = SubResource("Gradient_ucorl")
+hue_variation_max = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_left = 16.0
@@ -39,10 +74,16 @@ sprite_frames = ExtResource("2_woppf")
 autoplay = "default"
 centered = false
 
-[node name="VSeparator2" type="VSeparator" parent="VBoxContainer"]
+[node name="ArkaLabel" type="Label" parent="VBoxContainer"]
+material = SubResource("ShaderMaterial_1rhte")
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 6
 theme = ExtResource("1_rv7oa")
+theme_type_variation = &"Arkanoid"
+text = "UPGRADES"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("6_ducwl")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 160)
@@ -63,6 +104,7 @@ theme = ExtResource("1_rv7oa")
 layout_mode = 2
 Name = "Effect Time"
 GlobalVariable = "effect_time"
+Description = "Increases how long powerup effects last for"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
 layout_mode = 2
@@ -73,6 +115,7 @@ theme = ExtResource("1_rv7oa")
 layout_mode = 2
 Name = "Effect Chance"
 GlobalVariable = "powerup_percent"
+Description = "Increases the chance that a powerup will drop when a block is destroyed"
 
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
 layout_mode = 2
@@ -83,6 +126,7 @@ theme = ExtResource("1_rv7oa")
 layout_mode = 2
 Name = "Laser Power"
 GlobalVariable = "laser_power"
+Description = "Increase the amount of damage the lasers do"
 
 [node name="HSeparator4" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
 layout_mode = 2
@@ -93,6 +137,7 @@ theme = ExtResource("1_rv7oa")
 layout_mode = 2
 Name = "Lives"
 GlobalVariable = "extra_lives"
+Description = "More lives!"
 
 [node name="HSeparator5" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
 layout_mode = 2
@@ -103,16 +148,19 @@ theme = ExtResource("1_rv7oa")
 layout_mode = 2
 Name = "Split"
 GlobalVariable = "ball_split"
+Description = "How many balls the D powerup splits the ball into"
 
 [node name="HSeparator6" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("1_rv7oa")
 
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer"]
+[node name="Description" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_rv7oa")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Exit" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -127,4 +175,14 @@ layout_mode = 2
 theme = ExtResource("1_rv7oa")
 text = "EXIT"
 
+[connection signal="mouse_enter" from="VBoxContainer/ScrollContainer/HBoxContainer/EffectTime" to="." method="_show_description"]
+[connection signal="mouse_leave" from="VBoxContainer/ScrollContainer/HBoxContainer/EffectTime" to="." method="_hide_description"]
+[connection signal="mouse_enter" from="VBoxContainer/ScrollContainer/HBoxContainer/EffectChance" to="." method="_show_description"]
+[connection signal="mouse_leave" from="VBoxContainer/ScrollContainer/HBoxContainer/EffectChance" to="." method="_hide_description"]
+[connection signal="mouse_enter" from="VBoxContainer/ScrollContainer/HBoxContainer/LaserPower" to="." method="_show_description"]
+[connection signal="mouse_leave" from="VBoxContainer/ScrollContainer/HBoxContainer/LaserPower" to="." method="_hide_description"]
+[connection signal="mouse_enter" from="VBoxContainer/ScrollContainer/HBoxContainer/Lives" to="." method="_show_description"]
+[connection signal="mouse_leave" from="VBoxContainer/ScrollContainer/HBoxContainer/Lives" to="." method="_hide_description"]
+[connection signal="mouse_enter" from="VBoxContainer/ScrollContainer/HBoxContainer/Split" to="." method="_show_description"]
+[connection signal="mouse_leave" from="VBoxContainer/ScrollContainer/HBoxContainer/Split" to="." method="_hide_description"]
 [connection signal="pressed" from="VBoxContainer/Exit/Exit" to="." method="_on_exit_pressed"]

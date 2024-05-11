@@ -95,6 +95,9 @@ func _process(delta : float) -> void:
 	if mode == MODE_LEAVE:
 		PaddleNode.global_position.x += (delta * leave_direction * 20.0)		
 		if PaddleNode.global_position.x < -16 or PaddleNode.global_position.x > 462:
+			if level == "NOTFOUND" and not Music.jingle_playing:
+				get_tree().change_scene_to_file("res://Intro.tscn")
+				return
 			if opened:
 				PipesNode.close_door(Pipes.BOTTOM_LEFT)
 				PipesNode.close_door(Pipes.BOTTOM_RIGHT)
@@ -141,14 +144,12 @@ func new_level() -> void:
 	PaddleNode.position.x = 224
 	mode = MODE_WAIT
 	for ball in balls:
-		if ball.get_parent() != self:
-			print("For some reason this ball's parent has got lost")
-		remove_child(ball)
-		ball.queue_free()
+		call_deferred("remove_child", ball)
+		ball.call_deferred("queue_free")
 	balls.clear()
 	for brick in bricks:
-		BricksNode.remove_child(brick)
-		brick.queue_free()
+		BricksNode.call_deferred("remove_child", brick)
+		brick.call_deferred("queue_free")
 	bricks.clear()
 	chr += 1
 	level_data = load_level_from_disk(level)
@@ -198,6 +199,7 @@ func _brick_destroyed(brick) -> void:
 			brick_count += 1
 		
 	if brick_count == 0:
+		RunTimerNode.pause()
 		for ball in balls:
 			call_deferred("remove_child", ball)
 			ball.call_deferred("queue_free")
@@ -273,8 +275,8 @@ func _on_hit_floor(ball, _power) -> void:
 	if balls.size() == 0:
 		for c in get_children():
 			if c is Upgrade:
-				remove_child(c)
-				c.queue_free()
+				call_deferred("remove_child", c)
+				c.call_deferred("queue_free")
 		PaddleNode.normal()
 		ball = _Ball.instantiate()
 		ball.capture(PaddleNode, Vector2((randf() * 32) - 16, 8))

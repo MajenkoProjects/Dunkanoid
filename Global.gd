@@ -2,6 +2,15 @@ extends Node
 
 const INT64_MAX = (1 << 63) - 1 # 9223372036854775807
 
+const _settings : Array[String] = [
+		"highscore", "relative_mouse",
+		"music_volume", "effects_volume",
+		"best_times", "upgrade_tokens",
+		"effect_time", "laser_power",
+		"extra_lives", "powerup_percent",
+		"ball_split", "laser_autofire"
+]
+
 var score : int = 0 :
 	set(x):
 		score = x
@@ -64,6 +73,11 @@ var ball_split : int = 0 :
 	set(x):
 		ball_split = x
 		_save()
+		
+var laser_autofire : int = 0 :
+	set(x):
+		laser_autofire = x
+		_save()
 
 
 
@@ -75,17 +89,9 @@ func _ready() -> void:
 	_loading = true
 	if FileAccess.file_exists("user://data.json"):
 		var data = JSON.parse_string(FileAccess.get_file_as_string("user://data.json"))
-		highscore = data.get("highscore", 0)
-		relative_mouse = data.get("relative_mouse", true)
-		music_volume = data.get("music_volume", AudioServer.get_bus_volume_db(1))
-		effects_volume = data.get("effects_volume", AudioServer.get_bus_volume_db(2))
-		best_times = data.get("best_times", {})
-		upgrade_tokens = data.get("upgrade_tokens", 0)
-		effect_time = data.get("effect_time", 0)
-		laser_power = data.get("laser_power", 0)
-		extra_lives = data.get("extra_lives", 0)
-		powerup_percent = data.get("powerup_percent", 0)
-		ball_split = data.get("ball_split", 0)
+		for s in _settings:
+			if data.has(s):
+				set(s, data.get(s))
 	else:
 		highscore = 0
 		relative_mouse = true
@@ -98,25 +104,16 @@ func _ready() -> void:
 		extra_lives = 0
 		powerup_percent = 0
 		ball_split = 0
+		laser_autofire = 0
 		
 	_loading = false
 
 func _save() -> void:
 	if _loading:
 		return
-	var data : Dictionary = {
-		"highscore": highscore,
-		"relative_mouse": relative_mouse,
-		"music_volume": music_volume,
-		"effects_volume": effects_volume,
-		"best_times": best_times,
-		"upgrade_tokens": upgrade_tokens,
-		"effect_time": effect_time,
-		"laser_power": laser_power,
-		"extra_lives": extra_lives,
-		"powerup_percent": powerup_percent,
-		"ball_split": ball_split
-	}
+	var data : Dictionary = {}
+	for s in _settings:
+		data[s] = get(s)
 	var f = FileAccess.open("user://data.json", FileAccess.WRITE)
 	f.store_string(JSON.stringify(data))
 	f.close()
