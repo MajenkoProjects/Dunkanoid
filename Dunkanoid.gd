@@ -29,6 +29,10 @@ var _Coin = preload("res://Coin/Coin.tscn")
 @onready var CoinCollectedSoundNode = $Sounds/CoinCollected
 @onready var TokenLabelNode = $Tokens/TokenLabel
 
+var _Aliens : Array = [
+	preload("res://Alien.tscn")
+]
+
 var bricks : Array = []
 var balls : Array[Node] = []
 
@@ -424,7 +428,7 @@ func spawn_alien() -> void:
 func _on_pipes_door_opened(door) -> void:
 	match door:
 		Pipes.TOP_LEFT:
-			var alien = _Alien.instantiate()
+			var alien = _Aliens.pick_random().instantiate()
 			alien.position = Vector2(96, -12)
 			alien.velocity = Vector2(0, 50)
 			alien.alien_died.connect(_alien_died)
@@ -432,7 +436,7 @@ func _on_pipes_door_opened(door) -> void:
 			get_tree().create_timer(2).timeout.connect(_close_top_left)
 			pass
 		Pipes.TOP_RIGHT:
-			var alien = _Alien.instantiate()
+			var alien = _Aliens.pick_random().instantiate()
 			alien.position = Vector2(352, -12)
 			alien.velocity = Vector2(0, 50)
 			alien.alien_died.connect(_alien_died)

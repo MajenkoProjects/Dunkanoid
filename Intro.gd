@@ -20,7 +20,7 @@ func _ready() -> void:
 		EventBus.update_highscore.connect(_on_update_highscore)
 		_on_update_score(Global.score)
 		_on_update_highscore(Global.highscore)
-		$VBoxContainer/Play/Play.grab_focus()
+		$VBoxContainer/Play/VBoxContainer/Play.grab_focus()
 		Music.play_intro()
 		get_tree().create_timer(5).timeout.connect(_show_credits)
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c2oboya05agti"]
+[gd_scene load_steps=15 format=3 uid="uid://c2oboya05agti"]
 
 [ext_resource type="Script" path="res://Intro.gd" id="1_1hnh1"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="3_8d2ix"]
@@ -7,7 +7,9 @@
 [ext_resource type="Script" path="res://ExitButton.gd" id="4_ty0na"]
 [ext_resource type="Texture2D" uid="uid://b56kjbt4ub52n" path="res://NoidTex.png" id="4_v8i0c"]
 [ext_resource type="PackedScene" uid="uid://deyotp28r4uwj" path="res://LoadPanel.tscn" id="5_esv62"]
+[ext_resource type="Script" path="res://Level.gd" id="6_hw2gq"]
 [ext_resource type="SpriteFrames" uid="uid://c6wwkgmwfpdu7" path="res://Coin/Coin.tres" id="7_2tpc7"]
+[ext_resource type="Script" path="res://Preview.gd" id="9_x2ejj"]
 
 [sub_resource type="Curve" id="Curve_jhhjd"]
 min_value = -200.0
@@ -114,109 +116,47 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
-[node name="Play" type="Button" parent="VBoxContainer/Play"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Play"]
+layout_mode = 2
+
+[node name="Play" type="Button" parent="VBoxContainer/Play/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 text = "PLAY"
 icon_alignment = 1
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/Play"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("3_8d2ix")
-
-[node name="PlayLevel" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/PlayLevel"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("3_8d2ix")
-
-[node name="PlayLevel" type="Button" parent="VBoxContainer/PlayLevel"]
+[node name="PlayLevel" type="Button" parent="VBoxContainer/Play/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 text = "PLAY LEVEL"
 icon_alignment = 1
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/PlayLevel"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("3_8d2ix")
-
-[node name="Upgrades" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/Upgrades"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("3_8d2ix")
-
-[node name="Upgrades" type="Button" parent="VBoxContainer/Upgrades"]
+[node name="Upgrades" type="Button" parent="VBoxContainer/Play/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 text = "UPGRADES"
 icon_alignment = 1
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/Upgrades"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("3_8d2ix")
-
-[node name="LevelEditor" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/LevelEditor"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("3_8d2ix")
-
-[node name="Editor" type="Button" parent="VBoxContainer/LevelEditor"]
+[node name="Editor" type="Button" parent="VBoxContainer/Play/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 text = "LEVEL EDITOR"
 icon_alignment = 1
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/LevelEditor"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("3_8d2ix")
-
-[node name="Settings" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/Settings"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("3_8d2ix")
-
-[node name="Settings" type="Button" parent="VBoxContainer/Settings"]
+[node name="Settings" type="Button" parent="VBoxContainer/Play/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 text = "SETTINGS"
 icon_alignment = 1
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/Settings"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("3_8d2ix")
-
-[node name="ExitButton" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-script = ExtResource("4_ty0na")
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/ExitButton"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("3_8d2ix")
-
-[node name="Exit" type="Button" parent="VBoxContainer/ExitButton"]
+[node name="Exit" type="Button" parent="VBoxContainer/Play/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 text = "EXIT"
 icon_alignment = 1
+script = ExtResource("4_ty0na")
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/ExitButton"]
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/Play"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
@@ -315,10 +255,39 @@ offset_top = 116.0
 offset_right = 399.0
 offset_bottom = 297.0
 
-[connection signal="pressed" from="VBoxContainer/Play/Play" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/PlayLevel/PlayLevel" to="." method="_on_play_level_pressed"]
-[connection signal="pressed" from="VBoxContainer/Upgrades/Upgrades" to="." method="_on_upgrades_pressed"]
-[connection signal="pressed" from="VBoxContainer/LevelEditor/Editor" to="." method="_on_editor_pressed"]
-[connection signal="pressed" from="VBoxContainer/Settings/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="VBoxContainer/ExitButton/Exit" to="." method="_on_exit_pressed"]
+[node name="Preview" type="Node2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+script = ExtResource("9_x2ejj")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Preview"]
+offset_left = 68.0
+offset_top = 124.0
+offset_right = 516.0
+offset_bottom = 484.0
+scale = Vector2(0.3, 0.3)
+stretch = true
+
+[node name="Level" type="SubViewport" parent="Preview/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(448, 360)
+render_target_update_mode = 4
+script = ExtResource("6_hw2gq")
+
+[node name="Label" type="Label" parent="Preview"]
+offset_left = 68.0
+offset_top = 238.0
+offset_right = 202.0
+offset_bottom = 261.0
+theme = ExtResource("3_8d2ix")
+theme_type_variation = &"Numbers"
+text = "00:00.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="VBoxContainer/Play/VBoxContainer/Play" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Play/VBoxContainer/PlayLevel" to="." method="_on_play_level_pressed"]
+[connection signal="pressed" from="VBoxContainer/Play/VBoxContainer/Upgrades" to="." method="_on_upgrades_pressed"]
+[connection signal="pressed" from="VBoxContainer/Play/VBoxContainer/Editor" to="." method="_on_editor_pressed"]
+[connection signal="pressed" from="VBoxContainer/Play/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/Play/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
 [connection signal="load_level" from="LoadPanel" to="." method="_on_load_panel_load_level"]
