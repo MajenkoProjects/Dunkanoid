@@ -78,13 +78,12 @@ func dump_all(dir : String, indent : String = "") -> void:
 		
 	for file in DirAccess.get_files_at(dir):
 		print("%s%s" % [indent, file])
-		
-
 
 func _on_play_level_pressed() -> void:
 	$LoadPanel.show_panel(true)
 
 func _on_load_panel_load_level(level_name: String) -> void:
+	Music.fade_down(1)
 	Global.start_level = level_name
 	var tween = get_tree().create_tween()
 	tween.tween_property($ColorRect, "color", Color(0, 0, 0, 1), 1)
@@ -94,6 +93,7 @@ func _start_game() -> void:
 	get_tree().change_scene_to_file("res://Dunkanoid.tscn")
 
 func _on_button_pressed() -> void:
+	Music.fade_down(1)
 	Global.start_level = "DUNKANOID"
 	var tween = get_tree().create_tween()
 	tween.tween_property($ColorRect, "color", Color(0, 0, 0, 1), 1)

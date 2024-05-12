@@ -33,6 +33,7 @@ var JingleFileGameOver = preload("res://Sounds/GameOver.wav")
 var jingle_playing : bool = false
 var jingle_number : int = 0
 
+var tween = null
 
 func _ready() -> void:
 	MusicPlayer = AudioStreamPlayer.new();
@@ -43,7 +44,22 @@ func _ready() -> void:
 	MusicPlayer.play()
 	music = MUSIC_INTRO
 
+func fade_up(time : int = 1) -> void:
+	if MusicPlayer.volume_db < 0:
+		if tween != null:
+			tween.kill()
+		tween = get_tree().create_tween()
+		tween.tween_property(MusicPlayer, "volume_db", 0, time)
+
+func fade_down(time : int = 1) -> void:
+	if MusicPlayer.volume_db > -80:
+		if tween != null:
+			tween.kill()
+		tween = get_tree().create_tween()
+		tween.tween_property(MusicPlayer, "volume_db", -80, time)
+
 func play_game() -> void:
+	fade_up()
 	if music == MUSIC_GAME:
 		return
 	if jingle_playing:
@@ -54,6 +70,7 @@ func play_game() -> void:
 	music = MUSIC_GAME
 
 func play_intro() -> void:
+	fade_up()
 	if music == MUSIC_INTRO:
 		return
 	if jingle_playing:
@@ -64,6 +81,7 @@ func play_intro() -> void:
 	music = MUSIC_INTRO
 
 func play_game_over() -> void:
+	fade_up()
 	if music == MUSIC_GAME_OVER:
 		return
 	if jingle_playing:
@@ -81,6 +99,7 @@ func resume() -> void:
 	MusicPlayer.play(pausepos)
 
 func jingle(item : int) -> void:
+	MusicPlayer.volume_db = 0
 	jingle_number = item
 	MusicPlayer.finished.connect(_jingle_done)
 	pause()

@@ -30,7 +30,8 @@ func _on_sub_viewport_container_scroll_finished() -> void:
 	tween.finished.connect(_wait_load_intro)
 
 func _wait_load_intro() -> void:
+	Music.fade_down(3)
 	get_tree().create_timer(3).timeout.connect(_load_intro)
 
 func _load_intro() -> void:
-		get_tree().change_scene_to_file("res://Intro.tscn")
+	get_tree().change_scene_to_file("res://Intro.tscn")
