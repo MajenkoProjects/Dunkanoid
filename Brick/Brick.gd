@@ -55,22 +55,22 @@ func type(base : int, color : Color) -> void:
 	original_color = color
 	match base:
 		NORMAL:
-			$TextureRect.texture = load("res://Brick/BaseBrick.png")
+			$TextureRect.texture = Global.Bricks["base"]
 			$TextureRect.modulate = color
 			hits = 1
 			value = 100
 		SILVER:
-			$TextureRect.texture = load("res://Brick/ShinyBrick.png")
+			$TextureRect.texture = Global.Bricks["shiny"]
 			$TextureRect.modulate = color
 			hits = 2
 			value = 200
 		GOLD:
-			$TextureRect.texture = load("res://Brick/ShinyBrick.png")
+			$TextureRect.texture = Global.Bricks["shiny"]
 			$TextureRect.modulate = color
 			hits = 3
 			value = 500
 		INVULNERABLE:
-			$TextureRect.texture = load("res://Brick/InvulBrick.png")
+			$TextureRect.texture = Global.Bricks["invul"]
 			$TextureRect.modulate = color
 			hits = 2
 			value = 0

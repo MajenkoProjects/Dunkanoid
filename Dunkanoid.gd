@@ -160,7 +160,7 @@ func new_level() -> void:
 	BestTimeNode.text = format_time(Global.get_best_time(level_data.name))
 	StartTitleNode.text = level
 	StartRoundNode.text = "ROUND %3d" % [chr]
-	BackgroundNode.texture = load("res://Backgrounds/%s.png" % level_data.background)
+	BackgroundNode.texture = Global.Backgrounds.get(level_data.background, null)
 	BackgroundNode.modulate = Color("#%s" % level_data.get("tint", "FFFFFF"))
 	load_level(level_data.data)
 	var ball = _Ball.instantiate()

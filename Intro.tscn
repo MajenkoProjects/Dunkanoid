@@ -20,13 +20,13 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_431mb"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6jl2f"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_coeve"]
 shader = ExtResource("3_eo4f3")
 shader_parameter/rect_global_position = Vector2(0, 0)
 shader_parameter/rect_size = Vector2(150, 25)
 shader_parameter/ColourTexture = ExtResource("4_v8i0c")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1smc2"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_04r5o"]
 shader = ExtResource("3_eo4f3")
 shader_parameter/rect_global_position = Vector2(0, 0)
 shader_parameter/rect_size = Vector2(242, 25)
@@ -70,7 +70,7 @@ size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
 [node name="ArkaLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
-material = SubResource("ShaderMaterial_6jl2f")
+material = SubResource("ShaderMaterial_coeve")
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 theme_type_variation = &"Arkanoid"
@@ -91,7 +91,7 @@ size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
 [node name="Revenge" type="Label" parent="VBoxContainer/HBoxContainer2"]
-material = SubResource("ShaderMaterial_1smc2")
+material = SubResource("ShaderMaterial_04r5o")
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 theme_type_variation = &"Arkanoid"

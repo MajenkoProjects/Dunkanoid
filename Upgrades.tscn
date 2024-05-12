@@ -18,7 +18,7 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_ucorl"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v7t7t"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0g7aw"]
 shader = ExtResource("4_waenw")
 shader_parameter/rect_global_position = Vector2(8, 8)
 shader_parameter/rect_size = Vector2(127, 25)
@@ -76,7 +76,7 @@ autoplay = "default"
 centered = false
 
 [node name="ArkaLabel" type="Label" parent="VBoxContainer"]
-material = SubResource("ShaderMaterial_v7t7t")
+material = SubResource("ShaderMaterial_0g7aw")
 layout_mode = 2
 size_flags_vertical = 6
 theme = ExtResource("1_rv7oa")

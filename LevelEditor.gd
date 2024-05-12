@@ -7,7 +7,7 @@ func _ready() -> void:
 	Music.pause()
 	
 func _on_background_item_selected(index: int) -> void:
-	$Background.texture = load($VBoxContainer/Background.get_item_metadata(index))
+	$Background.texture = Global.Backgrounds.get($VBoxContainer/Background.get_selected_text(), null)
 
 func get_level_object() -> Dictionary:
 	var data : Dictionary = {
@@ -61,7 +61,7 @@ func load_level_from_object(data : Dictionary) -> void:
 		$VBoxContainer/Left.select_by_name(data.get("left", "DUNKANOID"))
 		$VBoxContainer/Right.select_by_name(data.get("right", "DUNKANOID"))
 		$VBoxContainer/Background.select_by_name(data.get("background", "BlueSlash"))
-		$Background.texture = load($VBoxContainer/Background.get_selected_filename())
+		$Background.texture = Global.Backgrounds.get($VBoxContainer/Background.get_selected_text())
 		$VBoxContainer/Tint.text = data.get("tint", "FFFFFF")
 		$Background.modulate = Color("#%s" % $VBoxContainer/Tint.text)
 	for row in 18:

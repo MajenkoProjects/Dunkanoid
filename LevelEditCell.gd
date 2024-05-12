@@ -35,50 +35,50 @@ func _input(event : InputEvent) -> void:
 func set_brick_type(t : String) -> void:
 	match t:
 		"R": 
-			texture = load("res://Brick/BaseBrick.png")
+			texture = Global.Bricks["base"]
 			modulate = Color.RED
 			type = "R"
 		"Y": 
-			texture = load("res://Brick/BaseBrick.png")
+			texture = Global.Bricks["base"]
 			modulate = Color.YELLOW
 			type = "Y"
 		"G": 
-			texture = load("res://Brick/BaseBrick.png")
+			texture = Global.Bricks["base"]
 			modulate = Color.GREEN
 			type = "G"
 		"B": 
-			texture = load("res://Brick/BaseBrick.png")
+			texture = Global.Bricks["base"]
 			modulate = Color.ROYAL_BLUE
 			type = "B"
 		"M": 
-			texture = load("res://Brick/BaseBrick.png")
+			texture = Global.Bricks["base"]
 			modulate = Color.MAGENTA
 			type = "M"
 		"C": 
-			texture = load("res://Brick/BaseBrick.png")
+			texture = Global.Bricks["base"]
 			modulate = Color.CYAN
 			type = "C"
 		"O": 
-			texture = load("res://Brick/BaseBrick.png")
+			texture = Global.Bricks["base"]
 			modulate = Color.ORANGE
 			type = "O"
 		"W": 
-			texture = load("res://Brick/BaseBrick.png")
+			texture = Global.Bricks["base"]
 			modulate = Color.WHITE
 			type = "W"
 		"s":
-			texture = load("res://Brick/ShinyBrick.png")
+			texture = Global.Bricks["shiny"]
 			modulate = Color.SILVER
 			type = "s"
 		"g":
-			texture = load("res://Brick/ShinyBrick.png")
+			texture = Global.Bricks["shiny"]
 			modulate = Color.GOLD
 			type = "g"
 		"i":
-			texture = load("res://Brick/InvulBrick.png")
+			texture = Global.Bricks["invul"]
 			modulate = Color.GRAY
 			type = "i"						
 		" ":
-			texture = load("res://Brick/BlankBrick.png")
+			texture = Global.Bricks["blank"]
 			modulate = Color.WHITE
 			type = " "

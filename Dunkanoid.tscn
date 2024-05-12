@@ -43,13 +43,13 @@ distance = -432.0
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_48dqy"]
 distance = -360.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mnwco"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bxn44"]
 shader = ExtResource("12_ljnes")
-shader_parameter/rect_global_position = Vector2(0, 0.226471)
-shader_parameter/rect_size = Vector2(448, 25)
+shader_parameter/rect_global_position = Vector2(0, 0)
+shader_parameter/rect_size = Vector2(150, 25)
 shader_parameter/ColourTexture = ExtResource("13_u52d1")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xsw3b"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_37u5t"]
 shader = ExtResource("12_ljnes")
 shader_parameter/rect_global_position = Vector2(0, 0)
 shader_parameter/rect_size = Vector2(89, 25)
@@ -323,7 +323,7 @@ theme_type_variation = &"RoundStart"
 layout_mode = 2
 
 [node name="Title" type="Label" parent="Start/VBoxContainer/PanelContainer/VBoxContainer"]
-material = SubResource("ShaderMaterial_mnwco")
+material = SubResource("ShaderMaterial_bxn44")
 layout_mode = 2
 theme = ExtResource("8_wcf7g")
 theme_type_variation = &"Arkanoid"
@@ -371,7 +371,7 @@ size_flags_vertical = 3
 theme = ExtResource("8_wcf7g")
 
 [node name="Label" type="Label" parent="Paused/VBoxContainer"]
-material = SubResource("ShaderMaterial_xsw3b")
+material = SubResource("ShaderMaterial_37u5t")
 layout_mode = 2
 theme = ExtResource("8_wcf7g")
 theme_type_variation = &"Arkanoid"

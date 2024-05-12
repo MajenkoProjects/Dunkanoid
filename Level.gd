@@ -64,7 +64,7 @@ func load_from_file(filename : String) -> void:
 func load_from_data(data : Dictionary) -> void:
 	purge_bricks()
 	level_data = data
-	Background.texture = load("res://Backgrounds/%s.png" % level_data.background)
+	Background.texture = Global.Backgrounds.get(level_data.background, null)
 	Background.modulate = Color("#%s" % level_data.get("tint", "FFFFFF"))
 	for y in level_data.data.size():
 		var line : String = level_data.data[y]
@@ -107,8 +107,8 @@ func load_from_data(data : Dictionary) -> void:
 
 func purge_bricks() -> void:
 	for brick in bricks:
-		BricksNode.call_deferred("remove_child", brick)
-		brick.call_deferred("queue_free")
+		BricksNode.remove_child(brick)
+		brick.queue_free()
 	bricks.clear()
 
 func _brick_destroyed(brick : Node2D) -> void:

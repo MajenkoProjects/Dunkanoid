@@ -1,6 +1,7 @@
 extends Node2D
 
 func _ready() -> void:
+	$VBoxContainer/Version.text = "Version %s" % ProjectSettings.get_setting("application/config/version")
 	$VBoxContainer/HBoxContainer/LeftPanel/Relative.button_pressed = Global.relative_mouse
 	$VBoxContainer/HBoxContainer/LeftPanel/Absolute.button_pressed = !Global.relative_mouse
 	$VBoxContainer/HBoxContainer/RightPanel/Music.set_value_no_signal(Global.music_volume)

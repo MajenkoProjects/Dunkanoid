@@ -80,13 +80,21 @@ var laser_autofire : int = 0 :
 		_save()
 
 
-
+# Textures and other resources
+var Backgrounds : Dictionary = {}
+var Bricks : Dictionary = {
+	"blank": preload("res://Brick/BlankBrick.png"),
+	"base": preload("res://Brick/BaseBrick.png"),
+	"shiny": preload("res://Brick/ShinyBrick.png"),
+	"invul": preload("res://Brick/InvulBrick.png")
+}
 
 var start_level : String = "DUNKANOID"
 var _loading : bool = false
 
 func _ready() -> void:
 	_loading = true
+	load_backgrounds()
 	if FileAccess.file_exists("user://data.json"):
 		var data = JSON.parse_string(FileAccess.get_file_as_string("user://data.json"))
 		for s in _settings:
@@ -162,3 +170,20 @@ func format_powerup_percent() -> String:
 
 func format_ball_split() -> String:
 	return "%d balls" % get_num_balls()
+
+
+
+func load_backgrounds() -> void:
+	for bg in Backgrounds.values():
+		bg.free()
+	Backgrounds.clear()
+	if DirAccess.dir_exists_absolute("user://Backgrounds"):
+		for file in DirAccess.get_files_at("user://Backgrounds"):
+			if file.ends_with(".png") or file.ends_with(".jpg"):
+				var bgname = file.left(-4)
+				Backgrounds[bgname] = load("user://Backgrounds/%s" % file)
+	for file in DirAccess.get_files_at("res://Backgrounds"):
+		if file.ends_with(".png.import") or file.ends_with(".jpg.import"):
+			var bgname = file.left(-11)
+			if not Backgrounds.has(bgname):
+				Backgrounds[bgname] = load("res://Backgrounds/%s" % file.left(-7))

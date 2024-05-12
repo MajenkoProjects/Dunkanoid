@@ -14,6 +14,13 @@ offset_top = 32.0
 offset_right = 608.0
 offset_bottom = 328.0
 
+[node name="Version" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_lirja")
+text = "0.0.0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
