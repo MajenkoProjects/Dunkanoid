@@ -60,7 +60,7 @@ func _on_body_exited(body: Node) -> void:
 		if not body.visible:
 			return
 		$BrickSound.play()
-		body.hit(1)
+		body.hit(1, false)
 		hit_brick.emit(self, body, 1)
 		speed += 1
 		return

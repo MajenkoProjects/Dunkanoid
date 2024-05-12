@@ -8,7 +8,7 @@ enum {
 	INVULNERABLE
 }
 
-signal brick_destroyed(brick : StaticBody2D)
+signal brick_destroyed(brick : StaticBody2D, is_laser : bool )
 
 var hits : int = 1
 var value : int = 100
@@ -22,7 +22,7 @@ func _ready() -> void:
 func _process(_delta) -> void:
 	pass
 
-func hit(power : int) -> void:
+func hit(power : int, is_laser : bool = false) -> void:
 	if hits <= 0:
 		return
 	hits -= power
@@ -33,7 +33,7 @@ func hit(power : int) -> void:
 			visible = false
 			get_tree().create_timer(5).timeout.connect(_show_block)
 			return
-		brick_destroyed.emit(self)
+		brick_destroyed.emit(self, is_laser)
 		get_parent().call_deferred("remove_child", self)
 		call_deferred("queue_free")
 	else:

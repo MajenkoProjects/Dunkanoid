@@ -1,6 +1,7 @@
 extends Node
 
 var MusicPlayer : AudioStreamPlayer
+var JinglePlayer : AudioStreamPlayer
 
 enum {
 	MUSIC_INTRO,
@@ -43,6 +44,13 @@ func _ready() -> void:
 	MusicPlayer.stream = MP3["Through The Crystal"]
 	MusicPlayer.play()
 	music = MUSIC_INTRO
+
+	JinglePlayer = AudioStreamPlayer.new();
+	JinglePlayer.bus = "Music"
+	JinglePlayer.process_mode = Node.PROCESS_MODE_ALWAYS
+	JinglePlayer.finished.connect(_jingle_done)
+	add_child(JinglePlayer)
+
 
 func fade_up(time : int = 1) -> void:
 	if MusicPlayer.volume_db < 0:
@@ -99,32 +107,32 @@ func resume() -> void:
 	MusicPlayer.play(pausepos)
 
 func jingle(item : int) -> void:
-	MusicPlayer.volume_db = 0
+	fade_down()
+#	MusicPlayer.volume_db = 0
 	jingle_number = item
-	MusicPlayer.finished.connect(_jingle_done)
-	pause()
+#	pause()
 	match item:
 		JINGLE_LEVEL_START:
-			MusicPlayer.stream = JingleFileStart
-			MusicPlayer.play()
+			JinglePlayer.stream = JingleFileStart
+			JinglePlayer.play()
 		JINGLE_LEVEL_WON:
-			MusicPlayer.stream = JingleFileWin
-			MusicPlayer.play()
+			JinglePlayer.stream = JingleFileWin
+			JinglePlayer.play()
 		JINGLE_GAME_OVER:
-			MusicPlayer.stream = JingleFileGameOver
-			MusicPlayer.play()
+			JinglePlayer.stream = JingleFileGameOver
+			JinglePlayer.play()
 	jingle_playing = true
 	pass
 
 func _jingle_done() -> void:
-	MusicPlayer.finished.disconnect(_jingle_done)
-	match music:
-		MUSIC_INTRO:
-			MusicPlayer.stream = MP3["Through The Crystal"]
-		MUSIC_GAME:
-			MusicPlayer.stream = MP3["Powerup"]
-		MUSIC_GAME_OVER:
-			MusicPlayer.stream = MP3["I'll Remember You"]
-	resume()
+	fade_up()
+	#match music:
+		#MUSIC_INTRO:
+			#MusicPlayer.stream = MP3["Through The Crystal"]
+		#MUSIC_GAME:
+			#MusicPlayer.stream = MP3["Powerup"]
+		#MUSIC_GAME_OVER:
+			#MusicPlayer.stream = MP3["I'll Remember You"]
+	#resume()
 	jingle_playing = false
 	jingle_finished.emit(jingle_number)

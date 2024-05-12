@@ -6,6 +6,7 @@ var _Upgrade = preload("res://Upgrade/Upgrade.tscn")
 var _Alien = preload("res://Alien.tscn")
 var _Bullet = preload("res://Bullet.tscn")
 var _Coin = preload("res://Coin/Coin.tscn")
+var _Explosion = preload("res://Explosion.tscn")
 
 @onready var ScoreNode = $ScoreCard/Score/ScoreBox
 @onready var LivesNode = $ScoreCard/Lives/LivesBox
@@ -172,11 +173,18 @@ func new_level() -> void:
 	add_child(ball)
 	balls.push_back(ball)
 
+	get_tree().create_timer(2).timeout.connect(show_start)
+	
+func show_start() -> void:
 	StartNode.visible = true
 	Music.jingle_finished.connect(_on_start_round_finished)
 	Music.jingle(Music.JINGLE_LEVEL_START)
 	
-func _brick_destroyed(brick) -> void:
+func _brick_destroyed(brick, is_laser) -> void:
+	if is_laser:
+		var exp = _Explosion.instantiate()
+		exp.global_position = brick.global_position
+		add_child(exp)
 	Global.score += brick.value
 	if randf() >= Global.get_powerup_percent():
 		var upgrade = _Upgrade.instantiate()
@@ -287,7 +295,8 @@ func _on_hit_floor(ball, _power) -> void:
 		if lives <= 0:
 			var tween = get_tree().create_tween()
 			tween.tween_property($ColorRect, "color", Color(0, 0, 0, 1), 2)
-			tween.finished.connect(_go_to_game_over)			
+			tween.finished.connect(_go_to_game_over)	
+			mode = MODE_WAIT		
 		else:
 			PaddleNode.normal()
 			ball = _Ball.instantiate()
@@ -478,7 +487,7 @@ func fire_bullet() -> void:
 	bullet.linear_velocity = Vector2(0, -500)
 
 func _on_bullet_hit_brick(node, power) -> void:
-	node.hit(power)
+	node.hit(power, true)
 
 func _on_bullet_hit_alien(node, power) -> void:
 	node.hit(power)

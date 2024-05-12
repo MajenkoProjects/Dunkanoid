@@ -45,8 +45,8 @@ distance = -360.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kyxd5"]
 shader = ExtResource("12_ljnes")
-shader_parameter/rect_global_position = Vector2(0, 0)
-shader_parameter/rect_size = Vector2(150, 25)
+shader_parameter/rect_global_position = Vector2(0, 0.233687)
+shader_parameter/rect_size = Vector2(448, 25)
 shader_parameter/ColourTexture = ExtResource("13_u52d1")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_48a5y"]
@@ -304,6 +304,7 @@ size_flags_horizontal = 3
 theme = ExtResource("8_wcf7g")
 
 [node name="Start" type="Node2D" parent="."]
+visible = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Start"]
 offset_right = 448.0
