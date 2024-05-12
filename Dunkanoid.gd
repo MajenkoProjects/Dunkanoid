@@ -75,6 +75,8 @@ func _ready() -> void:
 	EventBus.update_score.connect(_on_update_score)
 	new_level()
 	Music.play_game()
+	var tween = get_tree().create_tween()
+	tween.tween_property($ColorRect, "color", Color(0, 0, 0, 0), 1)
 
 var opened: bool = false
 
@@ -281,21 +283,26 @@ func _on_hit_floor(ball, _power) -> void:
 			if c is Upgrade:
 				call_deferred("remove_child", c)
 				c.call_deferred("queue_free")
-		PaddleNode.normal()
-		ball = _Ball.instantiate()
-		ball.capture(PaddleNode, Vector2((randf() * 32) - 16, 8))
-		ball.hit_paddle.connect(_on_hit_paddle)
-		ball.hit_floor.connect(_on_hit_floor)
-		call_deferred("add_child", ball)
-		balls.push_back(ball)
-		Music.jingle_finished.connect(_on_start_round_finished)
-		Music.jingle(Music.JINGLE_LEVEL_START)
-		StartNode.visible = true
-		mode = MODE_WAIT
 		lives -= 1
 		if lives <= 0:
-			get_tree().change_scene_to_file("res://GameOver.tscn")
+			var tween = get_tree().create_tween()
+			tween.tween_property($ColorRect, "color", Color(0, 0, 0, 1), 2)
+			tween.finished.connect(_go_to_game_over)			
+		else:
+			PaddleNode.normal()
+			ball = _Ball.instantiate()
+			ball.capture(PaddleNode, Vector2((randf() * 32) - 16, 8))
+			ball.hit_paddle.connect(_on_hit_paddle)
+			ball.hit_floor.connect(_on_hit_floor)
+			call_deferred("add_child", ball)
+			balls.push_back(ball)
+			StartNode.visible = true
+			mode = MODE_WAIT
+			Music.jingle_finished.connect(_on_start_round_finished)
+			Music.jingle(Music.JINGLE_LEVEL_START)
 
+func _go_to_game_over() -> void:
+	get_tree().change_scene_to_file("res://GameOver.tscn")
 
 func _on_round_won_finished() -> void:
 	pass

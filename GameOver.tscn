@@ -1,25 +1,29 @@
-[gd_scene load_steps=7 format=3 uid="uid://c3ikcjhbrm0hp"]
+[gd_scene load_steps=11 format=3 uid="uid://c3ikcjhbrm0hp"]
 
 [ext_resource type="Script" path="res://GameOver.gd" id="1_clfqa"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="3_km2fx"]
 [ext_resource type="Shader" path="res://Arkanoid.gdshader" id="3_u76hk"]
 [ext_resource type="Texture2D" uid="uid://b56kjbt4ub52n" path="res://NoidTex.png" id="4_lxs2b"]
 [ext_resource type="Script" path="res://ArkaLabel.gd" id="5_g14o8"]
+[ext_resource type="Shader" path="res://ScrollText.gdshader" id="6_t71ub"]
+[ext_resource type="Script" path="res://ScrollText.gd" id="6_y6ajf"]
+[ext_resource type="Texture2D" uid="uid://c6nwmsoi1gjvv" path="res://FadeTex.png" id="7_wpqjt"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ne3hd"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sdln7"]
 shader = ExtResource("3_u76hk")
-shader_parameter/rect_global_position = Vector2(0, 0)
-shader_parameter/rect_size = Vector2(160, 25)
+shader_parameter/rect_global_position = Vector2(0, 0.104895)
+shader_parameter/rect_size = Vector2(640, 25)
 shader_parameter/ColourTexture = ExtResource("4_lxs2b")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fxm16"]
+shader = ExtResource("6_t71ub")
+shader_parameter/rect_global_position = Vector2(0.5, 0.37)
+shader_parameter/rect_size = Vector2(211, 96)
+shader_parameter/ColourTexture = ExtResource("7_wpqjt")
 
 [node name="GameOver" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_clfqa")
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 10.0
-one_shot = true
-autostart = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_right = 640.0
@@ -31,7 +35,7 @@ size_flags_vertical = 3
 theme = ExtResource("3_km2fx")
 
 [node name="GameOver" type="Label" parent="VBoxContainer"]
-material = SubResource("ShaderMaterial_ne3hd")
+material = SubResource("ShaderMaterial_sdln7")
 layout_mode = 2
 theme = ExtResource("3_km2fx")
 theme_type_variation = &"Arkanoid"
@@ -39,11 +43,6 @@ text = "GAME OVER"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("5_g14o8")
-
-[node name="VSeparator2" type="VSeparator" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("3_km2fx")
 
 [node name="ScoreLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
@@ -78,4 +77,93 @@ layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("3_km2fx")
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_km2fx")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/HBoxContainer2"]
+material = SubResource("ShaderMaterial_fxm16")
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+script = ExtResource("6_y6ajf")
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/HBoxContainer2/SubViewportContainer"]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(211, 71)
+render_target_update_mode = 4
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer2/SubViewportContainer/SubViewport"]
+custom_minimum_size = Vector2(211, 96)
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/SubViewportContainer/SubViewport/ScrollContainer"]
+custom_minimum_size = Vector2(211, 96)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_km2fx")
+text = "
+
+
+
+
+
+
+
+For you, the war is over.
+
+Countless have died on both sides of the conflict.
+
+And now, without you to lead them, countless more will die.
+
+
+
+The fate of humanity, or what is left of humanity, is now sealed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_km2fx")
+
+[node name="VSeparator4" type="VSeparator" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_km2fx")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[connection signal="scroll_finished" from="VBoxContainer/HBoxContainer2/SubViewportContainer" to="." method="_on_sub_viewport_container_scroll_finished"]

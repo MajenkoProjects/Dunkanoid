@@ -43,13 +43,13 @@ distance = -432.0
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_48dqy"]
 distance = -360.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bxn44"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_334al"]
 shader = ExtResource("12_ljnes")
-shader_parameter/rect_global_position = Vector2(0, 0)
-shader_parameter/rect_size = Vector2(150, 25)
+shader_parameter/rect_global_position = Vector2(0, 0.215385)
+shader_parameter/rect_size = Vector2(448, 25)
 shader_parameter/ColourTexture = ExtResource("13_u52d1")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_37u5t"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ldhlx"]
 shader = ExtResource("12_ljnes")
 shader_parameter/rect_global_position = Vector2(0, 0)
 shader_parameter/rect_size = Vector2(89, 25)
@@ -323,7 +323,7 @@ theme_type_variation = &"RoundStart"
 layout_mode = 2
 
 [node name="Title" type="Label" parent="Start/VBoxContainer/PanelContainer/VBoxContainer"]
-material = SubResource("ShaderMaterial_bxn44")
+material = SubResource("ShaderMaterial_334al")
 layout_mode = 2
 theme = ExtResource("8_wcf7g")
 theme_type_variation = &"Arkanoid"
@@ -371,7 +371,7 @@ size_flags_vertical = 3
 theme = ExtResource("8_wcf7g")
 
 [node name="Label" type="Label" parent="Paused/VBoxContainer"]
-material = SubResource("ShaderMaterial_37u5t")
+material = SubResource("ShaderMaterial_ldhlx")
 layout_mode = 2
 theme = ExtResource("8_wcf7g")
 theme_type_variation = &"Arkanoid"
@@ -608,6 +608,12 @@ layout_mode = 2
 sprite_frames = ExtResource("26_ahhyt")
 autoplay = "default"
 centered = false
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 641.0
+offset_bottom = 360.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
 
 [connection signal="update_lives" from="." to="." method="_on_update_lives"]
 [connection signal="effect_finished" from="Paddle" to="." method="_on_paddle_effect_finished"]

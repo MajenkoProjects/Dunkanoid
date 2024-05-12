@@ -12,7 +12,7 @@ void fragment() {
 
 	if ((COLOR.r > 0.8) && (COLOR.g > 0.8) && (COLOR.b < 0.2) && (COLOR.a > 0.9)) {
 		vec2 actual_uv = (SCREEN_UV - rect_global_position) * rect_size;
-		COLOR.rgb = texture(ColourTexture, actual_uv).rgb ;
+		COLOR.rgb = texture(ColourTexture, actual_uv).rgb;
 	}
 //	if (COLOR.rgba == vec4(1.0, 0.0, 1.0, 1.0)) {
 //	if (COLOR.a > 0.9) {

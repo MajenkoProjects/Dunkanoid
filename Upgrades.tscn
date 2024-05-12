@@ -18,10 +18,10 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_ucorl"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0g7aw"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ttnt2"]
 shader = ExtResource("4_waenw")
-shader_parameter/rect_global_position = Vector2(8, 8)
-shader_parameter/rect_size = Vector2(127, 25)
+shader_parameter/rect_global_position = Vector2(0.012945, 0.048951)
+shader_parameter/rect_size = Vector2(608, 25)
 shader_parameter/ColourTexture = ExtResource("5_y0x1p")
 
 [node name="Upgrades" type="Node2D"]
@@ -76,7 +76,7 @@ autoplay = "default"
 centered = false
 
 [node name="ArkaLabel" type="Label" parent="VBoxContainer"]
-material = SubResource("ShaderMaterial_0g7aw")
+material = SubResource("ShaderMaterial_ttnt2")
 layout_mode = 2
 size_flags_vertical = 6
 theme = ExtResource("1_rv7oa")
@@ -86,72 +86,60 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("6_ducwl")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 160)
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-follow_focus = true
-vertical_scroll_mode = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer"]
-layout_mode = 2
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("1_rv7oa")
 
-[node name="EffectTime" parent="VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("4_rlh0r")]
+[node name="EffectTime" parent="VBoxContainer/HBoxContainer" instance=ExtResource("4_rlh0r")]
 layout_mode = 2
 Name = "Effect Time"
 GlobalVariable = "effect_time"
 Description = "Increases how long powerup effects last for"
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("1_rv7oa")
-
-[node name="EffectChance" parent="VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("4_rlh0r")]
+[node name="EffectChance" parent="VBoxContainer/HBoxContainer" instance=ExtResource("4_rlh0r")]
 layout_mode = 2
 Name = "Effect Chance"
 GlobalVariable = "powerup_percent"
 Description = "Increases the chance that a powerup will drop when a block is destroyed"
 
-[node name="HSeparator3" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("1_rv7oa")
-
-[node name="LaserPower" parent="VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("4_rlh0r")]
+[node name="LaserPower" parent="VBoxContainer/HBoxContainer" instance=ExtResource("4_rlh0r")]
 layout_mode = 2
 Name = "Laser Power"
 GlobalVariable = "laser_power"
 Description = "Increase the amount of damage the lasers do"
 
-[node name="HSeparator4" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("1_rv7oa")
 
-[node name="Lives" parent="VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("4_rlh0r")]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_rv7oa")
+
+[node name="Lives" parent="VBoxContainer/HBoxContainer2" instance=ExtResource("4_rlh0r")]
 layout_mode = 2
 Name = "Lives"
 GlobalVariable = "extra_lives"
 Description = "More lives!"
 
-[node name="HSeparator5" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("1_rv7oa")
-
-[node name="Split" parent="VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("4_rlh0r")]
+[node name="Split" parent="VBoxContainer/HBoxContainer2" instance=ExtResource("4_rlh0r")]
 layout_mode = 2
 Name = "Split"
 GlobalVariable = "ball_split"
 Description = "How many balls the D powerup splits the ball into"
 
-[node name="HSeparator6" type="HSeparator" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+[node name="HSeparator4" type="HSeparator" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("1_rv7oa")
@@ -178,14 +166,14 @@ text = "EXIT"
 script = ExtResource("8_frvhv")
 HoverVariant = "ButtonHover"
 
-[connection signal="mouse_enter" from="VBoxContainer/ScrollContainer/HBoxContainer/EffectTime" to="." method="_show_description"]
-[connection signal="mouse_leave" from="VBoxContainer/ScrollContainer/HBoxContainer/EffectTime" to="." method="_hide_description"]
-[connection signal="mouse_enter" from="VBoxContainer/ScrollContainer/HBoxContainer/EffectChance" to="." method="_show_description"]
-[connection signal="mouse_leave" from="VBoxContainer/ScrollContainer/HBoxContainer/EffectChance" to="." method="_hide_description"]
-[connection signal="mouse_enter" from="VBoxContainer/ScrollContainer/HBoxContainer/LaserPower" to="." method="_show_description"]
-[connection signal="mouse_leave" from="VBoxContainer/ScrollContainer/HBoxContainer/LaserPower" to="." method="_hide_description"]
-[connection signal="mouse_enter" from="VBoxContainer/ScrollContainer/HBoxContainer/Lives" to="." method="_show_description"]
-[connection signal="mouse_leave" from="VBoxContainer/ScrollContainer/HBoxContainer/Lives" to="." method="_hide_description"]
-[connection signal="mouse_enter" from="VBoxContainer/ScrollContainer/HBoxContainer/Split" to="." method="_show_description"]
-[connection signal="mouse_leave" from="VBoxContainer/ScrollContainer/HBoxContainer/Split" to="." method="_hide_description"]
+[connection signal="mouse_enter" from="VBoxContainer/HBoxContainer/EffectTime" to="." method="_show_description"]
+[connection signal="mouse_leave" from="VBoxContainer/HBoxContainer/EffectTime" to="." method="_hide_description"]
+[connection signal="mouse_enter" from="VBoxContainer/HBoxContainer/EffectChance" to="." method="_show_description"]
+[connection signal="mouse_leave" from="VBoxContainer/HBoxContainer/EffectChance" to="." method="_hide_description"]
+[connection signal="mouse_enter" from="VBoxContainer/HBoxContainer/LaserPower" to="." method="_show_description"]
+[connection signal="mouse_leave" from="VBoxContainer/HBoxContainer/LaserPower" to="." method="_hide_description"]
+[connection signal="mouse_enter" from="VBoxContainer/HBoxContainer2/Lives" to="." method="_show_description"]
+[connection signal="mouse_leave" from="VBoxContainer/HBoxContainer2/Lives" to="." method="_hide_description"]
+[connection signal="mouse_enter" from="VBoxContainer/HBoxContainer2/Split" to="." method="_show_description"]
+[connection signal="mouse_leave" from="VBoxContainer/HBoxContainer2/Split" to="." method="_hide_description"]
 [connection signal="pressed" from="VBoxContainer/Exit/Exit" to="." method="_on_exit_pressed"]

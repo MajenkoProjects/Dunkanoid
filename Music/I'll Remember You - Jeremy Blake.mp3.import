@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://vi5k4w8klmdb"
+path="res://.godot/imported/I'll Remember You - Jeremy Blake.mp3-e39490dc4200e439788e8a18c9007047.mp3str"
+
+[deps]
+
+source_file="res://Music/I'll Remember You - Jeremy Blake.mp3"
+dest_files=["res://.godot/imported/I'll Remember You - Jeremy Blake.mp3-e39490dc4200e439788e8a18c9007047.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -92,6 +92,8 @@ var Bricks : Dictionary = {
 var start_level : String = "DUNKANOID"
 var _loading : bool = false
 
+var MainTheme = preload("res://MainTheme.tres")
+
 func _ready() -> void:
 	_loading = true
 	load_backgrounds()

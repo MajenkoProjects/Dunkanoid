@@ -23,6 +23,8 @@ func _ready() -> void:
 	$VBoxContainer/Play/VBoxContainer/Play.grab_focus()
 	Music.play_intro()
 	get_tree().create_timer(5).timeout.connect(_show_credits)
+	var tween = get_tree().create_tween()
+	tween.tween_property($ColorRect, "color", Color(0, 0, 0, 0), 1)
 
 func _show_credits() -> void:
 	$HBoxContainer/Credits/CreditsRole.modulate = Color(0, 0, 0, 0)
@@ -49,9 +51,7 @@ func _hide_credits() -> void:
 func _hide_credits_done() -> void:
 	get_tree().create_timer(1).timeout.connect(_show_credits)
 
-func _on_button_pressed() -> void:
-	Global.start_level = "DUNKANOID"
-	get_tree().change_scene_to_file("res://Dunkanoid.tscn")
+
 	
 
 func _on_update_score(score : int) -> void:
@@ -86,8 +86,18 @@ func _on_play_level_pressed() -> void:
 
 func _on_load_panel_load_level(level_name: String) -> void:
 	Global.start_level = level_name
+	var tween = get_tree().create_tween()
+	tween.tween_property($ColorRect, "color", Color(0, 0, 0, 1), 1)
+	tween.finished.connect(_start_game)
+
+func _start_game() -> void:
 	get_tree().change_scene_to_file("res://Dunkanoid.tscn")
 
+func _on_button_pressed() -> void:
+	Global.start_level = "DUNKANOID"
+	var tween = get_tree().create_tween()
+	tween.tween_property($ColorRect, "color", Color(0, 0, 0, 1), 1)
+	tween.finished.connect(_start_game)
 
 func _on_upgrades_pressed() -> void:
 	get_tree().change_scene_to_file("res://Upgrades.tscn")
