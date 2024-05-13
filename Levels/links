@@ -1,0 +1,59 @@
+#!/usr/bin/php
+<?php
+
+$links = [
+	"DUNKANOID" 	=>	["RAINBOW",		"CUBISM"],
+
+	"RAINBOW"		=>	["TOWER",		"SNOWCAP"],
+	"CUBISM"		=>	["TOWER",		"SNOWCAP"],
+
+	"TOWER"			=>	["KNOT",		"GOOBER"],
+	"SNOWCAP"		=>	["KNOT",		"GOOBER"],
+
+	"KNOT"			=>	["CRAWLY",		"TINSEL"],
+	"GOOBER"		=>	["CRAWLY",		"TINSEL"],
+
+	"CRAWLY"		=>	["GRILLE",		"THOPTER"],
+	"TINSEL"		=>	["GRILLE",		"THOPTER"],
+
+	"GRILLE"		=>	["SWEET",		"PLATFORM"],
+	"THOPTER"		=>	["SWEET",		"PLATFORM"],
+
+	"SWEET"			=>	["FOCAL POINT",	"SANDS OF TIME"],
+	"PLATFORM"		=>	["FOCAL POINT",	"SANDS OF TIME"],
+
+	"FOCAL POINT"	=>	["TENNIS",		"BALLOON"],
+	"SANDS OF TIME"	=>	["TENNIS",		"BALLOON"],
+
+	"TENNIS"		=>	["TIC TAC",		"X-BOX"],
+	"BALLOON"		=>	["TIC TAC",		"X-BOX"],
+
+	"TIC TAC"		=>	["WINGS",		"SPIDER"],
+	"X-BOX"			=>	["WINGS",		"SPIDER"],
+
+	"WINGS"			=>	["NOTFOUND",	"NOTFOUND"],
+	"SPIDER"		=>	["NOTFOUND",	"NOTFOUND"],
+];
+
+foreach ($links as $file=>$out) {
+	fix_file($file, $out[0], $out[1]);
+}
+
+function fix_file($file, $left, $right) {
+	if (!file_exists($file . ".json")) {
+		print("Source not found: $file\n");
+		return;
+	}
+	if (!file_exists($left . ".json")) {
+		print("Left not found: $left\n");
+		return;
+	}
+	if (!file_exists($right . ".json")) {
+		print("Right not found: $right\n");
+		return;
+	}
+	$json = json_decode(file_get_contents($file . ".json"));
+	$json->left = $left;
+	$json->right = $right;
+	file_put_contents($file . ".json", json_encode($json, JSON_PRETTY_PRINT));
+}
