@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dm61ni80p8hll"]
+[gd_scene load_steps=4 format=3 uid="uid://dm61ni80p8hll"]
 
 [ext_resource type="Script" path="res://Settings.gd" id="1_a8wdi"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="1_lirja"]
-[ext_resource type="ButtonGroup" uid="uid://6t0fev6x6qyf" path="res://MouseMode.tres" id="2_5uw4g"]
 [ext_resource type="AudioStream" uid="uid://d3g30x1n2ncjj" path="res://Sounds/PaddleHit.wav" id="4_hgwvx"]
 
 [node name="Settings" type="Node2D"]
+texture_filter = 1
 script = ExtResource("1_a8wdi")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -37,21 +37,33 @@ size_flags_horizontal = 3
 [node name="MouseModeLabel" type="Label" parent="VBoxContainer/HBoxContainer/LeftPanel"]
 layout_mode = 2
 theme = ExtResource("1_lirja")
+theme_type_variation = &"GlowLabel"
 text = "Mouse Mode"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Relative" type="CheckButton" parent="VBoxContainer/HBoxContainer/LeftPanel"]
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer/LeftPanel"]
+custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 theme = ExtResource("1_lirja")
-button_group = ExtResource("2_5uw4g")
-text = "Relative"
 
-[node name="Absolute" type="CheckButton" parent="VBoxContainer/HBoxContainer/LeftPanel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/LeftPanel"]
+layout_mode = 2
+
+[node name="Absolute" type="Button" parent="VBoxContainer/HBoxContainer/LeftPanel/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_lirja")
-button_group = ExtResource("2_5uw4g")
 text = "Absolute"
+
+[node name="Toggle" type="CheckButton" parent="VBoxContainer/HBoxContainer/LeftPanel/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_lirja")
+
+[node name="Relative" type="Button" parent="VBoxContainer/HBoxContainer/LeftPanel/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_lirja")
+text = "Relative
+"
 
 [node name="CenterGutter" type="HSeparator" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(32, 0)
@@ -61,6 +73,20 @@ theme = ExtResource("1_lirja")
 [node name="RightPanel" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Volume" type="Label" parent="VBoxContainer/HBoxContainer/RightPanel"]
+layout_mode = 2
+theme = ExtResource("1_lirja")
+theme_type_variation = &"GlowLabel"
+text = "Volume
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator3" type="VSeparator" parent="VBoxContainer/HBoxContainer/RightPanel"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+theme = ExtResource("1_lirja")
 
 [node name="MusicLabel" type="Label" parent="VBoxContainer/HBoxContainer/RightPanel"]
 layout_mode = 2
@@ -72,8 +98,13 @@ vertical_alignment = 1
 [node name="Music" type="HSlider" parent="VBoxContainer/HBoxContainer/RightPanel"]
 layout_mode = 2
 min_value = -80.0
-max_value = 6.0
+max_value = 0.0
 tick_count = 10
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/HBoxContainer/RightPanel"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+theme = ExtResource("1_lirja")
 
 [node name="EffectsLabel" type="Label" parent="VBoxContainer/HBoxContainer/RightPanel"]
 layout_mode = 2
@@ -85,7 +116,7 @@ vertical_alignment = 1
 [node name="Effects" type="HSlider" parent="VBoxContainer/HBoxContainer/RightPanel"]
 layout_mode = 2
 min_value = -80.0
-max_value = 6.0
+max_value = 0.0
 tick_count = 10
 
 [node name="RightGutter" type="HSeparator" parent="VBoxContainer/HBoxContainer"]
@@ -116,8 +147,9 @@ text = "Exit"
 stream = ExtResource("4_hgwvx")
 bus = &"Effects"
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/LeftPanel/Relative" to="." method="_on_relative_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/LeftPanel/Absolute" to="." method="_on_absolute_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/LeftPanel/HBoxContainer/Absolute" to="." method="_on_absolute_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/LeftPanel/HBoxContainer/Toggle" to="." method="_on_toggle_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/LeftPanel/HBoxContainer/Relative" to="." method="_on_relative_pressed"]
 [connection signal="drag_ended" from="VBoxContainer/HBoxContainer/RightPanel/Music" to="." method="_on_music_volume_drag_ended"]
 [connection signal="drag_ended" from="VBoxContainer/HBoxContainer/RightPanel/Effects" to="." method="_on_effects_volume_drag_ended"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/ResetTimes" to="." method="_on_reset_times_pressed"]

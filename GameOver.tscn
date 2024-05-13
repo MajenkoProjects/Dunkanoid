@@ -9,16 +9,16 @@
 [ext_resource type="Script" path="res://ScrollText.gd" id="6_y6ajf"]
 [ext_resource type="Texture2D" uid="uid://c6nwmsoi1gjvv" path="res://FadeTex.png" id="7_wpqjt"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0d7e6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u467p"]
 shader = ExtResource("3_u76hk")
-shader_parameter/rect_global_position = Vector2(0, 37.5)
+shader_parameter/rect_global_position = Vector2(0, 0.0998668)
 shader_parameter/rect_size = Vector2(640, 25)
 shader_parameter/ColourTexture = ExtResource("4_lxs2b")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fxm16"]
 shader = ExtResource("6_t71ub")
-shader_parameter/rect_global_position = Vector2(107, 107)
-shader_parameter/rect_size = Vector2(2532, 852)
+shader_parameter/rect_global_position = Vector2(nan, nan)
+shader_parameter/rect_size = Vector2(nan, nan)
 shader_parameter/ColourTexture = ExtResource("7_wpqjt")
 
 [node name="GameOver" type="Node2D"]
@@ -35,7 +35,7 @@ size_flags_vertical = 3
 theme = ExtResource("3_km2fx")
 
 [node name="GameOver" type="Label" parent="VBoxContainer"]
-material = SubResource("ShaderMaterial_0d7e6")
+material = SubResource("ShaderMaterial_u467p")
 layout_mode = 2
 theme = ExtResource("3_km2fx")
 theme_type_variation = &"Arkanoid"

@@ -64,8 +64,9 @@ func load_from_file(filename : String) -> void:
 func load_from_data(data : Dictionary) -> void:
 	purge_bricks()
 	level_data = data
-	Background.texture = Global.Backgrounds.get(level_data.background, null)
-	Background.modulate = Color("#%s" % level_data.get("tint", "FFFFFF"))
+	if not Engine.is_editor_hint():
+		Background.texture = Global.Backgrounds.get(level_data.background, null)
+		Background.modulate = Color("#%s" % level_data.get("tint", "FFFFFF"))
 	for y in level_data.data.size():
 		var line : String = level_data.data[y]
 		for x in line.length():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c2oboya05agti"]
+[gd_scene load_steps=19 format=3 uid="uid://c2oboya05agti"]
 
 [ext_resource type="Script" path="res://Intro.gd" id="1_1hnh1"]
 [ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="3_8d2ix"]
@@ -10,6 +10,9 @@
 [ext_resource type="Script" path="res://Level.gd" id="6_hw2gq"]
 [ext_resource type="SpriteFrames" uid="uid://c6wwkgmwfpdu7" path="res://Coin/Coin.tres" id="7_2tpc7"]
 [ext_resource type="Script" path="res://Preview.gd" id="9_x2ejj"]
+[ext_resource type="Shader" path="res://ScrollText.gdshader" id="11_p7bee"]
+[ext_resource type="Texture2D" uid="uid://c6nwmsoi1gjvv" path="res://FadeTex.png" id="12_8ixec"]
+[ext_resource type="Script" path="res://IntroScroller.tres.gd" id="13_q2pbx"]
 
 [sub_resource type="Curve" id="Curve_jhhjd"]
 min_value = -200.0
@@ -20,17 +23,23 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_431mb"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dkeyh"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2oo2w"]
 shader = ExtResource("3_eo4f3")
-shader_parameter/rect_global_position = Vector2(0, 0)
+shader_parameter/rect_global_position = Vector2(0.19822, 0.0732357)
 shader_parameter/rect_size = Vector2(150, 25)
 shader_parameter/ColourTexture = ExtResource("4_v8i0c")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_le8eo"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fb3e4"]
 shader = ExtResource("3_eo4f3")
-shader_parameter/rect_global_position = Vector2(0, 0)
+shader_parameter/rect_global_position = Vector2(0.161003, 0.111851)
 shader_parameter/rect_size = Vector2(242, 25)
 shader_parameter/ColourTexture = ExtResource("4_v8i0c")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s1jgx"]
+shader = ExtResource("11_p7bee")
+shader_parameter/rect_global_position = Vector2(0.332524, 0.210386)
+shader_parameter/rect_size = Vector2(2.369, 3.688)
+shader_parameter/ColourTexture = ExtResource("12_8ixec")
 
 [node name="Intro" type="Node2D"]
 script = ExtResource("1_1hnh1")
@@ -70,7 +79,7 @@ size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
 [node name="ArkaLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
-material = SubResource("ShaderMaterial_dkeyh")
+material = SubResource("ShaderMaterial_2oo2w")
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 theme_type_variation = &"Arkanoid"
@@ -91,7 +100,7 @@ size_flags_horizontal = 3
 theme = ExtResource("3_8d2ix")
 
 [node name="Revenge" type="Label" parent="VBoxContainer/HBoxContainer2"]
-material = SubResource("ShaderMaterial_le8eo")
+material = SubResource("ShaderMaterial_fb3e4")
 layout_mode = 2
 theme = ExtResource("3_8d2ix")
 theme_type_variation = &"Arkanoid"
@@ -295,7 +304,74 @@ text = "00:00.00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_s1jgx")
+clip_contents = true
+custom_minimum_size = Vector2(160, 96)
+offset_left = 411.0
+offset_top = 158.0
+offset_right = 571.0
+offset_bottom = 254.0
+size_flags_horizontal = 3
+stretch = true
+script = ExtResource("13_q2pbx")
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(160, 96)
+render_target_update_mode = 4
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SubViewportContainer/SubViewport"]
+custom_minimum_size = Vector2(160, 96)
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="Label" type="Label" parent="SubViewportContainer/SubViewport/ScrollContainer"]
+custom_minimum_size = Vector2(160, 96)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_8d2ix")
+text = "
+
+
+
+
+
+
+
+
+For centuries the battle has raged. Since the first invasion of 2398, when the Xorqzees entered our dimension through a rift in space, humanity has bravely defended their territories with every ounce of strength they can muster.
+
+Until today.
+
+Today the full might of the Xorqzean war machine has been turned upon humanity in a final attempt to destroy what resistance is left.
+
+But there is hope. A new generation of warship, the Dunkanoid, has finally been completed, and you have been chosen as its commander.
+
+It is up to you to save humanity.
+
+Are you up to the task? Or will humanity crumble?
+
+
+
+
+
+
+
+
+ "
+horizontal_alignment = 1
+autowrap_mode = 3
+
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 offset_right = 640.0
 offset_bottom = 360.0
 mouse_filter = 2
