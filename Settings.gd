@@ -12,18 +12,16 @@ func _ready() -> void:
 	ToggleNode.button_pressed = Global.relative_mouse
 	AbsoluteNode.theme_type_variation = "" if Global.relative_mouse else "GlowLabel"
 	RelativeNode.theme_type_variation = "GlowLabel" if Global.relative_mouse else ""
-	MusicNode.set_value_no_signal(Global.music_volume)
-	EffectsNode.set_value_no_signal(Global.effects_volume)
+	MusicNode.set_value_no_signal(db_to_linear(Global.music_volume))
+	EffectsNode.set_value_no_signal(db_to_linear(Global.effects_volume))
 
 
 func _on_exit_pressed() -> void:
 	get_tree().change_scene_to_file("res://Intro.tscn")
 
-func _on_music_volume_drag_ended(value_changed: bool) -> void:
-	Global.music_volume = MusicNode.value
 
 func _on_effects_volume_drag_ended(value_changed: bool) -> void:
-	Global.effects_volume = EffectsNode.value
+	Global.effects_volume = linear_to_db(EffectsNode.value)
 	$Boink.play()
 
 
@@ -48,3 +46,7 @@ func _on_relative_pressed() -> void:
 	ToggleNode.button_pressed = true
 	AbsoluteNode.theme_type_variation = "" if Global.relative_mouse else "GlowLabel"
 	RelativeNode.theme_type_variation = "GlowLabel" if Global.relative_mouse else ""
+
+
+func _on_music_value_changed(value: float) -> void:
+	Global.music_volume = linear_to_db(MusicNode.value)

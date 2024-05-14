@@ -97,9 +97,10 @@ vertical_alignment = 1
 
 [node name="Music" type="HSlider" parent="VBoxContainer/HBoxContainer/RightPanel"]
 layout_mode = 2
-min_value = -80.0
-max_value = 0.0
-tick_count = 10
+max_value = 1.0
+step = 0.1
+tick_count = 11
+ticks_on_borders = true
 
 [node name="VSeparator2" type="VSeparator" parent="VBoxContainer/HBoxContainer/RightPanel"]
 custom_minimum_size = Vector2(0, 8)
@@ -115,9 +116,10 @@ vertical_alignment = 1
 
 [node name="Effects" type="HSlider" parent="VBoxContainer/HBoxContainer/RightPanel"]
 layout_mode = 2
-min_value = -80.0
-max_value = 0.0
-tick_count = 10
+max_value = 1.0
+step = 0.1
+tick_count = 11
+ticks_on_borders = true
 
 [node name="RightGutter" type="HSeparator" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -150,7 +152,7 @@ bus = &"Effects"
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/LeftPanel/HBoxContainer/Absolute" to="." method="_on_absolute_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/LeftPanel/HBoxContainer/Toggle" to="." method="_on_toggle_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/LeftPanel/HBoxContainer/Relative" to="." method="_on_relative_pressed"]
-[connection signal="drag_ended" from="VBoxContainer/HBoxContainer/RightPanel/Music" to="." method="_on_music_volume_drag_ended"]
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer/RightPanel/Music" to="." method="_on_music_value_changed"]
 [connection signal="drag_ended" from="VBoxContainer/HBoxContainer/RightPanel/Effects" to="." method="_on_effects_volume_drag_ended"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/ResetTimes" to="." method="_on_reset_times_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/Exit" to="." method="_on_exit_pressed"]
