@@ -90,12 +90,14 @@ var Bricks : Dictionary = {
 }
 
 var start_level : String = "DUNKANOID"
-var _loading : bool = false
+var _loading : bool = true
 
 var MainTheme = preload("res://MainTheme.tres")
 
 func _ready() -> void:
-	_loading = true
+	pass
+	
+func initialize() -> void:
 	load_backgrounds()
 	if FileAccess.file_exists("user://data.json"):
 		var data = JSON.parse_string(FileAccess.get_file_as_string("user://data.json"))

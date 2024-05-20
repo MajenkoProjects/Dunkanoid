@@ -34,4 +34,4 @@ func _wait_load_intro() -> void:
 	get_tree().create_timer(3).timeout.connect(_load_intro)
 
 func _load_intro() -> void:
-	get_tree().change_scene_to_file("res://Intro.tscn")
+	get_tree().change_scene_to_packed(Scenes.MainMenu)

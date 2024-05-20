@@ -62,10 +62,10 @@ func _on_update_highscore(score : int) -> void:
 
 
 func _on_settings_pressed() -> void:
-	get_tree().change_scene_to_file("res://Settings.tscn")
+	get_tree().change_scene_to_packed(Scenes.Settings)
 
 func _on_editor_pressed() -> void:
-	get_tree().change_scene_to_file("res://LevelEditor.tscn")
+	get_tree().change_scene_to_packed(Scenes.LevelEditor)
 
 
 func _on_exit_pressed() -> void:
@@ -90,7 +90,7 @@ func _on_load_panel_load_level(level_name: String) -> void:
 	tween.finished.connect(_start_game)
 
 func _start_game() -> void:
-	get_tree().change_scene_to_file("res://Dunkanoid.tscn")
+	get_tree().change_scene_to_packed(Scenes.Game)
 
 func _on_button_pressed() -> void:
 	Music.fade_down(1)
@@ -100,4 +100,4 @@ func _on_button_pressed() -> void:
 	tween.finished.connect(_start_game)
 
 func _on_upgrades_pressed() -> void:
-	get_tree().change_scene_to_file("res://Upgrades.tscn")
+	get_tree().change_scene_to_packed(Scenes.Upgrades)

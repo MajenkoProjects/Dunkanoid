@@ -17,7 +17,7 @@ func _ready() -> void:
 
 
 func _on_exit_pressed() -> void:
-	get_tree().change_scene_to_file("res://Intro.tscn")
+	get_tree().change_scene_to_packed(Scenes.MainMenu)
 
 
 func _on_effects_volume_drag_ended(value_changed: bool) -> void:

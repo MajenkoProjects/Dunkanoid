@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://00yq7qqkj6fa"]
+
+[ext_resource type="Script" path="res://VanityCard.gd" id="1_a0et3"]
+[ext_resource type="AudioStream" uid="uid://dy4ipod58pbms" path="res://Sounds/MajenkoJingle.wav" id="1_af4dy"]
+[ext_resource type="Texture2D" uid="uid://dj73jh272cf4g" path="res://Icons/MT.png" id="2_rqk0g"]
+[ext_resource type="Theme" uid="uid://cfvww0geatnnk" path="res://MainTheme.tres" id="3_qirw7"]
+
+[node name="VanityCard" type="Node2D"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+script = ExtResource("1_a0et3")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_af4dy")
+
+[node name="Mt" type="Sprite2D" parent="."]
+position = Vector2(320, 149)
+scale = Vector2(0.424528, 0.424528)
+texture = ExtResource("2_rqk0g")
+
+[node name="Label" type="Label" parent="."]
+offset_top = 172.0
+offset_right = 640.0
+offset_bottom = 195.0
+theme = ExtResource("3_qirw7")
+text = "MAJENKO TECHNOLOGIES"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+offset_top = 195.0
+offset_right = 640.0
+offset_bottom = 218.0
+theme = ExtResource("3_qirw7")
+text = "majenko.co.uk"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_audio_stream_player_finished"]

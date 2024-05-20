@@ -42,7 +42,7 @@ func _on_save_pressed() -> void:
 	
 func _on_exit_pressed() -> void:
 	Music.resume()
-	get_tree().change_scene_to_file("res://Intro.tscn")
+	get_tree().change_scene_to_packed(Scenes.MainMenu)
 
 
 

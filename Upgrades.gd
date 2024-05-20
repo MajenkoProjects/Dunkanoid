@@ -8,7 +8,7 @@ func _ready() -> void:
 	Tokens.text = "%d" % Global.upgrade_tokens
 	
 func _on_exit_pressed() -> void:
-	get_tree().change_scene_to_file("res://Intro.tscn")
+	get_tree().change_scene_to_packed(Scenes.MainMenu)
 
 func _on_upgrade_tokens_updated(qty : int) -> void:
 	Tokens.text = "%d" % qty

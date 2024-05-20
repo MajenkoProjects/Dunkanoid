@@ -28,4 +28,4 @@ func _process(_delta : float) -> void:
 func _on_quit_pressed() -> void:
 	paused = false
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://Intro.tscn")
+	get_tree().change_scene_to_packed(Scenes.MainMenu)

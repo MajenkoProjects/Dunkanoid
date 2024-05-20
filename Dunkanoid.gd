@@ -103,7 +103,7 @@ func _process(delta : float) -> void:
 		PaddleNode.global_position.x += (delta * leave_direction * 20.0)		
 		if PaddleNode.global_position.x < -16 or PaddleNode.global_position.x > 462:
 			if level == "NOTFOUND" and not Music.jingle_playing:
-				get_tree().change_scene_to_file("res://Intro.tscn")
+				get_tree().change_scene_to_packed(Scenes.MainMenu)
 				return
 			if opened:
 				PipesNode.close_door(Pipes.BOTTOM_LEFT)
@@ -311,7 +311,7 @@ func _on_hit_floor(ball, _power) -> void:
 			Music.jingle(Music.JINGLE_LEVEL_START)
 
 func _go_to_game_over() -> void:
-	get_tree().change_scene_to_file("res://GameOver.tscn")
+	get_tree().change_scene_to_packed(Scenes.GameOver)
 
 func _on_round_won_finished() -> void:
 	pass

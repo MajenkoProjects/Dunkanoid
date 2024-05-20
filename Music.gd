@@ -6,7 +6,8 @@ var JinglePlayer : AudioStreamPlayer
 enum {
 	MUSIC_INTRO,
 	MUSIC_GAME,
-	MUSIC_GAME_OVER
+	MUSIC_GAME_OVER,
+	MUSIC_NONE
 }
 
 enum {
@@ -17,7 +18,7 @@ enum {
 
 signal jingle_finished(type : int)
 
-var music : int = MUSIC_INTRO
+var music : int = MUSIC_NONE
 var pausepos : float = 0
 
 var MP3 : Dictionary = {
@@ -37,13 +38,16 @@ var jingle_number : int = 0
 var tween = null
 
 func _ready() -> void:
+	pass
+
+func initialize() -> void:
 	MusicPlayer = AudioStreamPlayer.new();
 	MusicPlayer.bus = "Music"
 	MusicPlayer.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(MusicPlayer)
-	MusicPlayer.stream = MP3["Through The Crystal"]
-	MusicPlayer.play()
-	music = MUSIC_INTRO
+#	MusicPlayer.stream = MP3["Through The Crystal"]
+#	MusicPlayer.play()
+#	music = MUSIC_INTRO
 
 	JinglePlayer = AudioStreamPlayer.new();
 	JinglePlayer.bus = "Music"
